@@ -1,5 +1,7 @@
 # tailwind-preset-mantine
 
+[![npm version](https://img.shields.io/npm/v/tailwind-preset-mantine.svg)](https://www.npmjs.com/package/tailwind-preset-mantine)
+
 A Tailwind CSS preset for seamless integration with Mantine UI components.
 
 ## Installation

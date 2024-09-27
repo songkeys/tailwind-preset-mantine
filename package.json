@@ -7,6 +7,14 @@
 		"tailwind",
 		"preset"
 	],
+	"homepage": "https://github.com/songkeys/tailwind-preset-mantine#readme",
+	"bugs": {
+		"url": "https://github.com/songkeys/tailwind-preset-mantine/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/songkeys/tailwind-preset-mantine.git"
+	},
 	"license": "MIT",
 	"author": "Songkeys",
 	"main": "src/index.js",
