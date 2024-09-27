@@ -184,7 +184,7 @@ function generateColors(mantineColors) {
 	 */
 	const colors = {};
 
-	for (const color of mantineColors) {
+	for (const color of Object.keys(mantineColors)) {
 		colors[color] = {
 			50: `var(--mantine-color-${color}-0)`,
 			100: `var(--mantine-color-${color}-1)`,
@@ -232,7 +232,7 @@ function generateVariantSpecificColors(mantineColors) {
 	 */
 	const colors = {};
 
-	for (const color of mantineColors) {
+	for (const color of Object.keys(mantineColors)) {
 		colors[`${color}-filled`] = `var(--mantine-color-${color}-filled)`;
 		colors[`${color}-filled-hover`] =
 			`var(--mantine-color-${color}-filled-hover)`;
