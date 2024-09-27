@@ -19,8 +19,8 @@ To use the preset in your Tailwind CSS configuration, add it to the `presets` ar
 import tailwindPresetMantine from 'tailwind-preset-mantine';
 
 export default {
-  presets: [
-    tailwindPresetMantine,
+	presets: [
+		tailwindPresetMantine,
 	],
 };
 ```
@@ -46,9 +46,9 @@ Now you can use tailwind with mantine's style applied:
 import { Button } from '@mantine/core';
 
 export default function Page() {
-  // `bg-red-500` will be `background-color: var(--mantine-color-red-5)`
-  // `text-white` will be `color: var(--mantine-color-white)`
-  return <Button className="bg-red-500 text-white">Hello</Button>
+	// `bg-red-500` will be `background-color: var(--mantine-color-red-5)`
+	// `text-white` will be `color: var(--mantine-color-white)`
+	return <Button className="bg-red-500 text-white">Hello</Button>
 }
 ```
 
@@ -83,23 +83,23 @@ To make it work, you also need to change the postcss config like this:
 // postcss.config.js
 module.exports = {
 	plugins: {
-    'postcss-import': {},
-    'postcss-preset-mantine': {},
-    'postcss-simple-vars': {
-      variables: {
-        'mantine-breakpoint-xs': '36em',
-        'mantine-breakpoint-sm': '48em',
-        'mantine-breakpoint-md': '62em',
-        'mantine-breakpoint-lg': '75em',
-        'mantine-breakpoint-xl': '88em',
-      },
-    },
+		'postcss-import': {},
+		'postcss-preset-mantine': {},
+		'postcss-simple-vars': {
+			variables: {
+				'mantine-breakpoint-xs': '36em',
+				'mantine-breakpoint-sm': '48em',
+				'mantine-breakpoint-md': '62em',
+				'mantine-breakpoint-lg': '75em',
+				'mantine-breakpoint-xl': '88em',
+			},
+		},
 
-    // for tailwind
-+   autoprefixer: {},
-+   'tailwindcss/nesting': {},
-+   tailwindcss: {},
-  },
+		// for tailwind
++ autoprefixer: {},
++ 'tailwindcss/nesting': {},
++ tailwindcss: {},
+	},
 }
 ```
 
