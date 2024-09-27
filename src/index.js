@@ -43,7 +43,7 @@ module.exports = function tailwindPresetMantine({
 	 */
 	const preset = {
 		content: [],
-		darkMode: ["class", '[data-mantine-color-scheme="dark"]'],
+		darkMode: ["selector", '[data-mantine-color-scheme="dark"]'],
 		theme: {
 			extend: {
 				screens: {
