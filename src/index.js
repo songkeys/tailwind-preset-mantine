@@ -1,7 +1,7 @@
 /// for reference: https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/global.css
 
 /**
- * @typedef {import('@mantine/core').MantineThemeColors} MantineThemeColors
+ * @typedef {import('@mantine/core').MantineThemeColorsOverride} MantineThemeColorsOverride
  * @typedef {import('tailwindcss').Config} TailwindConfig
  */
 
@@ -176,7 +176,7 @@ module.exports = function tailwindPresetMantine({
 };
 
 /**
- * @param {MantineThemeColors} mantineColors
+ * @param {MantineThemeColorsOverride} mantineColors
  */
 function generateColors(mantineColors) {
 	/**
@@ -224,7 +224,7 @@ function generatePrimaryColors() {
 }
 
 /**
- * @param {MantineThemeColors} mantineColors
+ * @param {MantineThemeColorsOverride} mantineColors
  */
 function generateVariantSpecificColors(mantineColors) {
 	/**
