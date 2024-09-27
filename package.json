@@ -2,11 +2,7 @@
 	"name": "tailwind-preset-mantine",
 	"version": "1.0.0",
 	"description": "Integrate Mantine with Tailwind CSS",
-	"keywords": [
-		"mantine",
-		"tailwind",
-		"preset"
-	],
+	"keywords": ["mantine", "tailwind", "preset"],
 	"homepage": "https://github.com/songkeys/tailwind-preset-mantine#readme",
 	"bugs": {
 		"url": "https://github.com/songkeys/tailwind-preset-mantine/issues"

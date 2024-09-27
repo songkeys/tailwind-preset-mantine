@@ -1,7 +1,7 @@
 /// for reference: https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/global.css
 
 /**
- * @typedef {import('@mantine/core').MantineThemeOverride} MantineThemeOverride
+ * @typedef {import('@mantine/core').MantineThemeColors} MantineThemeColors
  * @typedef {import('tailwindcss').Config} TailwindConfig
  */
 
@@ -31,12 +31,12 @@ const { DEFAULT_THEME } = require("@mantine/core");
  * });
  *
  * export default {
- *  presets: [tailwindPresetMantine({ mantineTheme })],
+ *  presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors })],
  * };
  * ```
  */
 module.exports = function tailwindPresetMantine({
-	mantineTheme = DEFAULT_THEME,
+	mantineColors = DEFAULT_THEME.colors,
 } = {}) {
 	/**
 	 * @type {TailwindConfig}
@@ -120,44 +120,44 @@ module.exports = function tailwindPresetMantine({
 					DEFAULT: "var(--mantine-radius-default)",
 				},
 				colors: {
-					...generateColors(mantineTheme),
+					...generateColors(mantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineTheme),
+					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherTextColors(),
 				},
 				backgroundColor: {
-					...generateColors(mantineTheme),
+					...generateColors(mantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineTheme),
+					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBackgroundColors(),
 				},
 				placeholderColor: {
-					...generateColors(mantineTheme),
+					...generateColors(mantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineTheme),
+					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherTextColors(),
 				},
 				ringColor: {
-					...generateColors(mantineTheme),
+					...generateColors(mantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineTheme),
+					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
 				divideColor: {
-					...generateColors(mantineTheme),
+					...generateColors(mantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineTheme),
+					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
 				borderColor: {
-					...generateColors(mantineTheme),
+					...generateColors(mantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineTheme),
+					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
@@ -176,11 +176,9 @@ module.exports = function tailwindPresetMantine({
 };
 
 /**
- * @param {MantineThemeOverride} theme
+ * @param {MantineThemeColors} mantineColors
  */
-function generateColors(theme) {
-	const mantineColors = theme.colors;
-
+function generateColors(mantineColors) {
 	/**
 	 * @type {NonNullable<TailwindConfig['theme']>['colors']}
 	 */
@@ -226,11 +224,9 @@ function generatePrimaryColors() {
 }
 
 /**
- * @param {MantineThemeOverride} theme
+ * @param {MantineThemeColors} mantineColors
  */
-function generateVariantSpecificColors(theme) {
-	const mantineColors = theme.colors;
-
+function generateVariantSpecificColors(mantineColors) {
 	/**
 	 * @type {NonNullable<TailwindConfig['theme']>['colors']}
 	 */

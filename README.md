@@ -36,7 +36,7 @@ const mantineTheme = createTheme({
 });
 
 export default {
-	presets: [tailwindPresetMantine({ mantineTheme })],
+	presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors })],
 };
 ```
 
