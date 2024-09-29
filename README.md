@@ -96,9 +96,9 @@ module.exports = {
 		},
 
 		// for tailwind
-+ autoprefixer: {},
-+ 'tailwindcss/nesting': {},
-+ tailwindcss: {},
++		autoprefixer: {},
++		'tailwindcss/nesting': {},
++		tailwindcss: {},
 	},
 }
 ```
