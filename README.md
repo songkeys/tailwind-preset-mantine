@@ -103,6 +103,12 @@ module.exports = {
 }
 ```
 
+## Minimal template
+
+Here's a minimal template that you can use to get started:
+
+<https://github.com/songkeys/next-app-mantine-tailwind-template>
+
 ## License
 
 MIT
