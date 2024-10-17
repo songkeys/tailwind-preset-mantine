@@ -36,8 +36,9 @@ const { DEFAULT_THEME, mergeMantineTheme } = require("@mantine/core");
  * };
  * ```
  *
- * @param {MantineThemeColorsOverride} mantineColors
- * @param {PartialObjectDeep<MantineBreakpointsValues, {}>} mantineBreakpoints
+ * @param {Object} options
+ * @param {MantineThemeColorsOverride} [options.mantineColors=DEFAULT_THEME.colors]
+ * @param {Partial<MantineBreakpointsValues>} [options.mantineBreakpoints=DEFAULT_THEME.breakpoints]
  */
 module.exports = function tailwindPresetMantine({
 	mantineColors = DEFAULT_THEME.colors,
