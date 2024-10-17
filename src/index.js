@@ -216,7 +216,7 @@ function generatePrimaryColors() {
 			700: "var(--mantine-primary-color-7)",
 			800: "var(--mantine-primary-color-8)",
 			900: "var(--mantine-primary-color-9)",
-			DEFAULT: "var(--mantine-primary-color-6)",
+			DEFAULT: "var(--mantine-primary-color-filled)",
 		},
 	};
 
