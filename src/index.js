@@ -2,8 +2,6 @@
 
 /**
  * @typedef {import('@mantine/core').MantineThemeColorsOverride} MantineThemeColorsOverride
- * @typedef {import('@mantine/core').MantineColorShade} MantineColorShade
- * @typedef {import('@mantine/core').MantinePrimaryShade} MantinePrimaryShade
  * @typedef {import('tailwindcss').Config} TailwindConfig
  */
 
@@ -36,13 +34,9 @@ const { DEFAULT_THEME } = require("@mantine/core");
  *  presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors })],
  * };
  * ```
- *
- * @param {MantineThemeColorsOverride} mantineColors
- * @param {MantineColorShade | PartialObjectDeep<MantinePrimaryShade, {}> | undefined} mantinePrimaryShade
  */
 module.exports = function tailwindPresetMantine({
 	mantineColors = DEFAULT_THEME.colors,
-	mantinePrimaryShade = 6,
 } = {}) {
 	/**
 	 * @type {TailwindConfig}
@@ -127,42 +121,42 @@ module.exports = function tailwindPresetMantine({
 				},
 				colors: {
 					...generateColors(mantineColors),
-					...generatePrimaryColors(mantinePrimaryShade),
+					...generatePrimaryColors(),
 					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherTextColors(),
 				},
 				backgroundColor: {
 					...generateColors(mantineColors),
-					...generatePrimaryColors(mantinePrimaryShade),
+					...generatePrimaryColors(),
 					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBackgroundColors(),
 				},
 				placeholderColor: {
 					...generateColors(mantineColors),
-					...generatePrimaryColors(mantinePrimaryShade),
+					...generatePrimaryColors(),
 					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherTextColors(),
 				},
 				ringColor: {
 					...generateColors(mantineColors),
-					...generatePrimaryColors(mantinePrimaryShade),
+					...generatePrimaryColors(),
 					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
 				divideColor: {
 					...generateColors(mantineColors),
-					...generatePrimaryColors(mantinePrimaryShade),
+					...generatePrimaryColors(),
 					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
 				borderColor: {
 					...generateColors(mantineColors),
-					...generatePrimaryColors(mantinePrimaryShade),
+					...generatePrimaryColors(),
 					...generateVariantSpecificColors(mantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
@@ -209,15 +203,7 @@ function generateColors(mantineColors) {
 	return colors;
 }
 
-/**
- * @param {MantineColorShade | PartialObjectDeep<MantinePrimaryShade, {}> | undefined} mantinePrimaryShade
- */
-function generatePrimaryColors(mantinePrimaryShade = 6) {
-	const parsedMantinePrimaryShade =
-		typeof mantinePrimaryShade === "number"
-			? mantinePrimaryShade
-			: mantinePrimaryShade.light || mantinePrimaryShade.dark || 6;
-
+function generatePrimaryColors() {
 	const colors = {
 		primary: {
 			50: "var(--mantine-primary-color-0)",
@@ -230,13 +216,7 @@ function generatePrimaryColors(mantinePrimaryShade = 6) {
 			700: "var(--mantine-primary-color-7)",
 			800: "var(--mantine-primary-color-8)",
 			900: "var(--mantine-primary-color-9)",
-			light: mantinePrimaryShade && mantinePrimaryShade.light
-				? `var(--mantine-primary-color-${mantinePrimaryShade.light}-light)`
-				: undefined,
-			dark: mantinePrimaryShade && mantinePrimaryShade.dark
-				? `var(--mantine-primary-color-${mantinePrimaryShade.dark}-dark)`
-				: undefined,
-			DEFAULT: `var(--mantine-primary-color-${parsedMantinePrimaryShade})`,
+			DEFAULT: "var(--mantine-primary-color-6)",
 		},
 	};
 
