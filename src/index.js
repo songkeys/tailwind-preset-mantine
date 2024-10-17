@@ -1,7 +1,8 @@
 /// for reference: https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/global.css
 
 /**
- * @typedef {import('@mantine/core').MantineThemeOverride} MantineThemeOverride
+ * @typedef {import('@mantine/core').MantineThemeColorsOverride} MantineThemeColorsOverride
+ * @typedef {import('@mantine/core').MantineBreakpointsValues} MantineBreakpointsValues
  * @typedef {import('tailwindcss').Config} TailwindConfig
  */
 
@@ -35,14 +36,18 @@ const { DEFAULT_THEME, mergeMantineTheme } = require("@mantine/core");
  * };
  * ```
  *
- * @param {MantineThemeOverride} mantineTheme
+ * @param {MantineThemeColorsOverride} mantineColors
+ * @param {PartialObjectDeep<MantineBreakpointsValues, {}>} mantineBreakpoints
  */
 module.exports = function tailwindPresetMantine({
-	mantineTheme = DEFAULT_THEME,
+	mantineColors = DEFAULT_THEME.colors,
+	mantineBreakpoints = DEFAULT_THEME.breakpoints,
 } = {}) {
-	const mergedTheme = mergeMantineTheme(DEFAULT_THEME, mantineTheme);
-	const mantineColors = mergedTheme.colors;
-	const mantineBreakpoints = mergedTheme.breakpoints;
+	const { colors: mergedMantineColors, breakpoints: mergedMantineBreakpoints } =
+		mergeMantineTheme(DEFAULT_THEME, {
+			colors: mantineColors,
+			breakpoints: mantineBreakpoints,
+		});
 
 	/**
 	 * @type {TailwindConfig}
@@ -53,11 +58,11 @@ module.exports = function tailwindPresetMantine({
 		theme: {
 			extend: {
 				screens: {
-					xs: mantineBreakpoints.xs,
-					sm: mantineBreakpoints.sm,
-					md: mantineBreakpoints.md,
-					lg: mantineBreakpoints.lg,
-					xl: mantineBreakpoints.xl,
+					xs: mergedMantineBreakpoints.xs,
+					sm: mergedMantineBreakpoints.sm,
+					md: mergedMantineBreakpoints.md,
+					lg: mergedMantineBreakpoints.lg,
+					xl: mergedMantineBreakpoints.xl,
 				},
 				fontFamily: {
 					DEFAULT: ["var(--mantine-font-family)"],
@@ -126,44 +131,44 @@ module.exports = function tailwindPresetMantine({
 					DEFAULT: "var(--mantine-radius-default)",
 				},
 				colors: {
-					...generateColors(mantineColors),
+					...generateColors(mergedMantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineColors),
+					...generateVariantSpecificColors(mergedMantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherTextColors(),
 				},
 				backgroundColor: {
-					...generateColors(mantineColors),
+					...generateColors(mergedMantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineColors),
+					...generateVariantSpecificColors(mergedMantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBackgroundColors(),
 				},
 				placeholderColor: {
-					...generateColors(mantineColors),
+					...generateColors(mergedMantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineColors),
+					...generateVariantSpecificColors(mergedMantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherTextColors(),
 				},
 				ringColor: {
-					...generateColors(mantineColors),
+					...generateColors(mergedMantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineColors),
+					...generateVariantSpecificColors(mergedMantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
 				divideColor: {
-					...generateColors(mantineColors),
+					...generateColors(mergedMantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineColors),
+					...generateVariantSpecificColors(mergedMantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
 				borderColor: {
-					...generateColors(mantineColors),
+					...generateColors(mergedMantineColors),
 					...generatePrimaryColors(),
-					...generateVariantSpecificColors(mantineColors),
+					...generateVariantSpecificColors(mergedMantineColors),
 					...generateVariantSpecificPrimaryColors(),
 					...generateOtherBorderColors(),
 				},
