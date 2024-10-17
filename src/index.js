@@ -1,11 +1,11 @@
 /// for reference: https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/global.css
 
 /**
- * @typedef {import('@mantine/core').MantineThemeColorsOverride} MantineThemeColorsOverride
+ * @typedef {import('@mantine/core').MantineThemeOverride} MantineThemeOverride
  * @typedef {import('tailwindcss').Config} TailwindConfig
  */
 
-const { DEFAULT_THEME } = require("@mantine/core");
+const { DEFAULT_THEME, mergeMantineTheme } = require("@mantine/core");
 
 /**
  * @example
@@ -34,10 +34,16 @@ const { DEFAULT_THEME } = require("@mantine/core");
  *  presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors })],
  * };
  * ```
+ *
+ * @param {MantineThemeOverride} mantineTheme
  */
 module.exports = function tailwindPresetMantine({
-	mantineColors = DEFAULT_THEME.colors,
+	mantineTheme = DEFAULT_THEME,
 } = {}) {
+	const mergedTheme = mergeMantineTheme(DEFAULT_THEME, mantineTheme);
+	const mantineColors = mergedTheme.colors;
+	const mantineBreakpoints = mergedTheme.breakpoints;
+
 	/**
 	 * @type {TailwindConfig}
 	 */
@@ -47,11 +53,11 @@ module.exports = function tailwindPresetMantine({
 		theme: {
 			extend: {
 				screens: {
-					xs: "var(--mantine-breakpoint-xs)",
-					sm: "var(--mantine-breakpoint-sm)",
-					md: "var(--mantine-breakpoint-md)",
-					lg: "var(--mantine-breakpoint-lg)",
-					xl: "var(--mantine-breakpoint-xl)",
+					xs: mantineBreakpoints.xs,
+					sm: mantineBreakpoints.sm,
+					md: mantineBreakpoints.md,
+					lg: mantineBreakpoints.lg,
+					xl: mantineBreakpoints.xl,
 				},
 				fontFamily: {
 					DEFAULT: ["var(--mantine-font-family)"],
