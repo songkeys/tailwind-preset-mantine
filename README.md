@@ -25,7 +25,7 @@ export default {
 };
 ```
 
-If you have a custom mantine theme (https://mantine.dev/theming/theme-object/), you should pass it as an option to make custom colors available to tailwind.
+If you have a custom mantine theme (https://mantine.dev/theming/theme-object/), you should pass it as an option to make custom colors and custom breakpoints available to tailwind.
 
 ```ts
 import tailwindPresetMantine from 'tailwind-preset-mantine'
@@ -36,7 +36,7 @@ const mantineTheme = createTheme({
 });
 
 export default {
-	presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors })],
+	presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors, mantineBreakpoints: mantineTheme.breakpoints })],
 };
 ```
 
