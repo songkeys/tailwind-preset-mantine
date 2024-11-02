@@ -89,7 +89,7 @@ Then pass them to `tailwind-preset-mantine`:
 ```ts
 // tailwind.config.ts
 import tailwindPresetMantine from 'tailwind-preset-mantine'
-import { colors, breakpoints } from './theme';
+import { colors, breakpoints } from './src/theme';
 
 export default {
 	presets: [tailwindPresetMantine({
