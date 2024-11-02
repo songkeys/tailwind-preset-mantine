@@ -12,6 +12,8 @@ npm install tailwind-preset-mantine
 
 ## Usage
 
+### Default mantine theme
+
 To use the preset in your Tailwind CSS configuration, add it to the `presets` array:
 
 ```ts
@@ -20,23 +22,8 @@ import tailwindPresetMantine from 'tailwind-preset-mantine';
 
 export default {
 	presets: [
-		tailwindPresetMantine,
+		tailwindPresetMantine(),
 	],
-};
-```
-
-If you have a custom mantine theme (https://mantine.dev/theming/theme-object/), you should pass it as an option to make custom colors and custom breakpoints available to tailwind.
-
-```ts
-import tailwindPresetMantine from 'tailwind-preset-mantine'
-import { createTheme } from '@mantine/core';
-
-const mantineTheme = createTheme({
-	// ...your custom theme
-});
-
-export default {
-	presets: [tailwindPresetMantine({ mantineColors: mantineTheme.colors, mantineBreakpoints: mantineTheme.breakpoints })],
 };
 ```
 
@@ -51,6 +38,72 @@ export default function Page() {
 	return <Button className="bg-red-500 text-white">Hello</Button>
 }
 ```
+
+### Custom mantine theme
+
+If you have a custom mantine theme (https://mantine.dev/theming/theme-object/), you should pass it as an option to make custom colors and custom breakpoints available to tailwind.
+
+Let's define your custom mantine `colors` and `breakpoints` first:
+
+```tsx
+// src/theme.ts
+import {
+  type MantineThemeColors,
+  type MantineBreakpointsValues,
+} from "@mantine/core";
+
+export const colors: MantineThemeColors = {
+	// ...your custom colors
+}
+export const breakpoints: MantineBreakpointsValues = {
+	// ...your custom breakpoints
+}
+```
+
+Pass your custom `colors` and `breakpoints` to `MantineProvider`:
+
+```tsx
+// src/mantine-provider.tsx
+import {
+	MantineProvider,
+	mergeMantineTheme,
+	DEFAULT_THEME,
+} from '@mantine/core';
+import { colors, breakpoints } from './theme';
+
+const theme = mergeMantineTheme(
+  DEFAULT_THEME,
+  createTheme({
+    breakpoints,
+    colors,
+  }),
+);
+
+export default function MantineProvider({ children }: { children: React.ReactNode }) {
+	return <MantineProvider theme={{ colors, breakpoints }}>{children}</MantineProvider>
+}
+```
+
+Then pass them to `tailwind-preset-mantine`:
+
+```ts
+// tailwind.config.ts
+import tailwindPresetMantine from 'tailwind-preset-mantine'
+import { colors, breakpoints } from './theme';
+
+export default {
+	presets: [tailwindPresetMantine({
+		mantineColors: colors,
+		mantineBreakpoints: breakpoints
+	})],
+};
+```
+
+> Why separate the `colors` and `breakpoints` definition in a single file?
+>
+> Because if passing the whole `mantineTheme` object, the property [`mantineTheme.components`](https://mantine.dev/theming/theme-object/#components) might include (s)css modules, which could fail to resolve due to the absence of an (s)css loader when loading the Tailwind config file.
+>
+> If you have a better solution, please let me know in the [issue](https://github.com/songkeys/tailwind-preset-mantine/issues).
 
 ## Prevent style conflicts
 
@@ -73,6 +126,7 @@ Change your global.css to use CSS layers to prevent style conflicts:
 ```
 
 > What's `@layer`?
+>
 > Note that here we setup tailwind slightly different from [the official docs](https://arc.net/l/quote/eifghbsm). We use the [CSS `@layer` directive](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) to control the order of the css. This is because we want to make sure that the mantine styles doesn't get overridden by tailwind reset (tw_base). In this case, the order is `tw_base -> mantine -> tw_components -> tw_utilities`
 
 ### 2. postcss.config.js
@@ -85,16 +139,6 @@ module.exports = {
 	plugins: {
 		'postcss-import': {},
 		'postcss-preset-mantine': {},
-		'postcss-simple-vars': {
-			variables: {
-				'mantine-breakpoint-xs': '36em',
-				'mantine-breakpoint-sm': '48em',
-				'mantine-breakpoint-md': '62em',
-				'mantine-breakpoint-lg': '75em',
-				'mantine-breakpoint-xl': '88em',
-			},
-		},
-
 		// for tailwind
 +		autoprefixer: {},
 +		'tailwindcss/nesting': {},
