@@ -198,17 +198,17 @@ function generateColors(mantineColors) {
 
 	for (const color of Object.keys(mantineColors)) {
 		colors[color] = {
-			50: `var(--mantine-color-${color}-0)`,
-			100: `var(--mantine-color-${color}-1)`,
-			200: `var(--mantine-color-${color}-2)`,
-			300: `var(--mantine-color-${color}-3)`,
-			400: `var(--mantine-color-${color}-4)`,
-			500: `var(--mantine-color-${color}-5)`,
-			600: `var(--mantine-color-${color}-6)`,
-			700: `var(--mantine-color-${color}-7)`,
-			800: `var(--mantine-color-${color}-8)`,
-			900: `var(--mantine-color-${color}-9)`,
-			DEFAULT: `var(--mantine-color-${color}-filled)`,
+			50: `rgb(from var(--mantine-color-${color}-0) r g b / <alpha-value>)`,
+			100: `rgb(from var(--mantine-color-${color}-1) r g b / <alpha-value>)`,
+			200: `rgb(from var(--mantine-color-${color}-2) r g b / <alpha-value>)`,
+			300: `rgb(from var(--mantine-color-${color}-3) r g b / <alpha-value>)`,
+			400: `rgb(from var(--mantine-color-${color}-4) r g b / <alpha-value>)`,
+			500: `rgb(from var(--mantine-color-${color}-5) r g b / <alpha-value>)`,
+			600: `rgb(from var(--mantine-color-${color}-6) r g b / <alpha-value>)`,
+			700: `rgb(from var(--mantine-color-${color}-7) r g b / <alpha-value>)`,
+			800: `rgb(from var(--mantine-color-${color}-8) r g b / <alpha-value>)`,
+			900: `rgb(from var(--mantine-color-${color}-9) r g b / <alpha-value>)`,
+			DEFAULT: `rgb(from var(--mantine-color-${color}-filled) r g b / <alpha-value>)`,
 		};
 	}
 
@@ -218,17 +218,18 @@ function generateColors(mantineColors) {
 function generatePrimaryColors() {
 	const colors = {
 		primary: {
-			50: "var(--mantine-primary-color-0)",
-			100: "var(--mantine-primary-color-1)",
-			200: "var(--mantine-primary-color-2)",
-			300: "var(--mantine-primary-color-3)",
-			400: "var(--mantine-primary-color-4)",
-			500: "var(--mantine-primary-color-5)",
-			600: "var(--mantine-primary-color-6)",
-			700: "var(--mantine-primary-color-7)",
-			800: "var(--mantine-primary-color-8)",
-			900: "var(--mantine-primary-color-9)",
-			DEFAULT: "var(--mantine-primary-color-filled)",
+			50: "rgb(from var(--mantine-primary-color-0) r g b / <alpha-value>)",
+			100: "rgb(from var(--mantine-primary-color-1) r g b / <alpha-value>)",
+			200: "rgb(from var(--mantine-primary-color-2) r g b / <alpha-value>)",
+			300: "rgb(from var(--mantine-primary-color-3) r g b / <alpha-value>)",
+			400: "rgb(from var(--mantine-primary-color-4) r g b / <alpha-value>)",
+			500: "rgb(from var(--mantine-primary-color-5) r g b / <alpha-value>)",
+			600: "rgb(from var(--mantine-primary-color-6) r g b / <alpha-value>)",
+			700: "rgb(from var(--mantine-primary-color-7) r g b / <alpha-value>)",
+			800: "rgb(from var(--mantine-primary-color-8) r g b / <alpha-value>)",
+			900: "rgb(from var(--mantine-primary-color-9) r g b / <alpha-value>)",
+			DEFAULT:
+				"rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>)",
 		},
 	};
 
@@ -245,17 +246,20 @@ function generateVariantSpecificColors(mantineColors) {
 	const colors = {};
 
 	for (const color of Object.keys(mantineColors)) {
-		colors[`${color}-filled`] = `var(--mantine-color-${color}-filled)`;
+		colors[`${color}-filled`] =
+			`rgb(from var(--mantine-color-${color}-filled) r g b / <alpha-value>)`;
 		colors[`${color}-filled-hover`] =
-			`var(--mantine-color-${color}-filled-hover)`;
-		colors[`${color}-light`] = `var(--mantine-color-${color}-light)`;
+			`rgb(from var(--mantine-color-${color}-filled-hover) r g b / <alpha-value>)`;
+		colors[`${color}-light`] =
+			`rgb(from var(--mantine-color-${color}-light) r g b / <alpha-value>)`;
 		colors[`${color}-light-hover`] =
-			`var(--mantine-color-${color}-light-hover)`;
+			`rgb(from var(--mantine-color-${color}-light-hover) r g b / <alpha-value>)`;
 		colors[`${color}-light-color`] =
-			`var(--mantine-color-${color}-light-color)`;
-		colors[`${color}-outline`] = `var(--mantine-color-${color}-outline)`;
+			`rgb(from var(--mantine-color-${color}-light-color) r g b / <alpha-value>)`;
+		colors[`${color}-outline`] =
+			`rgb(from var(--mantine-color-${color}-outline) r g b / <alpha-value>)`;
 		colors[`${color}-outline-hover`] =
-			`var(--mantine-color-${color}-outline-hover)`;
+			`rgb(from var(--mantine-color-${color}-outline-hover) r g b / <alpha-value>)`;
 	}
 
 	return colors;
@@ -266,13 +270,20 @@ function generateVariantSpecificPrimaryColors() {
 	 * @type {NonNullable<TailwindConfig['theme']>['colors']}
 	 */
 	const colors = {
-		"primary-filled": "var(--mantine-primary-color-filled)",
-		"primary-filled-hover": "var(--mantine-primary-color-filled-hover)",
-		"primary-light": "var(--mantine-primary-color-light)",
-		"primary-light-hover": "var(--mantine-primary-color-light-hover)",
-		"primary-light-color": "var(--mantine-primary-color-light-color)",
-		"primary-outline": "var(--mantine-primary-color-outline)",
-		"primary-outline-hover": "var(--mantine-primary-color-outline-hover)",
+		"primary-filled":
+			"rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>)",
+		"primary-filled-hover":
+			"rgb(from var(--mantine-primary-color-filled-hover) r g b / <alpha-value>)",
+		"primary-light":
+			"rgb(from var(--mantine-primary-color-light) r g b / <alpha-value>)",
+		"primary-light-hover":
+			"rgb(from var(--mantine-primary-color-light-hover) r g b / <alpha-value>)",
+		"primary-light-color":
+			"rgb(from var(--mantine-primary-color-light-color) r g b / <alpha-value>)",
+		"primary-outline":
+			"rgb(from var(--mantine-primary-color-outline) r g b / <alpha-value>)",
+		"primary-outline-hover":
+			"rgb(from var(--mantine-primary-color-outline-hover) r g b / <alpha-value>)",
 	};
 
 	return colors;
@@ -283,13 +294,15 @@ function generateOtherTextColors() {
 	 * @type {NonNullable<TailwindConfig['theme']>['colors']}
 	 */
 	const colors = {
-		white: "var(--mantine-color-white)",
-		black: "var(--mantine-color-black)",
-		body: "var(--mantine-color-text)",
-		error: "var(--mantine-color-error)",
-		placeholder: "var(--mantine-color-placeholder)",
-		anchor: "var(--mantine-color-anchor)",
-		DEFAULT: "var(--mantine-color-default-color)",
+		white: "rgb(from var(--mantine-color-white) r g b / <alpha-value>)",
+		black: "rgb(from var(--mantine-color-black) r g b / <alpha-value>)",
+		body: "rgb(from var(--mantine-color-text) r g b / <alpha-value>)",
+		error: "rgb(from var(--mantine-color-error) r g b / <alpha-value>)",
+		placeholder:
+			"rgb(from var(--mantine-color-placeholder) r g b / <alpha-value>)",
+		anchor: "rgb(from var(--mantine-color-anchor) r g b / <alpha-value>)",
+		DEFAULT:
+			"rgb(from var(--mantine-color-default-color) r g b / <alpha-value>)",
 	};
 
 	return colors;
@@ -300,14 +313,15 @@ function generateOtherBackgroundColors() {
 	 * @type {NonNullable<TailwindConfig['theme']>['colors']}
 	 */
 	const colors = {
-		white: "var(--mantine-color-white)",
-		black: "var(--mantine-color-black)",
-		body: "var(--mantine-color-body)",
-		error: "var(--mantine-color-error)",
-		placeholder: "var(--mantine-color-placeholder)",
-		anchor: "var(--mantine-color-anchor)",
-		DEFAULT: "var(--mantine-color-default)",
-		hover: "var(--mantine-color-default-hover)",
+		white: "rgb(from var(--mantine-color-white) r g b / <alpha-value>)",
+		black: "rgb(from var(--mantine-color-black) r g b / <alpha-value>)",
+		body: "rgb(from var(--mantine-color-body) r g b / <alpha-value>)",
+		error: "rgb(from var(--mantine-color-error) r g b / <alpha-value>)",
+		placeholder:
+			"rgb(from var(--mantine-color-placeholder) r g b / <alpha-value>)",
+		anchor: "rgb(from var(--mantine-color-anchor) r g b / <alpha-value>)",
+		DEFAULT: "rgb(from var(--mantine-color-default) r g b / <alpha-value>)",
+		hover: "rgb(from var(--mantine-color-default-hover) r g b / <alpha-value>)",
 	};
 
 	return colors;
@@ -318,7 +332,8 @@ function generateOtherBorderColors() {
 	 * @type {NonNullable<TailwindConfig['theme']>['colors']}
 	 */
 	const colors = {
-		DEFAULT: "var(--mantine-color-default-border)",
+		DEFAULT:
+			"rgb(from var(--mantine-color-default-border) r g b / <alpha-value>)",
 	};
 
 	return colors;
