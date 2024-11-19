@@ -249,17 +249,16 @@ function generateVariantSpecificColors(mantineColors) {
 		colors[`${color}-filled`] =
 			`rgb(from var(--mantine-color-${color}-filled) r g b / <alpha-value>)`;
 		colors[`${color}-filled-hover`] =
-			`rgb(from var(--mantine-color-${color}-filled-hover) r g b / <alpha-value>)`;
-		colors[`${color}-light`] =
-			`rgb(from var(--mantine-color-${color}-light) r g b / <alpha-value>)`;
+			`var(--mantine-color-${color}-filled-hover)`;
+		colors[`${color}-light`] = `var(--mantine-color-${color}-light)`;
 		colors[`${color}-light-hover`] =
-			`rgb(from var(--mantine-color-${color}-light-hover) r g b / <alpha-value>)`;
+			`var(--mantine-color-${color}-light-hover)`;
 		colors[`${color}-light-color`] =
 			`rgb(from var(--mantine-color-${color}-light-color) r g b / <alpha-value>)`;
 		colors[`${color}-outline`] =
 			`rgb(from var(--mantine-color-${color}-outline) r g b / <alpha-value>)`;
 		colors[`${color}-outline-hover`] =
-			`rgb(from var(--mantine-color-${color}-outline-hover) r g b / <alpha-value>)`;
+			`var(--mantine-color-${color}-outline-hover)`;
 	}
 
 	return colors;
@@ -272,18 +271,14 @@ function generateVariantSpecificPrimaryColors() {
 	const colors = {
 		"primary-filled":
 			"rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>)",
-		"primary-filled-hover":
-			"rgb(from var(--mantine-primary-color-filled-hover) r g b / <alpha-value>)",
-		"primary-light":
-			"rgb(from var(--mantine-primary-color-light) r g b / <alpha-value>)",
-		"primary-light-hover":
-			"rgb(from var(--mantine-primary-color-light-hover) r g b / <alpha-value>)",
+		"primary-filled-hover": "var(--mantine-primary-color-filled-hover)",
+		"primary-light": "var(--mantine-primary-color-light)",
+		"primary-light-hover": "var(--mantine-primary-color-light-hover)",
 		"primary-light-color":
 			"rgb(from var(--mantine-primary-color-light-color) r g b / <alpha-value>)",
 		"primary-outline":
 			"rgb(from var(--mantine-primary-color-outline) r g b / <alpha-value>)",
-		"primary-outline-hover":
-			"rgb(from var(--mantine-primary-color-outline-hover) r g b / <alpha-value>)",
+		"primary-outline-hover": "var(--mantine-primary-color-outline-hover)",
 	};
 
 	return colors;
