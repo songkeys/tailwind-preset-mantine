@@ -51,6 +51,18 @@ module.exports = function tailwindPresetMantine({
 		});
 
 	/**
+	 * @type {NonNullable<TailwindConfig['theme']>['screens']}
+	 */
+	const screens = Object.entries(mergedMantineBreakpoints).reduce(
+		(acc, [key, value]) => {
+			acc[key] = value;
+			acc[`max-${key}`] = { raw: `not all and (min-width: ${value})` };
+			return acc;
+		},
+		{},
+	);
+
+	/**
 	 * @type {TailwindConfig}
 	 */
 	const preset = {
@@ -58,13 +70,7 @@ module.exports = function tailwindPresetMantine({
 		darkMode: ["selector", '[data-mantine-color-scheme="dark"]'],
 		theme: {
 			extend: {
-				screens: {
-					xs: mergedMantineBreakpoints.xs,
-					sm: mergedMantineBreakpoints.sm,
-					md: mergedMantineBreakpoints.md,
-					lg: mergedMantineBreakpoints.lg,
-					xl: mergedMantineBreakpoints.xl,
-				},
+				screens,
 				fontFamily: {
 					DEFAULT: ["var(--mantine-font-family)"],
 					sans: ["var(--mantine-font-family)"],
