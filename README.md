@@ -96,13 +96,13 @@ npx tailwind-preset-mantine theme.js -o theme.css
 ```
 
 Options:
-- `-o, --output`: Output file name (default: "theme.css")
-- `-w, --watch`: Watch for changes (coming soon)
+- `-o, --output`: Output file name/location (default: "theme.css")
 
 3. Import the generated CSS file in your application:
 
 ```css
-@import "./theme.css";
+@import "tailwind-preset-mantine";
+@import "./theme.css"; /* <-- add the generated theme */
 ```
 
 ## Minimal template

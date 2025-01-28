@@ -15,12 +15,6 @@ const options = {
 		default: "theme.css",
 		description: "Output file name",
 	},
-	watch: {
-		type: "boolean",
-		short: "w",
-		default: false,
-		description: "Watch for changes",
-	},
 };
 
 // Parse command line arguments
@@ -33,11 +27,6 @@ if (positionals.length === 0) {
 
 const inputFile = positionals[0];
 const outputFile = values.output;
-
-if (values.watch) {
-	console.log(`Watching ${inputFile} for changes...`);
-	// TODO: Implement file watching
-}
 
 try {
 	// Read the input theme file
