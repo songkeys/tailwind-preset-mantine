@@ -36,7 +36,7 @@ To use the preset in your Tailwind CSS configuration, add it to the css file:
 Note that you don't have to import tailwind or mantine styles, this preset will handle that for you. If you want to import it yourself, you can use the `./theme.css` file:
 
 ```css
-@layer theme, base, components, utilities;
+@layer theme, base, mantine, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);

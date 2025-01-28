@@ -3,180 +3,11 @@
 @custom-variant dark (&:where([data-mantine-color-scheme="dark"], [data-mantine-color-scheme="dark"] *));
 
 @theme {
+  
   /* font */
   --font-sans: var(--mantine-font-family);
   --font-mono: var(--mantine-font-family-monospace);
   --font-headings: var(--mantine-font-family-headings);
-
-  /* colors - all */
-  
-  --color-dark-50: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-0) r g b / <alpha-value>);
-  --color-dark-100: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-1) r g b / <alpha-value>);
-  --color-dark-200: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-2) r g b / <alpha-value>);
-  --color-dark-300: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-3) r g b / <alpha-value>);
-  --color-dark-400: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-4) r g b / <alpha-value>);
-  --color-dark-500: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-5) r g b / <alpha-value>);
-  --color-dark-600: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-6) r g b / <alpha-value>);
-  --color-dark-700: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-7) r g b / <alpha-value>);
-  --color-dark-800: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-8) r g b / <alpha-value>);
-  --color-dark-900: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-9) r g b / <alpha-value>);
-  --color-dark: rgb(from var(--mantine-color-#C9C9C9,#b8b8b8,#828282,#696969,#424242,#3b3b3b,#2e2e2e,#242424,#1f1f1f,#141414-filled) r g b / <alpha-value>);
-
-  --color-gray-50: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-0) r g b / <alpha-value>);
-  --color-gray-100: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-1) r g b / <alpha-value>);
-  --color-gray-200: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-2) r g b / <alpha-value>);
-  --color-gray-300: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-3) r g b / <alpha-value>);
-  --color-gray-400: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-4) r g b / <alpha-value>);
-  --color-gray-500: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-5) r g b / <alpha-value>);
-  --color-gray-600: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-6) r g b / <alpha-value>);
-  --color-gray-700: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-7) r g b / <alpha-value>);
-  --color-gray-800: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-8) r g b / <alpha-value>);
-  --color-gray-900: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-9) r g b / <alpha-value>);
-  --color-gray: rgb(from var(--mantine-color-#f8f9fa,#f1f3f5,#e9ecef,#dee2e6,#ced4da,#adb5bd,#868e96,#495057,#343a40,#212529-filled) r g b / <alpha-value>);
-
-  --color-red-50: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-0) r g b / <alpha-value>);
-  --color-red-100: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-1) r g b / <alpha-value>);
-  --color-red-200: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-2) r g b / <alpha-value>);
-  --color-red-300: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-3) r g b / <alpha-value>);
-  --color-red-400: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-4) r g b / <alpha-value>);
-  --color-red-500: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-5) r g b / <alpha-value>);
-  --color-red-600: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-6) r g b / <alpha-value>);
-  --color-red-700: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-7) r g b / <alpha-value>);
-  --color-red-800: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-8) r g b / <alpha-value>);
-  --color-red-900: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-9) r g b / <alpha-value>);
-  --color-red: rgb(from var(--mantine-color-#fff5f5,#ffe3e3,#ffc9c9,#ffa8a8,#ff8787,#ff6b6b,#fa5252,#f03e3e,#e03131,#c92a2a-filled) r g b / <alpha-value>);
-
-  --color-pink-50: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-0) r g b / <alpha-value>);
-  --color-pink-100: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-1) r g b / <alpha-value>);
-  --color-pink-200: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-2) r g b / <alpha-value>);
-  --color-pink-300: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-3) r g b / <alpha-value>);
-  --color-pink-400: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-4) r g b / <alpha-value>);
-  --color-pink-500: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-5) r g b / <alpha-value>);
-  --color-pink-600: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-6) r g b / <alpha-value>);
-  --color-pink-700: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-7) r g b / <alpha-value>);
-  --color-pink-800: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-8) r g b / <alpha-value>);
-  --color-pink-900: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-9) r g b / <alpha-value>);
-  --color-pink: rgb(from var(--mantine-color-#fff0f6,#ffdeeb,#fcc2d7,#faa2c1,#f783ac,#f06595,#e64980,#d6336c,#c2255c,#a61e4d-filled) r g b / <alpha-value>);
-
-  --color-grape-50: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-0) r g b / <alpha-value>);
-  --color-grape-100: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-1) r g b / <alpha-value>);
-  --color-grape-200: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-2) r g b / <alpha-value>);
-  --color-grape-300: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-3) r g b / <alpha-value>);
-  --color-grape-400: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-4) r g b / <alpha-value>);
-  --color-grape-500: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-5) r g b / <alpha-value>);
-  --color-grape-600: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-6) r g b / <alpha-value>);
-  --color-grape-700: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-7) r g b / <alpha-value>);
-  --color-grape-800: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-8) r g b / <alpha-value>);
-  --color-grape-900: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-9) r g b / <alpha-value>);
-  --color-grape: rgb(from var(--mantine-color-#f8f0fc,#f3d9fa,#eebefa,#e599f7,#da77f2,#cc5de8,#be4bdb,#ae3ec9,#9c36b5,#862e9c-filled) r g b / <alpha-value>);
-
-  --color-violet-50: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-0) r g b / <alpha-value>);
-  --color-violet-100: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-1) r g b / <alpha-value>);
-  --color-violet-200: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-2) r g b / <alpha-value>);
-  --color-violet-300: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-3) r g b / <alpha-value>);
-  --color-violet-400: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-4) r g b / <alpha-value>);
-  --color-violet-500: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-5) r g b / <alpha-value>);
-  --color-violet-600: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-6) r g b / <alpha-value>);
-  --color-violet-700: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-7) r g b / <alpha-value>);
-  --color-violet-800: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-8) r g b / <alpha-value>);
-  --color-violet-900: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-9) r g b / <alpha-value>);
-  --color-violet: rgb(from var(--mantine-color-#f3f0ff,#e5dbff,#d0bfff,#b197fc,#9775fa,#845ef7,#7950f2,#7048e8,#6741d9,#5f3dc4-filled) r g b / <alpha-value>);
-
-  --color-indigo-50: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-0) r g b / <alpha-value>);
-  --color-indigo-100: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-1) r g b / <alpha-value>);
-  --color-indigo-200: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-2) r g b / <alpha-value>);
-  --color-indigo-300: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-3) r g b / <alpha-value>);
-  --color-indigo-400: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-4) r g b / <alpha-value>);
-  --color-indigo-500: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-5) r g b / <alpha-value>);
-  --color-indigo-600: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-6) r g b / <alpha-value>);
-  --color-indigo-700: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-7) r g b / <alpha-value>);
-  --color-indigo-800: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-8) r g b / <alpha-value>);
-  --color-indigo-900: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-9) r g b / <alpha-value>);
-  --color-indigo: rgb(from var(--mantine-color-#edf2ff,#dbe4ff,#bac8ff,#91a7ff,#748ffc,#5c7cfa,#4c6ef5,#4263eb,#3b5bdb,#364fc7-filled) r g b / <alpha-value>);
-
-  --color-blue-50: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-0) r g b / <alpha-value>);
-  --color-blue-100: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-1) r g b / <alpha-value>);
-  --color-blue-200: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-2) r g b / <alpha-value>);
-  --color-blue-300: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-3) r g b / <alpha-value>);
-  --color-blue-400: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-4) r g b / <alpha-value>);
-  --color-blue-500: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-5) r g b / <alpha-value>);
-  --color-blue-600: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-6) r g b / <alpha-value>);
-  --color-blue-700: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-7) r g b / <alpha-value>);
-  --color-blue-800: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-8) r g b / <alpha-value>);
-  --color-blue-900: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-9) r g b / <alpha-value>);
-  --color-blue: rgb(from var(--mantine-color-#e7f5ff,#d0ebff,#a5d8ff,#74c0fc,#4dabf7,#339af0,#228be6,#1c7ed6,#1971c2,#1864ab-filled) r g b / <alpha-value>);
-
-  --color-cyan-50: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-0) r g b / <alpha-value>);
-  --color-cyan-100: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-1) r g b / <alpha-value>);
-  --color-cyan-200: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-2) r g b / <alpha-value>);
-  --color-cyan-300: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-3) r g b / <alpha-value>);
-  --color-cyan-400: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-4) r g b / <alpha-value>);
-  --color-cyan-500: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-5) r g b / <alpha-value>);
-  --color-cyan-600: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-6) r g b / <alpha-value>);
-  --color-cyan-700: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-7) r g b / <alpha-value>);
-  --color-cyan-800: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-8) r g b / <alpha-value>);
-  --color-cyan-900: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-9) r g b / <alpha-value>);
-  --color-cyan: rgb(from var(--mantine-color-#e3fafc,#c5f6fa,#99e9f2,#66d9e8,#3bc9db,#22b8cf,#15aabf,#1098ad,#0c8599,#0b7285-filled) r g b / <alpha-value>);
-
-  --color-teal-50: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-0) r g b / <alpha-value>);
-  --color-teal-100: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-1) r g b / <alpha-value>);
-  --color-teal-200: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-2) r g b / <alpha-value>);
-  --color-teal-300: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-3) r g b / <alpha-value>);
-  --color-teal-400: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-4) r g b / <alpha-value>);
-  --color-teal-500: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-5) r g b / <alpha-value>);
-  --color-teal-600: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-6) r g b / <alpha-value>);
-  --color-teal-700: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-7) r g b / <alpha-value>);
-  --color-teal-800: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-8) r g b / <alpha-value>);
-  --color-teal-900: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-9) r g b / <alpha-value>);
-  --color-teal: rgb(from var(--mantine-color-#e6fcf5,#c3fae8,#96f2d7,#63e6be,#38d9a9,#20c997,#12b886,#0ca678,#099268,#087f5b-filled) r g b / <alpha-value>);
-
-  --color-green-50: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-0) r g b / <alpha-value>);
-  --color-green-100: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-1) r g b / <alpha-value>);
-  --color-green-200: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-2) r g b / <alpha-value>);
-  --color-green-300: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-3) r g b / <alpha-value>);
-  --color-green-400: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-4) r g b / <alpha-value>);
-  --color-green-500: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-5) r g b / <alpha-value>);
-  --color-green-600: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-6) r g b / <alpha-value>);
-  --color-green-700: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-7) r g b / <alpha-value>);
-  --color-green-800: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-8) r g b / <alpha-value>);
-  --color-green-900: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-9) r g b / <alpha-value>);
-  --color-green: rgb(from var(--mantine-color-#ebfbee,#d3f9d8,#b2f2bb,#8ce99a,#69db7c,#51cf66,#40c057,#37b24d,#2f9e44,#2b8a3e-filled) r g b / <alpha-value>);
-
-  --color-lime-50: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-0) r g b / <alpha-value>);
-  --color-lime-100: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-1) r g b / <alpha-value>);
-  --color-lime-200: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-2) r g b / <alpha-value>);
-  --color-lime-300: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-3) r g b / <alpha-value>);
-  --color-lime-400: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-4) r g b / <alpha-value>);
-  --color-lime-500: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-5) r g b / <alpha-value>);
-  --color-lime-600: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-6) r g b / <alpha-value>);
-  --color-lime-700: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-7) r g b / <alpha-value>);
-  --color-lime-800: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-8) r g b / <alpha-value>);
-  --color-lime-900: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-9) r g b / <alpha-value>);
-  --color-lime: rgb(from var(--mantine-color-#f4fce3,#e9fac8,#d8f5a2,#c0eb75,#a9e34b,#94d82d,#82c91e,#74b816,#66a80f,#5c940d-filled) r g b / <alpha-value>);
-
-  --color-yellow-50: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-0) r g b / <alpha-value>);
-  --color-yellow-100: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-1) r g b / <alpha-value>);
-  --color-yellow-200: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-2) r g b / <alpha-value>);
-  --color-yellow-300: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-3) r g b / <alpha-value>);
-  --color-yellow-400: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-4) r g b / <alpha-value>);
-  --color-yellow-500: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-5) r g b / <alpha-value>);
-  --color-yellow-600: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-6) r g b / <alpha-value>);
-  --color-yellow-700: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-7) r g b / <alpha-value>);
-  --color-yellow-800: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-8) r g b / <alpha-value>);
-  --color-yellow-900: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-9) r g b / <alpha-value>);
-  --color-yellow: rgb(from var(--mantine-color-#fff9db,#fff3bf,#ffec99,#ffe066,#ffd43b,#fcc419,#fab005,#f59f00,#f08c00,#e67700-filled) r g b / <alpha-value>);
-
-  --color-orange-50: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-0) r g b / <alpha-value>);
-  --color-orange-100: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-1) r g b / <alpha-value>);
-  --color-orange-200: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-2) r g b / <alpha-value>);
-  --color-orange-300: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-3) r g b / <alpha-value>);
-  --color-orange-400: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-4) r g b / <alpha-value>);
-  --color-orange-500: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-5) r g b / <alpha-value>);
-  --color-orange-600: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-6) r g b / <alpha-value>);
-  --color-orange-700: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-7) r g b / <alpha-value>);
-  --color-orange-800: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-8) r g b / <alpha-value>);
-  --color-orange-900: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-9) r g b / <alpha-value>);
-  --color-orange: rgb(from var(--mantine-color-#fff4e6,#ffe8cc,#ffd8a8,#ffc078,#ffa94d,#ff922b,#fd7e14,#f76707,#e8590c,#d9480f-filled) r g b / <alpha-value>);
 
   /* colors - primary */
   --color-primary-50: rgb(from var(--mantine-primary-color-0) r g b / <alpha-value>);
@@ -190,6 +21,266 @@
   --color-primary-800: rgb(from var(--mantine-primary-color-8) r g b / <alpha-value>);
   --color-primary-900: rgb(from var(--mantine-primary-color-9) r g b / <alpha-value>);
   --color-primary: rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>);
+
+  /* colors - variant specific primary */
+  --color-primary-filled: rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>);
+  --color-primary-filled-hover: var(--mantine-primary-color-filled-hover);
+  --color-primary-light: var(--mantine-primary-color-light);
+  --color-primary-light-hover: var(--mantine-primary-color-light-hover);
+  --color-primary-light-color: rgb(from var(--mantine-primary-color-light-color) r g b / <alpha-value>);
+  --color-primary-outline: rgb(from var(--mantine-primary-color-outline) r g b / <alpha-value>);
+  --color-primary-outline-hover: var(--mantine-primary-color-outline-hover);
+
+  /* colors - others */
+  --color-white: rgb(from var(--mantine-color-white) r g b / <alpha-value>);
+  --color-black: rgb(from var(--mantine-color-black) r g b / <alpha-value>);
+  --color-body: rgb(from var(--mantine-color-text) r g b / <alpha-value>);
+  --color-error: rgb(from var(--mantine-color-error) r g b / <alpha-value>);
+  --color-placeholder: rgb(from var(--mantine-color-placeholder) r g b / <alpha-value>);
+  --color-anchor: rgb(from var(--mantine-color-anchor) r g b / <alpha-value>);
+  --color-default: rgb(from var(--mantine-color-default-color) r g b / <alpha-value>);
+
+  /* spacing */
+  --spacing-xs: var(--mantine-spacing-xs);
+  --spacing-sm: var(--mantine-spacing-sm);
+  --spacing-md: var(--mantine-spacing-md);
+  --spacing-lg: var(--mantine-spacing-lg);
+  --spacing-xl: var(--mantine-spacing-xl);
+  --spacing: var(--mantine-spacing-md);
+
+  /* container */
+  /* TODO: */
+
+  /* font size */
+  --text-xs: var(--mantine-font-size-xs);
+  --text-sm: var(--mantine-font-size-sm);
+  --text-md: var(--mantine-font-size-md);
+  --text-lg: var(--mantine-font-size-lg);
+  --text-xl: var(--mantine-font-size-xl);
+  --text-h1: var(--mantine-h1-font-size);
+  --text-h2: var(--mantine-h2-font-size);
+  --text-h3: var(--mantine-h3-font-size);
+  --text-h4: var(--mantine-h4-font-size);
+  --text-h5: var(--mantine-h5-font-size);
+  --text-h6: var(--mantine-h6-font-size);
+  --text-base: var(--mantine-font-size-md);
+
+  /* line height */
+  --text-xs--line-height: var(--mantine-line-height-xs);
+  --text-sm--line-height: var(--mantine-line-height-sm);
+  --text-md--line-height: var(--mantine-line-height-md);
+  --text-lg--line-height: var(--mantine-line-height-lg);
+  --text-xl--line-height: var(--mantine-line-height-xl);
+  --text-h1--line-height: var(--mantine-h1-line-height);
+  --text-h2--line-height: var(--mantine-h2-line-height);
+  --text-h3--line-height: var(--mantine-h3-line-height);
+  --text-h4--line-height: var(--mantine-h4-line-height);
+  --text-h5--line-height: var(--mantine-h5-line-height);
+  --text-h6--line-height: var(--mantine-h6-line-height);
+  --text-base--line-height: var(--mantine-line-height-md);
+  --text-heading--line-height: var(--mantine-heading-line-height);
+  --text-base--line-height: var(--mantine-line-height);
+
+  /* font weight */
+  --font-weight-h1: var(--mantine-h1-font-weight);
+  --font-weight-h2: var(--mantine-h2-font-weight);
+  --font-weight-h3: var(--mantine-h3-font-weight);
+  --font-weight-h4: var(--mantine-h4-font-weight);
+  --font-weight-h5: var(--mantine-h5-font-weight);
+  --font-weight-h6: var(--mantine-h6-font-weight);
+
+  /* border radius */
+  --radius-xs: var(--mantine-radius-xs);
+  --radius-sm: var(--mantine-radius-sm);
+  --radius-md: var(--mantine-radius-md);
+  --radius-lg: var(--mantine-radius-lg);
+  --radius-xl: var(--mantine-radius-xl);
+  --radius: var(--mantine-radius-default);
+
+  /* shadow */
+  --shadow-xs: var(--mantine-shadow-xs);
+  --shadow-sm: var(--mantine-shadow-sm);
+  --shadow-md: var(--mantine-shadow-md);
+  --shadow-lg: var(--mantine-shadow-lg);
+  --shadow-xl: var(--mantine-shadow-xl);
+  --shadow: var(--mantine-shadow-xs);
+
+  /* z-index */
+  --z-index-app: var(--mantine-z-index-app);
+  --z-index-modal: var(--mantine-z-index-modal);
+  --z-index-popover: var(--mantine-z-index-popover);
+  --z-index-overlay: var(--mantine-z-index-overlay);
+  --z-index-max: var(--mantine-z-index-max);
+
+  /* colors - all */
+  
+  --color-dark-50: rgb(from var(--mantine-color-dark-0) r g b / <alpha-value>);
+  --color-dark-100: rgb(from var(--mantine-color-dark-1) r g b / <alpha-value>);
+  --color-dark-200: rgb(from var(--mantine-color-dark-2) r g b / <alpha-value>);
+  --color-dark-300: rgb(from var(--mantine-color-dark-3) r g b / <alpha-value>);
+  --color-dark-400: rgb(from var(--mantine-color-dark-4) r g b / <alpha-value>);
+  --color-dark-500: rgb(from var(--mantine-color-dark-5) r g b / <alpha-value>);
+  --color-dark-600: rgb(from var(--mantine-color-dark-6) r g b / <alpha-value>);
+  --color-dark-700: rgb(from var(--mantine-color-dark-7) r g b / <alpha-value>);
+  --color-dark-800: rgb(from var(--mantine-color-dark-8) r g b / <alpha-value>);
+  --color-dark-900: rgb(from var(--mantine-color-dark-9) r g b / <alpha-value>);
+  --color-dark: rgb(from var(--mantine-color-dark-filled) r g b / <alpha-value>);
+
+  --color-gray-50: rgb(from var(--mantine-color-gray-0) r g b / <alpha-value>);
+  --color-gray-100: rgb(from var(--mantine-color-gray-1) r g b / <alpha-value>);
+  --color-gray-200: rgb(from var(--mantine-color-gray-2) r g b / <alpha-value>);
+  --color-gray-300: rgb(from var(--mantine-color-gray-3) r g b / <alpha-value>);
+  --color-gray-400: rgb(from var(--mantine-color-gray-4) r g b / <alpha-value>);
+  --color-gray-500: rgb(from var(--mantine-color-gray-5) r g b / <alpha-value>);
+  --color-gray-600: rgb(from var(--mantine-color-gray-6) r g b / <alpha-value>);
+  --color-gray-700: rgb(from var(--mantine-color-gray-7) r g b / <alpha-value>);
+  --color-gray-800: rgb(from var(--mantine-color-gray-8) r g b / <alpha-value>);
+  --color-gray-900: rgb(from var(--mantine-color-gray-9) r g b / <alpha-value>);
+  --color-gray: rgb(from var(--mantine-color-gray-filled) r g b / <alpha-value>);
+
+  --color-red-50: rgb(from var(--mantine-color-red-0) r g b / <alpha-value>);
+  --color-red-100: rgb(from var(--mantine-color-red-1) r g b / <alpha-value>);
+  --color-red-200: rgb(from var(--mantine-color-red-2) r g b / <alpha-value>);
+  --color-red-300: rgb(from var(--mantine-color-red-3) r g b / <alpha-value>);
+  --color-red-400: rgb(from var(--mantine-color-red-4) r g b / <alpha-value>);
+  --color-red-500: rgb(from var(--mantine-color-red-5) r g b / <alpha-value>);
+  --color-red-600: rgb(from var(--mantine-color-red-6) r g b / <alpha-value>);
+  --color-red-700: rgb(from var(--mantine-color-red-7) r g b / <alpha-value>);
+  --color-red-800: rgb(from var(--mantine-color-red-8) r g b / <alpha-value>);
+  --color-red-900: rgb(from var(--mantine-color-red-9) r g b / <alpha-value>);
+  --color-red: rgb(from var(--mantine-color-red-filled) r g b / <alpha-value>);
+
+  --color-pink-50: rgb(from var(--mantine-color-pink-0) r g b / <alpha-value>);
+  --color-pink-100: rgb(from var(--mantine-color-pink-1) r g b / <alpha-value>);
+  --color-pink-200: rgb(from var(--mantine-color-pink-2) r g b / <alpha-value>);
+  --color-pink-300: rgb(from var(--mantine-color-pink-3) r g b / <alpha-value>);
+  --color-pink-400: rgb(from var(--mantine-color-pink-4) r g b / <alpha-value>);
+  --color-pink-500: rgb(from var(--mantine-color-pink-5) r g b / <alpha-value>);
+  --color-pink-600: rgb(from var(--mantine-color-pink-6) r g b / <alpha-value>);
+  --color-pink-700: rgb(from var(--mantine-color-pink-7) r g b / <alpha-value>);
+  --color-pink-800: rgb(from var(--mantine-color-pink-8) r g b / <alpha-value>);
+  --color-pink-900: rgb(from var(--mantine-color-pink-9) r g b / <alpha-value>);
+  --color-pink: rgb(from var(--mantine-color-pink-filled) r g b / <alpha-value>);
+
+  --color-grape-50: rgb(from var(--mantine-color-grape-0) r g b / <alpha-value>);
+  --color-grape-100: rgb(from var(--mantine-color-grape-1) r g b / <alpha-value>);
+  --color-grape-200: rgb(from var(--mantine-color-grape-2) r g b / <alpha-value>);
+  --color-grape-300: rgb(from var(--mantine-color-grape-3) r g b / <alpha-value>);
+  --color-grape-400: rgb(from var(--mantine-color-grape-4) r g b / <alpha-value>);
+  --color-grape-500: rgb(from var(--mantine-color-grape-5) r g b / <alpha-value>);
+  --color-grape-600: rgb(from var(--mantine-color-grape-6) r g b / <alpha-value>);
+  --color-grape-700: rgb(from var(--mantine-color-grape-7) r g b / <alpha-value>);
+  --color-grape-800: rgb(from var(--mantine-color-grape-8) r g b / <alpha-value>);
+  --color-grape-900: rgb(from var(--mantine-color-grape-9) r g b / <alpha-value>);
+  --color-grape: rgb(from var(--mantine-color-grape-filled) r g b / <alpha-value>);
+
+  --color-violet-50: rgb(from var(--mantine-color-violet-0) r g b / <alpha-value>);
+  --color-violet-100: rgb(from var(--mantine-color-violet-1) r g b / <alpha-value>);
+  --color-violet-200: rgb(from var(--mantine-color-violet-2) r g b / <alpha-value>);
+  --color-violet-300: rgb(from var(--mantine-color-violet-3) r g b / <alpha-value>);
+  --color-violet-400: rgb(from var(--mantine-color-violet-4) r g b / <alpha-value>);
+  --color-violet-500: rgb(from var(--mantine-color-violet-5) r g b / <alpha-value>);
+  --color-violet-600: rgb(from var(--mantine-color-violet-6) r g b / <alpha-value>);
+  --color-violet-700: rgb(from var(--mantine-color-violet-7) r g b / <alpha-value>);
+  --color-violet-800: rgb(from var(--mantine-color-violet-8) r g b / <alpha-value>);
+  --color-violet-900: rgb(from var(--mantine-color-violet-9) r g b / <alpha-value>);
+  --color-violet: rgb(from var(--mantine-color-violet-filled) r g b / <alpha-value>);
+
+  --color-indigo-50: rgb(from var(--mantine-color-indigo-0) r g b / <alpha-value>);
+  --color-indigo-100: rgb(from var(--mantine-color-indigo-1) r g b / <alpha-value>);
+  --color-indigo-200: rgb(from var(--mantine-color-indigo-2) r g b / <alpha-value>);
+  --color-indigo-300: rgb(from var(--mantine-color-indigo-3) r g b / <alpha-value>);
+  --color-indigo-400: rgb(from var(--mantine-color-indigo-4) r g b / <alpha-value>);
+  --color-indigo-500: rgb(from var(--mantine-color-indigo-5) r g b / <alpha-value>);
+  --color-indigo-600: rgb(from var(--mantine-color-indigo-6) r g b / <alpha-value>);
+  --color-indigo-700: rgb(from var(--mantine-color-indigo-7) r g b / <alpha-value>);
+  --color-indigo-800: rgb(from var(--mantine-color-indigo-8) r g b / <alpha-value>);
+  --color-indigo-900: rgb(from var(--mantine-color-indigo-9) r g b / <alpha-value>);
+  --color-indigo: rgb(from var(--mantine-color-indigo-filled) r g b / <alpha-value>);
+
+  --color-blue-50: rgb(from var(--mantine-color-blue-0) r g b / <alpha-value>);
+  --color-blue-100: rgb(from var(--mantine-color-blue-1) r g b / <alpha-value>);
+  --color-blue-200: rgb(from var(--mantine-color-blue-2) r g b / <alpha-value>);
+  --color-blue-300: rgb(from var(--mantine-color-blue-3) r g b / <alpha-value>);
+  --color-blue-400: rgb(from var(--mantine-color-blue-4) r g b / <alpha-value>);
+  --color-blue-500: rgb(from var(--mantine-color-blue-5) r g b / <alpha-value>);
+  --color-blue-600: rgb(from var(--mantine-color-blue-6) r g b / <alpha-value>);
+  --color-blue-700: rgb(from var(--mantine-color-blue-7) r g b / <alpha-value>);
+  --color-blue-800: rgb(from var(--mantine-color-blue-8) r g b / <alpha-value>);
+  --color-blue-900: rgb(from var(--mantine-color-blue-9) r g b / <alpha-value>);
+  --color-blue: rgb(from var(--mantine-color-blue-filled) r g b / <alpha-value>);
+
+  --color-cyan-50: rgb(from var(--mantine-color-cyan-0) r g b / <alpha-value>);
+  --color-cyan-100: rgb(from var(--mantine-color-cyan-1) r g b / <alpha-value>);
+  --color-cyan-200: rgb(from var(--mantine-color-cyan-2) r g b / <alpha-value>);
+  --color-cyan-300: rgb(from var(--mantine-color-cyan-3) r g b / <alpha-value>);
+  --color-cyan-400: rgb(from var(--mantine-color-cyan-4) r g b / <alpha-value>);
+  --color-cyan-500: rgb(from var(--mantine-color-cyan-5) r g b / <alpha-value>);
+  --color-cyan-600: rgb(from var(--mantine-color-cyan-6) r g b / <alpha-value>);
+  --color-cyan-700: rgb(from var(--mantine-color-cyan-7) r g b / <alpha-value>);
+  --color-cyan-800: rgb(from var(--mantine-color-cyan-8) r g b / <alpha-value>);
+  --color-cyan-900: rgb(from var(--mantine-color-cyan-9) r g b / <alpha-value>);
+  --color-cyan: rgb(from var(--mantine-color-cyan-filled) r g b / <alpha-value>);
+
+  --color-teal-50: rgb(from var(--mantine-color-teal-0) r g b / <alpha-value>);
+  --color-teal-100: rgb(from var(--mantine-color-teal-1) r g b / <alpha-value>);
+  --color-teal-200: rgb(from var(--mantine-color-teal-2) r g b / <alpha-value>);
+  --color-teal-300: rgb(from var(--mantine-color-teal-3) r g b / <alpha-value>);
+  --color-teal-400: rgb(from var(--mantine-color-teal-4) r g b / <alpha-value>);
+  --color-teal-500: rgb(from var(--mantine-color-teal-5) r g b / <alpha-value>);
+  --color-teal-600: rgb(from var(--mantine-color-teal-6) r g b / <alpha-value>);
+  --color-teal-700: rgb(from var(--mantine-color-teal-7) r g b / <alpha-value>);
+  --color-teal-800: rgb(from var(--mantine-color-teal-8) r g b / <alpha-value>);
+  --color-teal-900: rgb(from var(--mantine-color-teal-9) r g b / <alpha-value>);
+  --color-teal: rgb(from var(--mantine-color-teal-filled) r g b / <alpha-value>);
+
+  --color-green-50: rgb(from var(--mantine-color-green-0) r g b / <alpha-value>);
+  --color-green-100: rgb(from var(--mantine-color-green-1) r g b / <alpha-value>);
+  --color-green-200: rgb(from var(--mantine-color-green-2) r g b / <alpha-value>);
+  --color-green-300: rgb(from var(--mantine-color-green-3) r g b / <alpha-value>);
+  --color-green-400: rgb(from var(--mantine-color-green-4) r g b / <alpha-value>);
+  --color-green-500: rgb(from var(--mantine-color-green-5) r g b / <alpha-value>);
+  --color-green-600: rgb(from var(--mantine-color-green-6) r g b / <alpha-value>);
+  --color-green-700: rgb(from var(--mantine-color-green-7) r g b / <alpha-value>);
+  --color-green-800: rgb(from var(--mantine-color-green-8) r g b / <alpha-value>);
+  --color-green-900: rgb(from var(--mantine-color-green-9) r g b / <alpha-value>);
+  --color-green: rgb(from var(--mantine-color-green-filled) r g b / <alpha-value>);
+
+  --color-lime-50: rgb(from var(--mantine-color-lime-0) r g b / <alpha-value>);
+  --color-lime-100: rgb(from var(--mantine-color-lime-1) r g b / <alpha-value>);
+  --color-lime-200: rgb(from var(--mantine-color-lime-2) r g b / <alpha-value>);
+  --color-lime-300: rgb(from var(--mantine-color-lime-3) r g b / <alpha-value>);
+  --color-lime-400: rgb(from var(--mantine-color-lime-4) r g b / <alpha-value>);
+  --color-lime-500: rgb(from var(--mantine-color-lime-5) r g b / <alpha-value>);
+  --color-lime-600: rgb(from var(--mantine-color-lime-6) r g b / <alpha-value>);
+  --color-lime-700: rgb(from var(--mantine-color-lime-7) r g b / <alpha-value>);
+  --color-lime-800: rgb(from var(--mantine-color-lime-8) r g b / <alpha-value>);
+  --color-lime-900: rgb(from var(--mantine-color-lime-9) r g b / <alpha-value>);
+  --color-lime: rgb(from var(--mantine-color-lime-filled) r g b / <alpha-value>);
+
+  --color-yellow-50: rgb(from var(--mantine-color-yellow-0) r g b / <alpha-value>);
+  --color-yellow-100: rgb(from var(--mantine-color-yellow-1) r g b / <alpha-value>);
+  --color-yellow-200: rgb(from var(--mantine-color-yellow-2) r g b / <alpha-value>);
+  --color-yellow-300: rgb(from var(--mantine-color-yellow-3) r g b / <alpha-value>);
+  --color-yellow-400: rgb(from var(--mantine-color-yellow-4) r g b / <alpha-value>);
+  --color-yellow-500: rgb(from var(--mantine-color-yellow-5) r g b / <alpha-value>);
+  --color-yellow-600: rgb(from var(--mantine-color-yellow-6) r g b / <alpha-value>);
+  --color-yellow-700: rgb(from var(--mantine-color-yellow-7) r g b / <alpha-value>);
+  --color-yellow-800: rgb(from var(--mantine-color-yellow-8) r g b / <alpha-value>);
+  --color-yellow-900: rgb(from var(--mantine-color-yellow-9) r g b / <alpha-value>);
+  --color-yellow: rgb(from var(--mantine-color-yellow-filled) r g b / <alpha-value>);
+
+  --color-orange-50: rgb(from var(--mantine-color-orange-0) r g b / <alpha-value>);
+  --color-orange-100: rgb(from var(--mantine-color-orange-1) r g b / <alpha-value>);
+  --color-orange-200: rgb(from var(--mantine-color-orange-2) r g b / <alpha-value>);
+  --color-orange-300: rgb(from var(--mantine-color-orange-3) r g b / <alpha-value>);
+  --color-orange-400: rgb(from var(--mantine-color-orange-4) r g b / <alpha-value>);
+  --color-orange-500: rgb(from var(--mantine-color-orange-5) r g b / <alpha-value>);
+  --color-orange-600: rgb(from var(--mantine-color-orange-6) r g b / <alpha-value>);
+  --color-orange-700: rgb(from var(--mantine-color-orange-7) r g b / <alpha-value>);
+  --color-orange-800: rgb(from var(--mantine-color-orange-8) r g b / <alpha-value>);
+  --color-orange-900: rgb(from var(--mantine-color-orange-9) r g b / <alpha-value>);
+  --color-orange: rgb(from var(--mantine-color-orange-filled) r g b / <alpha-value>);
 
   /* colors - variant specific */
   
@@ -305,32 +396,6 @@
   --color-orange-outline: rgb(from var(--mantine-color-orange-outline) r g b / <alpha-value>);
   --color-orange-outline-hover: var(--mantine-color-orange-outline-hover);
 
-  /* colors - variant specific primary */
-  --color-primary-filled: rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>);
-  --color-primary-filled-hover: var(--mantine-primary-color-filled-hover);
-  --color-primary-light: var(--mantine-primary-color-light);
-  --color-primary-light-hover: var(--mantine-primary-color-light-hover);
-  --color-primary-light-color: rgb(from var(--mantine-primary-color-light-color) r g b / <alpha-value>);
-  --color-primary-outline: rgb(from var(--mantine-primary-color-outline) r g b / <alpha-value>);
-  --color-primary-outline-hover: var(--mantine-primary-color-outline-hover);
-
-  /* colors - others */
-  --color-white: rgb(from var(--mantine-color-white) r g b / <alpha-value>);
-  --color-black: rgb(from var(--mantine-color-black) r g b / <alpha-value>);
-  --color-body: rgb(from var(--mantine-color-text) r g b / <alpha-value>);
-  --color-error: rgb(from var(--mantine-color-error) r g b / <alpha-value>);
-  --color-placeholder: rgb(from var(--mantine-color-placeholder) r g b / <alpha-value>);
-  --color-anchor: rgb(from var(--mantine-color-anchor) r g b / <alpha-value>);
-  --color-default: rgb(from var(--mantine-color-default-color) r g b / <alpha-value>);
-
-  /* spacing */
-  --spacing-xs: var(--mantine-spacing-xs);
-  --spacing-sm: var(--mantine-spacing-sm);
-  --spacing-md: var(--mantine-spacing-md);
-  --spacing-lg: var(--mantine-spacing-lg);
-  --spacing-xl: var(--mantine-spacing-xl);
-  --spacing: var(--mantine-spacing-md);
-
   /* breakpoints */
   
   --breakpoint-xs: 36em;
@@ -342,68 +407,4 @@
   --breakpoint-lg: 75em;
 
   --breakpoint-xl: 88em;
-
-  /* container */
-  /* TODO: */
-
-  /* font size */
-  --text-xs: var(--mantine-font-size-xs);
-  --text-sm: var(--mantine-font-size-sm);
-  --text-md: var(--mantine-font-size-md);
-  --text-lg: var(--mantine-font-size-lg);
-  --text-xl: var(--mantine-font-size-xl);
-  --text-h1: var(--mantine-h1-font-size);
-  --text-h2: var(--mantine-h2-font-size);
-  --text-h3: var(--mantine-h3-font-size);
-  --text-h4: var(--mantine-h4-font-size);
-  --text-h5: var(--mantine-h5-font-size);
-  --text-h6: var(--mantine-h6-font-size);
-  --text-base: var(--mantine-font-size-md);
-
-  /* line height */
-  --text-xs--line-height: var(--mantine-line-height-xs);
-  --text-sm--line-height: var(--mantine-line-height-sm);
-  --text-md--line-height: var(--mantine-line-height-md);
-  --text-lg--line-height: var(--mantine-line-height-lg);
-  --text-xl--line-height: var(--mantine-line-height-xl);
-  --text-h1--line-height: var(--mantine-h1-line-height);
-  --text-h2--line-height: var(--mantine-h2-line-height);
-  --text-h3--line-height: var(--mantine-h3-line-height);
-  --text-h4--line-height: var(--mantine-h4-line-height);
-  --text-h5--line-height: var(--mantine-h5-line-height);
-  --text-h6--line-height: var(--mantine-h6-line-height);
-  --text-base--line-height: var(--mantine-line-height-md);
-  --text-heading--line-height: var(--mantine-heading-line-height);
-  --text-base--line-height: var(--mantine-line-height);
-
-  /* font weight */
-  --font-weight-h1: var(--mantine-h1-font-weight);
-  --font-weight-h2: var(--mantine-h2-font-weight);
-  --font-weight-h3: var(--mantine-h3-font-weight);
-  --font-weight-h4: var(--mantine-h4-font-weight);
-  --font-weight-h5: var(--mantine-h5-font-weight);
-  --font-weight-h6: var(--mantine-h6-font-weight);
-
-  /* border radius */
-  --radius-xs: var(--mantine-radius-xs);
-  --radius-sm: var(--mantine-radius-sm);
-  --radius-md: var(--mantine-radius-md);
-  --radius-lg: var(--mantine-radius-lg);
-  --radius-xl: var(--mantine-radius-xl);
-  --radius: var(--mantine-radius-default);
-
-  /* shadow */
-  --shadow-xs: var(--mantine-shadow-xs);
-  --shadow-sm: var(--mantine-shadow-sm);
-  --shadow-md: var(--mantine-shadow-md);
-  --shadow-lg: var(--mantine-shadow-lg);
-  --shadow-xl: var(--mantine-shadow-xl);
-  --shadow: var(--mantine-shadow-xs);
-
-  /* z-index */
-  --z-index-app: var(--mantine-z-index-app);
-  --z-index-modal: var(--mantine-z-index-modal);
-  --z-index-popover: var(--mantine-z-index-popover);
-  --z-index-overlay: var(--mantine-z-index-overlay);
-  --z-index-max: var(--mantine-z-index-max);
 }
