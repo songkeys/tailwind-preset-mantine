@@ -65,7 +65,7 @@ Pass your custom `colors` and `breakpoints` to `MantineProvider`:
 ```tsx
 // src/mantine-provider.tsx
 import {
-	MantineProvider,
+	MantineProvider as MantineProvider_,
 	mergeMantineTheme,
 	DEFAULT_THEME,
 } from '@mantine/core';
@@ -80,7 +80,7 @@ const theme = mergeMantineTheme(
 );
 
 export default function MantineProvider({ children }: { children: React.ReactNode }) {
-	return <MantineProvider theme={{ colors, breakpoints }}>{children}</MantineProvider>
+	return <MantineProvider_ theme={{ colors, breakpoints }}>{children}</MantineProvider>
 }
 ```
 
