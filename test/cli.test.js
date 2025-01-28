@@ -97,6 +97,12 @@ test("processes custom TS theme", async (t) => {
 	await testThemeGeneration(inputPath, "custom-theme-ts-output.css");
 });
 
+// Test: CLI should process CJS theme
+test("processes CJS theme", async (t) => {
+	const inputPath = join(FIXTURES_DIR, "cjs-theme.cjs");
+	await testThemeGeneration(inputPath, "cjs-theme-output.css");
+});
+
 // Test: CLI should handle custom output path
 test("handles custom output path with --output flag", async (t) => {
 	const inputPath = join(FIXTURES_DIR, "default-theme.js");

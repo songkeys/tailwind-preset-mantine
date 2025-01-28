@@ -1,4 +1,5 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env node
+import "tsx";
 
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";

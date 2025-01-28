@@ -143,7 +143,7 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
 	}
 
   /* colors - all */
-  ${Object.keys(theme.colors)
+  ${Object.keys(theme.colors ?? {})
 		.map((key) =>
 			`
   --color-${key}-50: rgb(from var(--mantine-color-${key}-0) r g b / <alpha-value>);
@@ -162,7 +162,7 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
 		.join("\n")}
 
   /* colors - variant specific */
-  ${Object.keys(theme.colors)
+  ${Object.keys(theme.colors ?? {})
 		.map((key) =>
 			`
   --color-${key}-filled: rgb(from var(--mantine-color-${key}-filled) r g b / <alpha-value>);
@@ -177,7 +177,7 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
 		.join("\n")}
 
   /* breakpoints */
-  ${Object.entries(theme.breakpoints)
+  ${Object.entries(theme.breakpoints ?? {})
 		.map(([key, value]) =>
 			`
   --breakpoint-${key}: ${value};
