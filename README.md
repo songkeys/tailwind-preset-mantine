@@ -80,7 +80,7 @@ const theme = mergeMantineTheme(
 );
 
 export default function MantineProvider({ children }: { children: React.ReactNode }) {
-	return <MantineProvider_ theme={{ colors, breakpoints }}>{children}</MantineProvider>
+	return <MantineProvider_ theme={theme}>{children}</MantineProvider>
 }
 ```
 
