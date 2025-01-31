@@ -16,7 +16,7 @@ A Tailwind CSS (v4) preset for seamless integration with Mantine UI (v7) compone
 ## Installation
 
 ```bash
-npm install tailwind-preset-mantine
+npm install tailwind-preset-mantine@beta
 ```
 
 ## Usage
@@ -29,6 +29,20 @@ To use the preset in your Tailwind CSS configuration, add it to the css file:
 
 ```css
 @import "tailwind-preset-mantine";
+```
+
+That's it!
+
+Now you can use tailwind with mantine's style applied:
+
+```tsx
+import { Button } from '@mantine/core';
+
+export default function Page() {
+	// `bg-red-500` will be `background-color: var(--mantine-color-red-5)`
+	// `text-white` will be `color: var(--mantine-color-white)`
+	return <Button className="bg-red-500 text-white">Hello</Button>
+}
 ```
 
 2. Manual import (advanced)
@@ -107,11 +121,9 @@ Options:
 
 ## Minimal template
 
-<!-- Here's a minimal template that you can use to get started:
+Here's a minimal template that you can use to get started:
 
-<https://github.com/songkeys/next-app-mantine-tailwind-template> -->
-
-TODO
+<https://github.com/songkeys/next-app-mantine-tailwind-template/tree/tw4>
 
 ## License
 
