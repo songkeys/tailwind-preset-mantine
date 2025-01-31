@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "tsx";
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
@@ -33,7 +34,7 @@ try {
 	const themePath = resolve(pwd, inputFile);
 
 	// Execute the theme file content to get the theme object
-	const themeModule = await tsImport(themePath, import.meta.url);
+	const themeModule = await import(themePath);
 	const theme = themeModule.default;
 
 	// Generate CSS from theme object
