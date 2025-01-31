@@ -3,7 +3,6 @@ import "tsx";
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
-import { tsImport } from "tsx/esm/api";
 import { generateTheme } from "./generate.js";
 
 const pwd = process.cwd();
@@ -35,7 +34,18 @@ try {
 
 	// Execute the theme file content to get the theme object
 	const themeModule = await import(themePath);
-	const theme = themeModule.default;
+	const theme =
+		themeModule.default?.default ??
+		themeModule.default ??
+		themeModule.default?.theme ??
+		themeModule.default?.default?.theme;
+
+	if (!theme) {
+		console.error(
+			"No theme found in the input file; please ensure the file exports a valid theme object",
+		);
+		process.exit(1);
+	}
 
 	// Generate CSS from theme object
 	const css = generateTheme(theme);
