@@ -16,7 +16,7 @@ A Tailwind CSS (v4) preset for seamless integration with Mantine UI (v7) compone
 ## Installation
 
 ```bash
-npm install tailwind-preset-mantine@beta
+npm install tailwind-preset-mantine
 ```
 
 ## Usage
