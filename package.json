@@ -1,8 +1,12 @@
 {
 	"name": "tailwind-preset-mantine",
-	"version": "1.3.2",
+	"version": "2.0.0-beta.6",
 	"description": "Integrate Mantine with Tailwind CSS",
-	"keywords": ["mantine", "tailwind", "preset"],
+	"keywords": [
+		"mantine",
+		"tailwind",
+		"preset"
+	],
 	"homepage": "https://github.com/songkeys/tailwind-preset-mantine#readme",
 	"bugs": {
 		"url": "https://github.com/songkeys/tailwind-preset-mantine/issues"
@@ -13,22 +17,32 @@
 	},
 	"license": "MIT",
 	"author": "Songkeys",
-	"main": "src/index.js",
-	"types": "src/index.d.ts",
+	"main": "src/index.css",
+	"exports": {
+		".": "./src/index.css",
+		"./theme.css": "./src/theme.css"
+	},
+	"bin": {
+		"tailwind-preset-mantine": "./src/cli.js"
+	},
 	"scripts": {
 		"lint": "biome check .",
 		"lint:fix": "biome check . --write",
-		"release": "bumpp"
+		"release": "bumpp",
+		"generate": "node scripts/generate.js"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@mantine/core": "^7.14.3",
-		"bumpp": "^9.8.1",
-		"tailwindcss": "^3.4.16"
+		"@mantine/core": "^7.16.2",
+		"bumpp": "^10.0.1"
 	},
 	"peerDependencies": {
 		"@mantine/core": "^7",
-		"tailwindcss": "^3"
+		"tailwindcss": "^4"
 	},
-	"packageManager": "pnpm@9.15.0"
+	"packageManager": "pnpm@9.15.4",
+	"type": "module",
+	"dependencies": {
+		"tsx": "^4.19.2"
+	}
 }
