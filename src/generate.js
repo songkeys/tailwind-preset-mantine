@@ -37,35 +37,35 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
   --font-headings: var(--mantine-font-family-headings);
 
   /* colors - primary */
-  --color-primary-50: rgb(from var(--mantine-primary-color-0) r g b / <alpha-value>);
-  --color-primary-100: rgb(from var(--mantine-primary-color-1) r g b / <alpha-value>);
-  --color-primary-200: rgb(from var(--mantine-primary-color-2) r g b / <alpha-value>);
-  --color-primary-300: rgb(from var(--mantine-primary-color-3) r g b / <alpha-value>);
-  --color-primary-400: rgb(from var(--mantine-primary-color-4) r g b / <alpha-value>);
-  --color-primary-500: rgb(from var(--mantine-primary-color-5) r g b / <alpha-value>);
-  --color-primary-600: rgb(from var(--mantine-primary-color-6) r g b / <alpha-value>);
-  --color-primary-700: rgb(from var(--mantine-primary-color-7) r g b / <alpha-value>);
-  --color-primary-800: rgb(from var(--mantine-primary-color-8) r g b / <alpha-value>);
-  --color-primary-900: rgb(from var(--mantine-primary-color-9) r g b / <alpha-value>);
-  --color-primary: rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>);
+  --color-primary-50: var(--mantine-primary-color-0);
+  --color-primary-100: var(--mantine-primary-color-1);
+  --color-primary-200: var(--mantine-primary-color-2);
+  --color-primary-300: var(--mantine-primary-color-3);
+  --color-primary-400: var(--mantine-primary-color-4);
+  --color-primary-500: var(--mantine-primary-color-5);
+  --color-primary-600: var(--mantine-primary-color-6);
+  --color-primary-700: var(--mantine-primary-color-7);
+  --color-primary-800: var(--mantine-primary-color-8);
+  --color-primary-900: var(--mantine-primary-color-9);
+  --color-primary: var(--mantine-primary-color-filled);
 
   /* colors - variant specific primary */
-  --color-primary-filled: rgb(from var(--mantine-primary-color-filled) r g b / <alpha-value>);
+  --color-primary-filled: var(--mantine-primary-color-filled);
   --color-primary-filled-hover: var(--mantine-primary-color-filled-hover);
   --color-primary-light: var(--mantine-primary-color-light);
   --color-primary-light-hover: var(--mantine-primary-color-light-hover);
-  --color-primary-light-color: rgb(from var(--mantine-primary-color-light-color) r g b / <alpha-value>);
-  --color-primary-outline: rgb(from var(--mantine-primary-color-outline) r g b / <alpha-value>);
+  --color-primary-light-color: var(--mantine-primary-color-light-color);
+  --color-primary-outline: var(--mantine-primary-color-outline);
   --color-primary-outline-hover: var(--mantine-primary-color-outline-hover);
 
   /* colors - others */
-  --color-white: rgb(from var(--mantine-color-white) r g b / <alpha-value>);
-  --color-black: rgb(from var(--mantine-color-black) r g b / <alpha-value>);
-  --color-body: rgb(from var(--mantine-color-text) r g b / <alpha-value>);
-  --color-error: rgb(from var(--mantine-color-error) r g b / <alpha-value>);
-  --color-placeholder: rgb(from var(--mantine-color-placeholder) r g b / <alpha-value>);
-  --color-anchor: rgb(from var(--mantine-color-anchor) r g b / <alpha-value>);
-  --color-default: rgb(from var(--mantine-color-default-color) r g b / <alpha-value>);
+  --color-white: var(--mantine-color-white);
+  --color-black: var(--mantine-color-black);
+  --color-body: var(--mantine-color-text);
+  --color-error: var(--mantine-color-error);
+  --color-placeholder: var(--mantine-color-placeholder);
+  --color-anchor: var(--mantine-color-anchor);
+  --color-default: var(--mantine-color-default-color);
 
   /* spacing */
   --spacing-xs: var(--mantine-spacing-xs);
@@ -146,17 +146,17 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
   ${Object.keys(theme.colors ?? {})
 		.map((key) =>
 			`
-  --color-${key}-50: rgb(from var(--mantine-color-${key}-0) r g b / <alpha-value>);
-  --color-${key}-100: rgb(from var(--mantine-color-${key}-1) r g b / <alpha-value>);
-  --color-${key}-200: rgb(from var(--mantine-color-${key}-2) r g b / <alpha-value>);
-  --color-${key}-300: rgb(from var(--mantine-color-${key}-3) r g b / <alpha-value>);
-  --color-${key}-400: rgb(from var(--mantine-color-${key}-4) r g b / <alpha-value>);
-  --color-${key}-500: rgb(from var(--mantine-color-${key}-5) r g b / <alpha-value>);
-  --color-${key}-600: rgb(from var(--mantine-color-${key}-6) r g b / <alpha-value>);
-  --color-${key}-700: rgb(from var(--mantine-color-${key}-7) r g b / <alpha-value>);
-  --color-${key}-800: rgb(from var(--mantine-color-${key}-8) r g b / <alpha-value>);
-  --color-${key}-900: rgb(from var(--mantine-color-${key}-9) r g b / <alpha-value>);
-  --color-${key}: rgb(from var(--mantine-color-${key}-filled) r g b / <alpha-value>);
+  --color-${key}-50: var(--mantine-color-${key}-0);
+  --color-${key}-100: var(--mantine-color-${key}-1);
+  --color-${key}-200: var(--mantine-color-${key}-2);
+  --color-${key}-300: var(--mantine-color-${key}-3);
+  --color-${key}-400: var(--mantine-color-${key}-4);
+  --color-${key}-500: var(--mantine-color-${key}-5);
+  --color-${key}-600: var(--mantine-color-${key}-6);
+  --color-${key}-700: var(--mantine-color-${key}-7);
+  --color-${key}-800: var(--mantine-color-${key}-8);
+  --color-${key}-900: var(--mantine-color-${key}-9);
+  --color-${key}: var(--mantine-color-${key}-filled);
   `.trimEnd(),
 		)
 		.join("\n")}
@@ -165,12 +165,12 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
   ${Object.keys(theme.colors ?? {})
 		.map((key) =>
 			`
-  --color-${key}-filled: rgb(from var(--mantine-color-${key}-filled) r g b / <alpha-value>);
+  --color-${key}-filled: var(--mantine-color-${key}-filled);
   --color-${key}-filled-hover: var(--mantine-color-${key}-filled-hover);
   --color-${key}-light: var(--mantine-color-${key}-light);
   --color-${key}-light-hover: var(--mantine-color-${key}-light-hover);
-  --color-${key}-light-color: rgb(from var(--mantine-color-${key}-light-color) r g b / <alpha-value>);
-  --color-${key}-outline: rgb(from var(--mantine-color-${key}-outline) r g b / <alpha-value>);
+  --color-${key}-light-color: var(--mantine-color-${key}-light-color);
+  --color-${key}-outline: var(--mantine-color-${key}-outline);
   --color-${key}-outline-hover: var(--mantine-color-${key}-outline-hover);
   `.trimEnd(),
 		)
