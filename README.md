@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/tailwind-preset-mantine.svg)](https://www.npmjs.com/package/tailwind-preset-mantine)
 
-A Tailwind CSS (v4) preset for seamless integration with Mantine UI (v7) components.
+A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration with [Mantine UI (v7)](https://mantine.dev/).
 
 ## Compatibility
 
@@ -62,7 +62,7 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 > What's `@layer`?
 >
-> Note that here we setup tailwind slightly different from [the official docs](https://arc.net/l/quote/eifghbsm). We use the [CSS `@layer` directive](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) to control the order of the css. This is because we want to make sure that the mantine styles doesn't get overridden by tailwind reset (tw_base). In this case, the order is `tw_base -> mantine -> tw_components -> tw_utilities`
+> Note that here we setup tailwind slightly different from [the official docs](https://arc.net/l/quote/vtfxbocq). We use the [CSS `@layer` directive](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) to control the order of the css. This is because we want to make sure that the mantine styles doesn't get overridden by tailwind reset (base). In this case, the order is `theme -> base -> mantine -> components -> utilities`.
 
 ### Custom mantine theme
 
@@ -123,7 +123,7 @@ Options:
 
 Here's a minimal template that you can use to get started:
 
-<https://github.com/songkeys/next-app-mantine-tailwind-template/tree/tw4>
+<https://github.com/songkeys/next-app-mantine-tailwind-template>
 
 ## License
 
