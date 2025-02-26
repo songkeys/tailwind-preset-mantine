@@ -2,6 +2,7 @@
 import "tsx";
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 import { generateTheme } from "./generate.js";
 
@@ -32,8 +33,11 @@ try {
 	// Read the input theme file
 	const themePath = resolve(pwd, inputFile);
 
+	// Convert file path to URL for ESM import compatibility
+	const themeURL = pathToFileURL(themePath);
+
 	// Execute the theme file content to get the theme object
-	const themeModule = await import(themePath);
+	const themeModule = await import(themeURL);
 	const theme =
 		themeModule.default?.default ??
 		themeModule.default ??
