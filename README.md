@@ -1,14 +1,18 @@
-# tailwind-preset-mantine
+# mantine-with-tailwind-preset-alpha
 
-[![npm version](https://img.shields.io/npm/v/tailwind-preset-mantine.svg)](https://www.npmjs.com/package/tailwind-preset-mantine)
+[![npm version](https://img.shields.io/npm/v/mantine-with-tailwind-preset-alpha.svg)](https://www.npmjs.com/package/mantine-with-tailwind-preset-alpha)
 
-A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration with [Mantine UI (v7)](https://mantine.dev/).
+A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration with [Mantine UI v8 Alpha](https://mantine.dev/).
+
+> ⚠️ **IMPORTANT:** This package is **ONLY** compatible with Mantine 8 Alpha version.
+>
+> This package is a fork of [tailwind-preset-mantine](https://github.com/songkeys/tailwind-preset-mantine) by [Songkeys](https://github.com/songkeys), adapted specifically for Mantine 8 Alpha. 
 
 ## Compatibility
 
 | Tailwind CSS Version | Mantine Version | Preset Version |
 |---------------------|-----------------|----------------|
-| v4                  | v7             | v2 (current)             |
+| v4                  | v8.0.0-alpha.x  | v0.1.0 (current) |
 | v3                  | v7             | ([v1](https://github.com/songkeys/tailwind-preset-mantine/tree/v1))* |
 
 *Note: you can still use v1 for Tailwind CSS via [`@config`](https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file) directive.
@@ -16,7 +20,7 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 ## Installation
 
 ```bash
-npm install tailwind-preset-mantine
+npm install mantine-with-tailwind-preset-alpha
 ```
 
 ## Usage
@@ -28,7 +32,7 @@ npm install tailwind-preset-mantine
 To use the preset in your Tailwind CSS configuration, add it to the css file:
 
 ```css
-@import "tailwind-preset-mantine";
+@import "mantine-with-tailwind-preset-alpha";
 ```
 
 That's it!
@@ -57,7 +61,7 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 @import "@mantine/core/styles.layer.css";
 
-@import "tailwind-preset-mantine/theme.css"; /* <-- import the preset */
+@import "mantine-with-tailwind-preset-alpha/theme.css"; /* <-- import the preset */
 ```
 
 > What's `@layer`?
@@ -106,7 +110,7 @@ export default theme;
 2. Generate the CSS using our CLI:
 
 ```bash
-npx tailwind-preset-mantine theme.js -o theme.css
+npx mantine-with-tailwind-preset-alpha theme.js -o theme.css
 ```
 
 Options:
@@ -115,7 +119,7 @@ Options:
 3. Import the generated CSS file in your application:
 
 ```css
-@import "tailwind-preset-mantine";
+@import "mantine-with-tailwind-preset-alpha";
 @import "./theme.css"; /* <-- add the generated theme */
 ```
 

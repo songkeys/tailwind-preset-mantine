@@ -1,26 +1,26 @@
 {
-	"name": "tailwind-preset-mantine",
-	"version": "2.0.3",
-	"description": "Integrate Mantine with Tailwind CSS",
-	"keywords": ["mantine", "tailwind", "preset"],
+	"name": "mantine-with-tailwind-preset-alpha",
+	"version": "0.1.0",
+	"description": "Integrate Mantine 8 Alpha with Tailwind CSS - Fork of tailwind-preset-mantine",
+	"keywords": ["mantine", "tailwind", "preset", "mantine-alpha", "mantine-8"],
 	"files": ["src"],
-	"homepage": "https://github.com/songkeys/tailwind-preset-mantine#readme",
+	"homepage": "https://github.com/williamneves/mantine-with-tailwind-preset-alpha",
 	"bugs": {
-		"url": "https://github.com/songkeys/tailwind-preset-mantine/issues"
+		"url": "https://github.com/williamneves/mantine-with-tailwind-preset-alpha/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/songkeys/tailwind-preset-mantine.git"
+		"url": "git+https://github.com/williamneves/mantine-with-tailwind-preset-alpha.git"
 	},
 	"license": "MIT",
-	"author": "Songkeys",
+	"author": "William Neves",
 	"main": "src/index.css",
 	"exports": {
 		".": "./src/index.css",
 		"./theme.css": "./src/theme.css"
 	},
 	"bin": {
-		"tailwind-preset-mantine": "./src/cli.js"
+		"mantine-with-tailwind-preset-alpha": "./src/cli.js"
 	},
 	"scripts": {
 		"lint": "biome check .",
@@ -30,11 +30,11 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@mantine/core": "^7.16.2",
+		"@mantine/core": "^8.0.0-alpha.1",
 		"bumpp": "^10.0.1"
 	},
 	"peerDependencies": {
-		"@mantine/core": "^7",
+		"@mantine/core": "^8.0.0-alpha.1",
 		"tailwindcss": "^4"
 	},
 	"packageManager": "pnpm@9.15.4",

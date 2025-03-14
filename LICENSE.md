@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2024 Songkeys <https://github.com/songkeys>
+Original work Copyright (c) 2024 Songkeys <https://github.com/songkeys>
+Modified work Copyright (c) 2024 William Neves
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
