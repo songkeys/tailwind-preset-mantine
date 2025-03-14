@@ -73,7 +73,6 @@ ${isDefault ? '@custom-variant dark (&:where([data-mantine-color-scheme="dark"],
   --spacing-md: var(--mantine-spacing-md);
   --spacing-lg: var(--mantine-spacing-lg);
   --spacing-xl: var(--mantine-spacing-xl);
-  --spacing: var(--mantine-spacing-md);
 
   /* container */
   /* TODO: */
