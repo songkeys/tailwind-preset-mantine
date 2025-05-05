@@ -2,7 +2,11 @@
 	"name": "tailwind-preset-mantine",
 	"version": "2.0.6",
 	"description": "Integrate Mantine with Tailwind CSS",
-	"keywords": ["mantine", "tailwind", "preset"],
+	"keywords": [
+		"mantine",
+		"tailwind",
+		"preset"
+	],
 	"homepage": "https://github.com/songkeys/tailwind-preset-mantine#readme",
 	"bugs": {
 		"url": "https://github.com/songkeys/tailwind-preset-mantine/issues"
@@ -22,7 +26,9 @@
 	"bin": {
 		"tailwind-preset-mantine": "./src/cli.js"
 	},
-	"files": ["src"],
+	"files": [
+		"src"
+	],
 	"scripts": {
 		"generate": "node scripts/generate.js",
 		"lint": "biome check .",
@@ -30,16 +36,16 @@
 		"release": "bumpp"
 	},
 	"dependencies": {
-		"tsx": "^4.19.3"
+		"tsx": "^4.19.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@mantine/core": "^7.17.4",
+		"@mantine/core": "^8.0.0",
 		"bumpp": "^10.1.0"
 	},
 	"peerDependencies": {
-		"@mantine/core": "^7",
+		"@mantine/core": "^7 || ^8",
 		"tailwindcss": "^4"
 	},
-	"packageManager": "pnpm@9.15.9"
+	"packageManager": "pnpm@10.10.0"
 }
