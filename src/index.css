@@ -36,15 +36,24 @@
   --color-primary-light-color: var(--mantine-primary-color-light-color);
   --color-primary-outline: var(--mantine-primary-color-outline);
   --color-primary-outline-hover: var(--mantine-primary-color-outline-hover);
+  --color-primary-contrast: var(--mantine-primary-color-contrast);
 
   /* colors - others */
   --color-white: var(--mantine-color-white);
   --color-black: var(--mantine-color-black);
+  --color-bright: var(--mantine-color-bright);
   --color-body: var(--mantine-color-text);
   --color-error: var(--mantine-color-error);
   --color-placeholder: var(--mantine-color-placeholder);
   --color-anchor: var(--mantine-color-anchor);
-  --color-default: var(--mantine-color-default-color);
+  --color-default: var(--mantine-color-default);
+  --color-default-hover: var(--mantine-color-default-hover);
+  --color-default-color: var(--mantine-color-default-color);
+  --color-default-border: var(--mantine-color-default-border);
+  --color-dimmed: var(--mantine-color-dimmed);
+  --color-disabled: var(--mantine-color-disabled);
+  --color-disabled-color: var(--mantine-color-disabled-color);
+  --color-disabled-border: var(--mantine-color-disabled-border);
 
   /* spacing */
   --spacing-xs: var(--mantine-spacing-xs);
@@ -406,7 +415,7 @@
   --breakpoint-lg: 75em;
   --breakpoint-xl: 88em;
 
-  /* readd back tailwind's default containers vars to fix #24 */
+  /* read back tailwind's default containers vars to fix #24 */
   --size-3xs: 16rem;
   --size-2xs: 18rem;
   --size-xs: 20rem;
