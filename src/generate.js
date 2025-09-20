@@ -1,5 +1,5 @@
 // for reference:
-// https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/global.css
+// https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/MantineCssVariables/default-css-variables-resolver.ts
 // https://tailwindcss.com/docs/theme#default-theme-variable-reference
 
 import { DEFAULT_THEME } from "@mantine/core";

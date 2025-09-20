@@ -33,19 +33,20 @@
 		"generate": "node scripts/generate.js",
 		"lint": "biome check .",
 		"lint:fix": "biome check . --write",
-		"release": "bumpp"
+		"release": "bumpp",
+		"test": "node --test"
 	},
 	"dependencies": {
-		"tsx": "^4.19.4"
+		"tsx": "^4.20.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@mantine/core": "^8.0.0",
-		"bumpp": "^10.1.0"
+		"@biomejs/biome": "^2.2.4",
+		"@mantine/core": "^8.3.1",
+		"bumpp": "^10.2.3"
 	},
 	"peerDependencies": {
 		"@mantine/core": "^7 || ^8",
 		"tailwindcss": "^4"
 	},
-	"packageManager": "pnpm@10.10.0"
+	"packageManager": "pnpm@10.17.0"
 }
