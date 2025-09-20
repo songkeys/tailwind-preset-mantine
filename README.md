@@ -8,7 +8,8 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 
 | Tailwind CSS Version | Mantine Version | Preset Version |
 |---------------------|-----------------|----------------|
-| v4                  | v7 or v8        | v2 (current)             |
+| v4                  | v7 or v8        | v3 (current)   |
+| v4                  | v7 or v8        | v2             |
 | v3                  | v7 or v8        | ([v1](https://github.com/songkeys/tailwind-preset-mantine/tree/v1))* |
 
 *Note: you can still use v1 for Tailwind CSS V4 via [`@config`](https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file) directive.
