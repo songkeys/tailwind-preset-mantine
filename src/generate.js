@@ -65,7 +65,7 @@ ${
   --color-white: var(--mantine-color-white);
   --color-black: var(--mantine-color-black);
   --color-bright: var(--mantine-color-bright);
-  --color-body: var(--mantine-color-text);
+  --color-body: var(--mantine-color-body);
   --color-error: var(--mantine-color-error);
   --color-placeholder: var(--mantine-color-placeholder);
   --color-anchor: var(--mantine-color-anchor);

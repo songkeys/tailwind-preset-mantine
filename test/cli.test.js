@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { access, unlink, writeFile } from "node:fs/promises";
+import { access, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -73,59 +73,59 @@ async function testThemeGeneration(fixturePath, outputPath) {
 }
 
 // Test: CLI should show error when no input file is provided
-test("shows error when no input file is provided", async (t) => {
+test("shows error when no input file is provided", async () => {
 	const { code, stderr } = await runCLI([]);
 	assert.equal(code, 1);
 	assert.match(stderr, /Please provide a theme file path/);
 });
 
 // Test: CLI should process default theme
-test("processes default theme", async (t) => {
+test("processes default theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "default-theme.js");
 	await testThemeGeneration(inputPath, "default-theme-output.css");
 });
 
 // Test: CLI should process custom JS theme
-test("processes custom JS theme", async (t) => {
+test("processes custom JS theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "custom-theme.js");
 	await testThemeGeneration(inputPath, "custom-theme-output.css");
 });
 
 // Test: CLI should process custom TS theme
-test("processes custom TS theme", async (t) => {
+test("processes custom TS theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "custom-theme-ts.ts");
 	await testThemeGeneration(inputPath, "custom-theme-ts-output.css");
 });
 
 // Test: CLI should process CJS theme
-test("processes CJS theme", async (t) => {
+test("processes CJS theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "cjs-theme.cjs");
 	await testThemeGeneration(inputPath, "cjs-theme-output.css");
 });
 
 // Test: CLI should handle custom output path
-test("handles custom output path with --output flag", async (t) => {
+test("handles custom output path with --output flag", async () => {
 	const inputPath = join(FIXTURES_DIR, "default-theme.js");
 	const customOutput = "custom-output-long.css";
 	await testThemeGeneration(inputPath, customOutput);
 });
 
 // Test: CLI should handle custom output path with short flag
-test("handles custom output path with -o flag", async (t) => {
+test("handles custom output path with -o flag", async () => {
 	const inputPath = join(FIXTURES_DIR, "default-theme.js");
 	const customOutput = "custom-output-short.css";
 	await testThemeGeneration(inputPath, customOutput);
 });
 
 // Test: CLI should handle invalid input file
-test("handles invalid input file", async (t) => {
+test("handles invalid input file", async () => {
 	const { code, stderr } = await runCLI(["non-existent-file.js"]);
 	assert.equal(code, 1);
 	assert.match(stderr, /Error generating theme/);
 });
 
 // Test: CLI should handle invalid file content
-test("handles invalid theme file content", async (t) => {
+test("handles invalid theme file content", async () => {
 	const { code, stderr } = await runCLI(["invalid-theme.js"]);
 	assert.equal(code, 1);
 	assert.match(stderr, /Error generating theme/);
