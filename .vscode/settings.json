@@ -1,9 +1,7 @@
 {
 	"unocss.root": ["./examples/vite"],
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "always",
-		"quickfix.biome": "always",
-		"source.organizeImports.biome": "always"
+		"source.fixAll.biome": "explicit"
 	},
 	"editor.defaultFormatter": "biomejs.biome",
 	"[json]": {

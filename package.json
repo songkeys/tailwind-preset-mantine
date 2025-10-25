@@ -37,12 +37,12 @@
 		"test": "node --test"
 	},
 	"dependencies": {
-		"tsx": "^4.20.5"
+		"tsx": "^4.20.6"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.2.4",
-		"@mantine/core": "^8.3.1",
-		"bumpp": "^10.2.3"
+		"@biomejs/biome": "^2.3.0",
+		"@mantine/core": "^8.3.5",
+		"bumpp": "^10.3.1"
 	},
 	"peerDependencies": {
 		"@mantine/core": "^7 || ^8",
