@@ -1,6 +1,6 @@
 {
 	"name": "tailwind-preset-mantine",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"description": "Integrate Mantine with Tailwind CSS",
 	"keywords": [
 		"mantine",
