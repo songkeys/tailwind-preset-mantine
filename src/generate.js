@@ -1,5 +1,6 @@
 // for reference:
 // https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/MantineCssVariables/default-css-variables-resolver.ts
+// https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/core/MantineProvider/MantineCssVariables/get-css-color-variables.ts
 // https://tailwindcss.com/docs/theme#default-theme-variable-reference
 
 import { DEFAULT_THEME } from "@mantine/core";
@@ -173,6 +174,7 @@ ${
 	${Object.keys(theme.colors ?? {})
 		.map((key) =>
 			`
+	--color-${key}-text: var(--mantine-color-${key}-text);
 	--color-${key}-filled: var(--mantine-color-${key}-filled);
 	--color-${key}-filled-hover: var(--mantine-color-${key}-filled-hover);
 	--color-${key}-light: var(--mantine-color-${key}-light);
