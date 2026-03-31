@@ -2,15 +2,16 @@
 
 [![npm version](https://img.shields.io/npm/v/tailwind-preset-mantine.svg)](https://www.npmjs.com/package/tailwind-preset-mantine)
 
-A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration with [Mantine UI (v7 or v8)](https://mantine.dev/).
+A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration with [Mantine UI (>= v7)](https://mantine.dev/).
 
 ## Compatibility
 
 | Tailwind CSS Version | Mantine Version | Preset Version |
-|---------------------|-----------------|----------------|
-| v4                  | v7 or v8        | v3 (current)   |
-| v4                  | v7 or v8        | v2             |
-| v3                  | v7 or v8        | ([v1](https://github.com/songkeys/tailwind-preset-mantine/tree/v1))* |
+|----------------------|-----------------|----------------|
+| v4                   | v9              | v4 (current)   |
+| v4                   | v7 or v8        | v3             |
+| v4                   | v7 or v8        | v2             |
+| v3                   | v7 or v8        | [v1]*          |
 
 *Note: you can still use v1 for Tailwind CSS V4 via [`@config`](https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file) directive.
 
@@ -131,3 +132,5 @@ Here's a minimal template that you can use to get started:
 ## License
 
 MIT
+
+[v1]: https://github.com/songkeys/tailwind-preset-mantine/tree/v1
