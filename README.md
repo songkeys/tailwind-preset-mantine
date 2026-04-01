@@ -8,8 +8,7 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 
 | Tailwind CSS Version | Mantine Version | Preset Version |
 |----------------------|-----------------|----------------|
-| v4                   | v9              | v4 (current)   |
-| v4                   | v7 or v8        | v3             |
+| v4                   | v7 or v8 or v9  | v3 (current)   |
 | v4                   | v7 or v8        | v2             |
 | v3                   | v7 or v8        | [v1]*          |
 

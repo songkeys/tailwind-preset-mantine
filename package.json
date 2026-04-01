@@ -1,6 +1,6 @@
 {
 	"name": "tailwind-preset-mantine",
-	"version": "4.0.0",
+	"version": "3.1.0",
 	"description": "Integrate Mantine with Tailwind CSS",
 	"keywords": [
 		"mantine",
@@ -45,11 +45,8 @@
 		"bumpp": "^11.0.1"
 	},
 	"peerDependencies": {
-		"@mantine/core": "^9",
-		"@mantine/hooks": "^9",
-		"react": "^19.2.0",
-		"react-dom": "^19.2.0",
+		"@mantine/core": "^7 || ^7 || ^9",
 		"tailwindcss": "^4"
 	},
-	"packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+	"packageManager": "pnpm@10.33.0"
 }
