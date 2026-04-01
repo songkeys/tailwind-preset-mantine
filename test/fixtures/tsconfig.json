@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"allowImportingTsExtensions": true,
+		"jsx": "react-jsx",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"target": "ES2022",
+		"noEmit": true
+	},
+	"include": ["./**/*.ts", "./**/*.tsx", "./**/*.d.ts"]
+}

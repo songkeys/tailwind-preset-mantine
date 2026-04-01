@@ -1,12 +1,95 @@
 #!/usr/bin/env node
 import "tsx";
 import { writeFile } from "node:fs/promises";
+import * as nodeModule from "node:module";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 import { generateTheme } from "./generate.js";
 
 const pwd = process.cwd();
+const STYLE_EXTENSIONS = [
+	".css",
+	".scss",
+	".sass",
+	".less",
+	".styl",
+	".stylus",
+];
+const ASSET_EXTENSIONS = [
+	".svg",
+	".png",
+	".jpg",
+	".jpeg",
+	".gif",
+	".webp",
+	".avif",
+	".ico",
+	".bmp",
+	".tiff",
+	".woff",
+	".woff2",
+	".ttf",
+	".otf",
+	".eot",
+];
+
+function normalizeSpecifier(specifier) {
+	return specifier.split("?")[0]?.split("#")[0] ?? specifier;
+}
+
+function matchesExtension(specifier, extensions) {
+	const normalizedSpecifier = normalizeSpecifier(specifier);
+	return extensions.some((extension) =>
+		normalizedSpecifier.endsWith(extension),
+	);
+}
+
+function ignoreNonCodeImports() {
+	// Theme files often pull in styling and asset files, but generation only needs theme tokens.
+	const require = nodeModule.createRequire(import.meta.url);
+	const extensions = require.extensions;
+
+	for (const extension of STYLE_EXTENSIONS) {
+		if (!extensions[extension]) {
+			extensions[extension] = (module) => {
+				module.exports = {};
+			};
+		}
+	}
+
+	for (const extension of ASSET_EXTENSIONS) {
+		if (!extensions[extension]) {
+			extensions[extension] = (module) => {
+				module.exports = "__tailwind_preset_mantine_asset__";
+			};
+		}
+	}
+
+	if (typeof nodeModule.registerHooks === "function") {
+		nodeModule.registerHooks({
+			load(url, context, nextLoad) {
+				if (matchesExtension(url, STYLE_EXTENSIONS)) {
+					return {
+						format: "module",
+						shortCircuit: true,
+						source: "export default {};",
+					};
+				}
+
+				if (matchesExtension(url, ASSET_EXTENSIONS)) {
+					return {
+						format: "module",
+						shortCircuit: true,
+						source: 'export default "__tailwind_preset_mantine_asset__";',
+					};
+				}
+
+				return nextLoad(url, context);
+			},
+		});
+	}
+}
 
 // Define CLI options
 const options = {
@@ -35,6 +118,8 @@ try {
 
 	// Convert file path to URL for ESM import compatibility
 	const themeURL = pathToFileURL(themePath);
+
+	ignoreNonCodeImports();
 
 	// Execute the theme file content to get the theme object
 	const themeModule = await import(themeURL);

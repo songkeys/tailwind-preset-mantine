@@ -97,6 +97,18 @@ test("processes custom TS theme", async () => {
 	await testThemeGeneration(inputPath, "custom-theme-ts-output.css");
 });
 
+// Test: CLI should ignore stylesheet imports in the theme import graph
+test("processes theme files that import stylesheets", async () => {
+	const inputPath = join(FIXTURES_DIR, "theme-with-css-import.ts");
+	await testThemeGeneration(inputPath, "theme-with-css-import-output.css");
+});
+
+// Test: CLI should ignore asset imports in the theme import graph
+test("processes theme files that import assets through tsx modules", async () => {
+	const inputPath = join(FIXTURES_DIR, "theme-with-assets-import.ts");
+	await testThemeGeneration(inputPath, "theme-with-assets-import-output.css");
+});
+
 // Test: CLI should process CJS theme
 test("processes CJS theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "cjs-theme.cjs");

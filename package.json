@@ -34,7 +34,7 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check . --write",
 		"release": "bumpp",
-		"test": "node --test"
+		"test": "node --test test/cli.test.js"
 	},
 	"dependencies": {
 		"tsx": "^4.21.0"

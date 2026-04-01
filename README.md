@@ -112,6 +112,8 @@ export default theme;
 npx tailwind-preset-mantine theme.js -o theme.css
 ```
 
+The CLI ignores imported stylesheet and asset files in the theme import graph, so `theme.ts` can safely import CSS modules, Sass files, images, fonts, or colocated `.tsx` helper modules that reference those files.
+
 Options:
 - `-o, --output`: Output file name/location (default: "theme.css")
 
