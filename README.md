@@ -131,6 +131,8 @@ export default defineConfig({
 });
 ```
 
+The Vite plugin also watches local modules imported by your Mantine theme file, so updates to split files like `theme/colors.ts` or `theme/spacing.ts` trigger CSS rebuilds automatically.
+
 3. Import the preset and point it at your Mantine theme file:
 
 ```css

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import postcss from "postcss";
 import mantineThemePostCSS from "../src/postcss.js";
 import mantineThemeVite from "../src/vite.js";
@@ -8,6 +8,12 @@ import mantineThemeVite from "../src/vite.js";
 const CSS_ENTRY = fileURLToPath(new URL("./fixtures/app.css", import.meta.url));
 const THEME_FILE = fileURLToPath(
 	new URL("./fixtures/plugin-theme.ts", import.meta.url),
+);
+const THEME_COLORS_FILE = fileURLToPath(
+	new URL("./fixtures/theme/colors.ts", import.meta.url),
+);
+const THEME_SPACING_FILE = fileURLToPath(
+	new URL("./fixtures/theme/spacing.ts", import.meta.url),
 );
 const INPUT = `@import "tailwind-preset-mantine";
 @mantine-theme "./plugin-theme.ts";
@@ -43,6 +49,11 @@ test("Vite plugin expands @mantine-theme directives and watches the theme file",
 			addWatchFile(file) {
 				watchFiles.push(file);
 			},
+			async resolve(specifier, importer) {
+				return {
+					id: fileURLToPath(new URL(specifier, pathToFileURL(importer))),
+				};
+			},
 		},
 		INPUT,
 		CSS_ENTRY,
@@ -53,5 +64,8 @@ test("Vite plugin expands @mantine-theme directives and watches the theme file",
 		transformed.code,
 		/--spacing-xxs: var\(--mantine-spacing-xxs\);/,
 	);
-	assert.deepEqual(watchFiles, [THEME_FILE]);
+	assert.deepEqual(
+		watchFiles.sort(),
+		[THEME_COLORS_FILE, THEME_FILE, THEME_SPACING_FILE].sort(),
+	);
 });

@@ -1,3 +1,4 @@
+import { collectThemeDependencies } from "./theme-dependencies.js";
 import { expandMantineThemeDirectives } from "./transform-theme-directives.js";
 
 export default function mantineTheme() {
@@ -20,7 +21,30 @@ export default function mantineTheme() {
 				return null;
 			}
 
+			const watchedFiles = new Set();
+
 			for (const file of dependencies) {
+				const transitiveDependencies = await collectThemeDependencies(
+					file,
+					async (specifier, importer) => {
+						const resolved = await this.resolve(specifier, importer, {
+							skipSelf: true,
+						});
+
+						if (resolved?.external) {
+							return null;
+						}
+
+						return resolved?.id ?? null;
+					},
+				);
+
+				for (const dependency of transitiveDependencies) {
+					watchedFiles.add(dependency);
+				}
+			}
+
+			for (const file of watchedFiles) {
 				this.addWatchFile(file);
 			}
 

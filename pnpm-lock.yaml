@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      es-module-lexer:
+        specifier: ^1.7.0
+        version: 1.7.0
       postcss:
         specifier: ^8.5.6
         version: 8.5.8
@@ -300,6 +303,9 @@ packages:
 
   detect-node-es@1.1.0:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
+
+  es-module-lexer@1.7.0:
+    resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
 
   esbuild@0.27.4:
     resolution: {integrity: sha512-Rq4vbHnYkK5fws5NF7MYTU68FPRE1ajX7heQ/8QXXWqNgqqJ/GkmmyxIzUnf2Sr/bakf8l54716CcMGHYhMrrQ==}
@@ -659,6 +665,8 @@ snapshots:
   defu@6.1.4: {}
 
   detect-node-es@1.1.0: {}
+
+  es-module-lexer@1.7.0: {}
 
   esbuild@0.27.4:
     optionalDependencies:
