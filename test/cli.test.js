@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { access, unlink } from "node:fs/promises";
+import { access, readFile, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -51,18 +51,23 @@ async function cleanupFile(filepath) {
 }
 
 // Helper function to run theme generation test
-async function testThemeGeneration(fixturePath, outputPath) {
+async function testThemeGeneration(fixturePath, outputPath, options = {}) {
+	const { extraArgs = [], assertOutput } = options;
+
 	try {
 		const { code, stdout, stderr } = await runCLI([
 			fixturePath,
 			"-o",
 			outputPath,
+			...extraArgs,
 		]);
 		assert.equal(code, 0, `CLI failed with error: ${stderr}`);
 		assert.match(stdout, /Successfully generated/);
 
 		// Verify file exists
 		await access(outputPath);
+		const css = await readFile(outputPath, "utf8");
+		await assertOutput?.(css);
 
 		// Clean up
 		await cleanupFile(outputPath);
@@ -114,6 +119,18 @@ test("processes CJS theme", async () => {
 	await testThemeGeneration(inputPath, "cjs-theme-output.css");
 });
 
+test("supports standalone output format", async () => {
+	const inputPath = join(FIXTURES_DIR, "custom-theme-ts.ts");
+	await testThemeGeneration(inputPath, "standalone-theme-output.css", {
+		extraArgs: ["--format", "standalone"],
+		assertOutput: async (css) => {
+			assert.match(css, /@layer mantine {/);
+			assert.match(css, /--mantine-color-deep-red-0:|--mantine-spacing-xs:/);
+			assert.match(css, /--spacing-xs: var\(--mantine-spacing-xs\);/);
+		},
+	});
+});
+
 // Test: CLI should handle custom output path
 test("handles custom output path with --output flag", async () => {
 	const inputPath = join(FIXTURES_DIR, "default-theme.js");
@@ -133,6 +150,13 @@ test("handles invalid input file", async () => {
 	const { code, stderr } = await runCLI(["non-existent-file.js"]);
 	assert.equal(code, 1);
 	assert.match(stderr, /Error generating theme/);
+});
+
+test("handles invalid output format", async () => {
+	const inputPath = join(FIXTURES_DIR, "default-theme.js");
+	const { code, stderr } = await runCLI([inputPath, "--format", "unknown"]);
+	assert.equal(code, 1);
+	assert.match(stderr, /Invalid output format/);
 });
 
 // Test: CLI should handle invalid file content

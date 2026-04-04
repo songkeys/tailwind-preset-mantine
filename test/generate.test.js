@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { createTheme } from "@mantine/core";
-import { generateTheme } from "../src/core/generate.js";
+import {
+	generateStandaloneTheme,
+	generateTheme,
+} from "../src/core/generate.js";
 
 test("generateTheme emits merged Mantine namespaces for custom theme keys", () => {
 	const css = generateTheme(
@@ -89,6 +92,46 @@ test("generateTheme keeps breakpoint reset needed by Tailwind responsive utiliti
 	assert.match(css, /--breakpoint-\*: initial;/);
 	assert.match(css, /--breakpoint-xs: 36em;/);
 	assert.doesNotMatch(css, /--breakpoint-xs: var\(--mantine-breakpoint-xs\);/);
+});
+
+test("generateStandaloneTheme emits Mantine variables and Tailwind aliases", () => {
+	const css = generateStandaloneTheme(
+		createTheme({
+			primaryColor: "deep-red",
+			colors: {
+				"deep-red": [
+					"#fff5f5",
+					"#ffe3e3",
+					"#ffc9c9",
+					"#ffa8a8",
+					"#ff8787",
+					"#ff6b6b",
+					"#fa5252",
+					"#f03e3e",
+					"#e03131",
+					"#c92a2a",
+				],
+			},
+			spacing: { xxs: "0.5rem" },
+		}),
+	);
+
+	assert.match(css, /@layer mantine {/);
+	assert.match(css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
+	assert.match(
+		css,
+		/--mantine-primary-color-filled:\s*var\(--mantine-color-deep-red-filled\);/,
+	);
+	assert.match(
+		css,
+		/:root\[data-mantine-color-scheme="dark"\], :host\(\[data-mantine-color-scheme="dark"\]\)\{/,
+	);
+	assert.match(css, /@theme inline {/);
+	assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
+	assert.match(
+		css,
+		/--color-primary-outline: var\(--mantine-color-deep-red-outline\);/,
+	);
 });
 
 test("generated index.css imports theme.css instead of duplicating theme content", () => {

@@ -146,6 +146,23 @@ This keeps the default preset import path unchanged while still generating Tailw
 
 The theme loader ignores imported stylesheet and common asset files in the theme import graph, so `mantine-theme.ts` can safely import CSS modules, Sass files, images, fonts, or colocated `.tsx` helper modules that reference those files.
 
+### Standalone pages without MantineProvider
+
+If a page does not render `MantineProvider` but still needs your custom Mantine variables, use `@mantine-standalone` instead of `@mantine-theme`:
+
+```css
+@import "tailwind-preset-mantine";
+@mantine-standalone "./mantine-theme.ts";
+```
+
+This generates both:
+- Mantine CSS variables like `--mantine-color-*` and `--mantine-spacing-*`
+- Tailwind aliases like `--color-*` and `--spacing-*`
+
+`@mantine-standalone` defaults to the light color scheme. To use the dark scheme on a standalone page, set `data-mantine-color-scheme="dark"` on the document root or host element.
+
+If you already render `MantineProvider` on the same page, prefer `@mantine-theme` instead. `@mantine-standalone` is meant for routes or templates that do not get Mantine runtime variable injection.
+
 ### CLI fallback
 
 If your setup does not use PostCSS or Vite, you can still pre-generate the theme CSS using the CLI:
@@ -156,6 +173,7 @@ npx tailwind-preset-mantine mantine-theme.ts -o theme.css
 
 Options:
 - `-o, --output`: Output file name/location (default: "theme.css")
+- `--format theme|standalone`: Output either Tailwind aliases only (`theme`, default) or Mantine variables plus Tailwind aliases (`standalone`)
 
 Then import the generated file after the preset:
 
@@ -163,6 +181,8 @@ Then import the generated file after the preset:
 @import "tailwind-preset-mantine";
 @import "./theme.css";
 ```
+
+Use `--format standalone` when generating CSS for pages that do not render `MantineProvider`.
 
 ## Minimal template
 

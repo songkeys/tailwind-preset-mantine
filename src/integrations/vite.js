@@ -6,7 +6,11 @@ export default function mantineTheme() {
 		name: "tailwind-preset-mantine",
 		enforce: "pre",
 		async transform(code, id) {
-			if (!id.includes(".css") || !code.includes("@mantine-theme")) {
+			if (
+				!id.includes(".css") ||
+				(!code.includes("@mantine-theme") &&
+					!code.includes("@mantine-standalone"))
+			) {
 				return null;
 			}
 
