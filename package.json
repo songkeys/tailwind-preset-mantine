@@ -39,14 +39,18 @@
 		"test": "node --test"
 	},
 	"dependencies": {
-		"es-module-lexer": "^1.7.0",
+		"es-module-lexer": "^2.0.0",
 		"postcss": "^8.5.6",
 		"tsx": "^4.21.0"
 	},
 	"devDependencies": {
+		"@tailwindcss/postcss": "^4",
+		"@tailwindcss/vite": "^4",
 		"@biomejs/biome": "^2.4.10",
 		"@mantine/core": "^9",
-		"bumpp": "^11.0.1"
+		"bumpp": "^11.0.1",
+		"tailwindcss": "^4",
+		"vite": "^7"
 	},
 	"peerDependencies": {
 		"@mantine/core": "^7 || ^7 || ^9",
