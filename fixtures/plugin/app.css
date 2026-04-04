@@ -1,0 +1,3 @@
+@import "tailwind-preset-mantine";
+/* biome-ignore lint/suspicious/noUnknownAtRules: custom directive handled by the Tailwind preset plugin */
+@mantine-theme "./plugin-theme.ts";

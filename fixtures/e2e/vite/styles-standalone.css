@@ -1,0 +1,4 @@
+@import "../../../src/index.css";
+@source "./index-standalone.html";
+/* biome-ignore lint/suspicious/noUnknownAtRules: custom directive handled by the Tailwind preset plugin */
+@mantine-standalone "../shared/plugin-theme.ts";

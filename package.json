@@ -1,6 +1,6 @@
 {
 	"name": "tailwind-preset-mantine",
-	"version": "3.1.0",
+	"version": "4.0.0-alpha.3",
 	"description": "Integrate Mantine with Tailwind CSS",
 	"keywords": [
 		"mantine",
@@ -20,15 +20,20 @@
 	"type": "module",
 	"exports": {
 		".": "./src/index.css",
-		"./theme.css": "./src/theme.css"
+		"./theme.css": "./src/theme.css",
+		"./postcss": "./src/integrations/postcss.js",
+		"./vite": "./src/integrations/vite.js"
 	},
 	"main": "src/index.css",
 	"bin": {
-		"tailwind-preset-mantine": "./src/cli.js"
+		"tailwind-preset-mantine": "src/cli/index.js"
 	},
 	"files": [
 		"src"
 	],
+	"engines": {
+		"node": ">=22.15.0"
+	},
 	"scripts": {
 		"generate": "node scripts/generate.js",
 		"lint": "biome check .",
@@ -37,12 +42,18 @@
 		"test": "node --test"
 	},
 	"dependencies": {
+		"es-module-lexer": "^2.0.0",
+		"postcss": "^8.5.6",
 		"tsx": "^4.21.0"
 	},
 	"devDependencies": {
+		"@tailwindcss/postcss": "^4",
+		"@tailwindcss/vite": "^4",
 		"@biomejs/biome": "^2.4.10",
 		"@mantine/core": "^9",
-		"bumpp": "^11.0.1"
+		"bumpp": "^11.0.1",
+		"tailwindcss": "^4",
+		"vite": "^7"
 	},
 	"peerDependencies": {
 		"@mantine/core": "^7 || ^7 || ^9",
