@@ -142,6 +142,8 @@ The Vite plugin also watches local modules imported by your Mantine theme file, 
 
 This keeps the default preset import path unchanged while still generating Tailwind theme variables from your merged Mantine theme during development and production builds.
 
+The theme loader ignores imported stylesheet and common asset files in the theme import graph, so `mantine-theme.ts` can safely import CSS modules, Sass files, images, fonts, or colocated `.tsx` helper modules that reference those files.
+
 ### CLI fallback
 
 If your setup does not use PostCSS or Vite, you can still pre-generate the theme CSS using the CLI:

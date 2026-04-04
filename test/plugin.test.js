@@ -18,6 +18,9 @@ const THEME_COLORS_FILE = fileURLToPath(
 const THEME_SPACING_FILE = fileURLToPath(
 	new URL("../fixtures/plugin/theme/spacing.ts", import.meta.url),
 );
+const LOADER_THEME_WITH_ASSETS_FILE = fileURLToPath(
+	new URL("../fixtures/loader/theme-with-assets-import.ts", import.meta.url),
+);
 const INPUT = readFileSync(CSS_ENTRY, "utf8");
 
 test("PostCSS plugin expands @mantine-theme directives into Tailwind theme variables", async () => {
@@ -39,6 +42,20 @@ test("PostCSS plugin expands @mantine-theme directives into Tailwind theme varia
 				message.file === THEME_FILE &&
 				message.parent === CSS_ENTRY,
 		),
+	);
+});
+
+test("PostCSS plugin loads theme graphs that import stylesheets and assets", async () => {
+	const result = await postcss([mantineThemePostCSS()]).process(
+		`@mantine-theme "${LOADER_THEME_WITH_ASSETS_FILE}";`,
+		{
+			from: CSS_ENTRY,
+		},
+	);
+
+	assert.match(
+		result.css,
+		/--color-forest-500: var\(--mantine-color-forest-5\);/,
 	);
 });
 

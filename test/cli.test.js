@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const CLI_PATH = join(__dirname, "../src/cli/index.js");
 const FIXTURES_DIR = join(__dirname, "../fixtures/cli");
+const LOADER_FIXTURES_DIR = join(__dirname, "../fixtures/loader");
 
 // Helper function to run CLI with args
 async function runCLI(args = []) {
@@ -95,6 +96,16 @@ test("processes custom JS theme", async () => {
 test("processes custom TS theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "custom-theme-ts.ts");
 	await testThemeGeneration(inputPath, "custom-theme-ts-output.css");
+});
+
+test("processes theme files that import stylesheets", async () => {
+	const inputPath = join(LOADER_FIXTURES_DIR, "theme-with-css-import.ts");
+	await testThemeGeneration(inputPath, "theme-with-css-import-output.css");
+});
+
+test("processes theme files that import assets through tsx modules", async () => {
+	const inputPath = join(LOADER_FIXTURES_DIR, "theme-with-assets-import.ts");
+	await testThemeGeneration(inputPath, "theme-with-assets-import-output.css");
 });
 
 // Test: CLI should process CJS theme
