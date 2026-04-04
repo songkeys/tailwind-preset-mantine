@@ -20,7 +20,9 @@
 	"type": "module",
 	"exports": {
 		".": "./src/index.css",
-		"./theme.css": "./src/theme.css"
+		"./theme.css": "./src/theme.css",
+		"./postcss": "./src/postcss.js",
+		"./vite": "./src/vite.js"
 	},
 	"main": "src/index.css",
 	"bin": {
@@ -37,6 +39,7 @@
 		"test": "node --test"
 	},
 	"dependencies": {
+		"postcss": "^8.5.6",
 		"tsx": "^4.21.0"
 	},
 	"devDependencies": {

@@ -69,11 +69,11 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 ### Custom mantine theme
 
-If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), you can create a theme file using `@mantine/core`'s `createTheme` function and generate the CSS using our CLI:
+If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), the recommended v4 setup is to keep the default preset import and point to your theme file directly from CSS using `@mantine-theme`.
 
-1. Create a theme file (e.g., `theme.js`):
+1. Create a theme file (e.g., `mantine-theme.ts`):
 
-```js
+```ts
 import { createTheme } from "@mantine/core";
 
 const theme = createTheme({
@@ -106,20 +106,56 @@ const theme = createTheme({
 export default theme;
 ```
 
-2. Generate the CSS using our CLI:
+2. Expand the `@mantine-theme` directive during CSS compilation.
+
+PostCSS:
+
+```js
+import mantineTheme from "tailwind-preset-mantine/postcss";
+import tailwindcss from "@tailwindcss/postcss";
+
+export default {
+  plugins: [mantineTheme(), tailwindcss()],
+};
+```
+
+Vite:
+
+```ts
+import { defineConfig } from "vite";
+import mantineTheme from "tailwind-preset-mantine/vite";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [mantineTheme(), tailwindcss()],
+});
+```
+
+3. Import the preset and point it at your Mantine theme file:
+
+```css
+@import "tailwind-preset-mantine";
+@mantine-theme "./mantine-theme.ts";
+```
+
+This keeps the default preset import path unchanged while still generating Tailwind theme variables from your merged Mantine theme during development and production builds.
+
+### CLI fallback
+
+If your setup does not use PostCSS or Vite, you can still pre-generate the theme CSS using the CLI:
 
 ```bash
-npx tailwind-preset-mantine theme.js -o theme.css
+npx tailwind-preset-mantine mantine-theme.ts -o theme.css
 ```
 
 Options:
 - `-o, --output`: Output file name/location (default: "theme.css")
 
-3. Import the generated CSS file in your application:
+Then import the generated file after the preset:
 
 ```css
 @import "tailwind-preset-mantine";
-@import "./theme.css"; /* <-- add the generated theme */
+@import "./theme.css";
 ```
 
 ## Minimal template
