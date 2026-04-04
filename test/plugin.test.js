@@ -1,23 +1,24 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import postcss from "postcss";
-import mantineThemePostCSS from "../src/postcss.js";
-import mantineThemeVite from "../src/vite.js";
+import mantineThemePostCSS from "../src/integrations/postcss.js";
+import mantineThemeVite from "../src/integrations/vite.js";
 
-const CSS_ENTRY = fileURLToPath(new URL("./fixtures/app.css", import.meta.url));
+const CSS_ENTRY = fileURLToPath(
+	new URL("../fixtures/plugin/app.css", import.meta.url),
+);
 const THEME_FILE = fileURLToPath(
-	new URL("./fixtures/plugin-theme.ts", import.meta.url),
+	new URL("../fixtures/plugin/plugin-theme.ts", import.meta.url),
 );
 const THEME_COLORS_FILE = fileURLToPath(
-	new URL("./fixtures/theme/colors.ts", import.meta.url),
+	new URL("../fixtures/plugin/theme/colors.ts", import.meta.url),
 );
 const THEME_SPACING_FILE = fileURLToPath(
-	new URL("./fixtures/theme/spacing.ts", import.meta.url),
+	new URL("../fixtures/plugin/theme/spacing.ts", import.meta.url),
 );
-const INPUT = `@import "tailwind-preset-mantine";
-@mantine-theme "./plugin-theme.ts";
-`;
+const INPUT = readFileSync(CSS_ENTRY, "utf8");
 
 test("PostCSS plugin expands @mantine-theme directives into Tailwind theme variables", async () => {
 	const result = await postcss([mantineThemePostCSS()]).process(INPUT, {

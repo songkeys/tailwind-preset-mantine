@@ -21,12 +21,12 @@
 	"exports": {
 		".": "./src/index.css",
 		"./theme.css": "./src/theme.css",
-		"./postcss": "./src/postcss.js",
-		"./vite": "./src/vite.js"
+		"./postcss": "./src/integrations/postcss.js",
+		"./vite": "./src/integrations/vite.js"
 	},
 	"main": "src/index.css",
 	"bin": {
-		"tailwind-preset-mantine": "src/cli.js"
+		"tailwind-preset-mantine": "src/cli/index.js"
 	},
 	"files": [
 		"src"

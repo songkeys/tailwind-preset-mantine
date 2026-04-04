@@ -1,4 +1,4 @@
-import { collectThemeDependencies } from "./theme-dependencies.js";
+import { collectThemeDependencies } from "../core/theme-dependencies.js";
 import { expandMantineThemeDirectives } from "./transform-theme-directives.js";
 
 export default function mantineTheme() {

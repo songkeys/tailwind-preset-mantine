@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { createTheme } from "@mantine/core";
-import { generateTheme } from "../src/generate.js";
+import { generateTheme } from "../src/core/generate.js";
 
 test("generateTheme emits merged Mantine namespaces for custom theme keys", () => {
 	const css = generateTheme(

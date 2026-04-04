@@ -2,8 +2,8 @@
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
-import { generateTheme } from "./generate.js";
-import { loadThemeFromFile } from "./theme-loader.js";
+import { generateTheme } from "../core/generate.js";
+import { loadThemeFromFile } from "../core/theme-loader.js";
 
 const pwd = process.cwd();
 

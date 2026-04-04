@@ -6,8 +6,8 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const CLI_PATH = join(__dirname, "../src/cli.js");
-const FIXTURES_DIR = join(__dirname, "fixtures");
+const CLI_PATH = join(__dirname, "../src/cli/index.js");
+const FIXTURES_DIR = join(__dirname, "../fixtures/cli");
 
 // Helper function to run CLI with args
 async function runCLI(args = []) {

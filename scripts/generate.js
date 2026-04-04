@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { generateDefaultImports, generateTheme } from "../src/generate.js";
+import { generateDefaultImports, generateTheme } from "../src/core/generate.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
