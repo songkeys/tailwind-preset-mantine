@@ -217,7 +217,6 @@
 	--color-dark-light-color: var(--mantine-color-dark-light-color);
 	--color-dark-outline: var(--mantine-color-dark-outline);
 	--color-dark-outline-hover: var(--mantine-color-dark-outline-hover);
-	--color-dark-contrast: var(--mantine-color-dark-contrast);
 	--color-gray-text: var(--mantine-color-gray-text);
 	--color-gray-filled: var(--mantine-color-gray-filled);
 	--color-gray-filled-hover: var(--mantine-color-gray-filled-hover);
@@ -226,7 +225,6 @@
 	--color-gray-light-color: var(--mantine-color-gray-light-color);
 	--color-gray-outline: var(--mantine-color-gray-outline);
 	--color-gray-outline-hover: var(--mantine-color-gray-outline-hover);
-	--color-gray-contrast: var(--mantine-color-gray-contrast);
 	--color-red-text: var(--mantine-color-red-text);
 	--color-red-filled: var(--mantine-color-red-filled);
 	--color-red-filled-hover: var(--mantine-color-red-filled-hover);
@@ -235,7 +233,6 @@
 	--color-red-light-color: var(--mantine-color-red-light-color);
 	--color-red-outline: var(--mantine-color-red-outline);
 	--color-red-outline-hover: var(--mantine-color-red-outline-hover);
-	--color-red-contrast: var(--mantine-color-red-contrast);
 	--color-pink-text: var(--mantine-color-pink-text);
 	--color-pink-filled: var(--mantine-color-pink-filled);
 	--color-pink-filled-hover: var(--mantine-color-pink-filled-hover);
@@ -244,7 +241,6 @@
 	--color-pink-light-color: var(--mantine-color-pink-light-color);
 	--color-pink-outline: var(--mantine-color-pink-outline);
 	--color-pink-outline-hover: var(--mantine-color-pink-outline-hover);
-	--color-pink-contrast: var(--mantine-color-pink-contrast);
 	--color-grape-text: var(--mantine-color-grape-text);
 	--color-grape-filled: var(--mantine-color-grape-filled);
 	--color-grape-filled-hover: var(--mantine-color-grape-filled-hover);
@@ -253,7 +249,6 @@
 	--color-grape-light-color: var(--mantine-color-grape-light-color);
 	--color-grape-outline: var(--mantine-color-grape-outline);
 	--color-grape-outline-hover: var(--mantine-color-grape-outline-hover);
-	--color-grape-contrast: var(--mantine-color-grape-contrast);
 	--color-violet-text: var(--mantine-color-violet-text);
 	--color-violet-filled: var(--mantine-color-violet-filled);
 	--color-violet-filled-hover: var(--mantine-color-violet-filled-hover);
@@ -262,7 +257,6 @@
 	--color-violet-light-color: var(--mantine-color-violet-light-color);
 	--color-violet-outline: var(--mantine-color-violet-outline);
 	--color-violet-outline-hover: var(--mantine-color-violet-outline-hover);
-	--color-violet-contrast: var(--mantine-color-violet-contrast);
 	--color-indigo-text: var(--mantine-color-indigo-text);
 	--color-indigo-filled: var(--mantine-color-indigo-filled);
 	--color-indigo-filled-hover: var(--mantine-color-indigo-filled-hover);
@@ -271,7 +265,6 @@
 	--color-indigo-light-color: var(--mantine-color-indigo-light-color);
 	--color-indigo-outline: var(--mantine-color-indigo-outline);
 	--color-indigo-outline-hover: var(--mantine-color-indigo-outline-hover);
-	--color-indigo-contrast: var(--mantine-color-indigo-contrast);
 	--color-blue-text: var(--mantine-color-blue-text);
 	--color-blue-filled: var(--mantine-color-blue-filled);
 	--color-blue-filled-hover: var(--mantine-color-blue-filled-hover);
@@ -280,7 +273,6 @@
 	--color-blue-light-color: var(--mantine-color-blue-light-color);
 	--color-blue-outline: var(--mantine-color-blue-outline);
 	--color-blue-outline-hover: var(--mantine-color-blue-outline-hover);
-	--color-blue-contrast: var(--mantine-color-blue-contrast);
 	--color-cyan-text: var(--mantine-color-cyan-text);
 	--color-cyan-filled: var(--mantine-color-cyan-filled);
 	--color-cyan-filled-hover: var(--mantine-color-cyan-filled-hover);
@@ -289,7 +281,6 @@
 	--color-cyan-light-color: var(--mantine-color-cyan-light-color);
 	--color-cyan-outline: var(--mantine-color-cyan-outline);
 	--color-cyan-outline-hover: var(--mantine-color-cyan-outline-hover);
-	--color-cyan-contrast: var(--mantine-color-cyan-contrast);
 	--color-teal-text: var(--mantine-color-teal-text);
 	--color-teal-filled: var(--mantine-color-teal-filled);
 	--color-teal-filled-hover: var(--mantine-color-teal-filled-hover);
@@ -298,7 +289,6 @@
 	--color-teal-light-color: var(--mantine-color-teal-light-color);
 	--color-teal-outline: var(--mantine-color-teal-outline);
 	--color-teal-outline-hover: var(--mantine-color-teal-outline-hover);
-	--color-teal-contrast: var(--mantine-color-teal-contrast);
 	--color-green-text: var(--mantine-color-green-text);
 	--color-green-filled: var(--mantine-color-green-filled);
 	--color-green-filled-hover: var(--mantine-color-green-filled-hover);
@@ -307,7 +297,6 @@
 	--color-green-light-color: var(--mantine-color-green-light-color);
 	--color-green-outline: var(--mantine-color-green-outline);
 	--color-green-outline-hover: var(--mantine-color-green-outline-hover);
-	--color-green-contrast: var(--mantine-color-green-contrast);
 	--color-lime-text: var(--mantine-color-lime-text);
 	--color-lime-filled: var(--mantine-color-lime-filled);
 	--color-lime-filled-hover: var(--mantine-color-lime-filled-hover);
@@ -316,7 +305,6 @@
 	--color-lime-light-color: var(--mantine-color-lime-light-color);
 	--color-lime-outline: var(--mantine-color-lime-outline);
 	--color-lime-outline-hover: var(--mantine-color-lime-outline-hover);
-	--color-lime-contrast: var(--mantine-color-lime-contrast);
 	--color-yellow-text: var(--mantine-color-yellow-text);
 	--color-yellow-filled: var(--mantine-color-yellow-filled);
 	--color-yellow-filled-hover: var(--mantine-color-yellow-filled-hover);
@@ -325,7 +313,6 @@
 	--color-yellow-light-color: var(--mantine-color-yellow-light-color);
 	--color-yellow-outline: var(--mantine-color-yellow-outline);
 	--color-yellow-outline-hover: var(--mantine-color-yellow-outline-hover);
-	--color-yellow-contrast: var(--mantine-color-yellow-contrast);
 	--color-orange-text: var(--mantine-color-orange-text);
 	--color-orange-filled: var(--mantine-color-orange-filled);
 	--color-orange-filled-hover: var(--mantine-color-orange-filled-hover);
@@ -334,7 +321,6 @@
 	--color-orange-light-color: var(--mantine-color-orange-light-color);
 	--color-orange-outline: var(--mantine-color-orange-outline);
 	--color-orange-outline-hover: var(--mantine-color-orange-outline-hover);
-	--color-orange-contrast: var(--mantine-color-orange-contrast);
 
 	/* spacing */
 	--spacing-xs: var(--mantine-spacing-xs);

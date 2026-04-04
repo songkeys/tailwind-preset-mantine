@@ -8,9 +8,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const defaultImports = generateDefaultImports();
 const theme = generateTheme();
+const indexTheme = generateTheme(undefined, { includeComment: false });
 
 fs.writeFileSync(path.join(__dirname, "../src/theme.css"), theme);
 fs.writeFileSync(
 	path.join(__dirname, "../src/index.css"),
-	defaultImports + theme,
+	defaultImports + indexTheme,
 );
