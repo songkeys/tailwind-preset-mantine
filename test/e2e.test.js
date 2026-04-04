@@ -29,6 +29,15 @@ function assertGeneratedUtilities(css) {
 		/\.text-primary-text\s*\{\s*color:\s*var\(--mantine-color-deep-red-text\);/m,
 	);
 	assert.match(css, /\.basis-md\s*\{\s*flex-basis:\s*var\(--size-md\);/m);
+	assert.ok(
+		/\.\\@xs\\\/navbar\\:block\s*\{\s*@container navbar \(width >= 20rem\)\s*\{\s*display:\s*block;/m.test(
+			css,
+		) ||
+			/@container navbar \(min-width:\s*20rem\)\s*\{\s*\.\\@xs\\\/navbar\\:block\s*\{\s*display:\s*block;/m.test(
+				css,
+			),
+		"Expected Tailwind to generate the @xs/navbar:block container query variant",
+	);
 }
 
 async function findBuiltCssFile(directory) {

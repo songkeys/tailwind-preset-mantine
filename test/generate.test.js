@@ -77,7 +77,7 @@ test("generateTheme preserves Tailwind sizing workarounds without forcing contai
 	assert.match(css, /--min-width-xs: var\(--size-xs\);/);
 	assert.match(css, /--max-width-xs: var\(--size-xs\);/);
 	assert.match(css, /--flex-basis-xs: var\(--size-xs\);/);
-	assert.match(css, /--container-xs: var\(--size-xs\);/);
+	assert.match(css, /--container-xs: 20rem;/);
 	assert.doesNotMatch(css, /--height-xs:/);
 	assert.doesNotMatch(css, /--min-height-xs:/);
 	assert.doesNotMatch(css, /--max-height-xs:/);

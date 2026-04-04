@@ -198,7 +198,7 @@ export function generateTheme(theme = DEFAULT_THEME) {
 		([key, value]) => `--size-${key}: ${value};`,
 	).join("\n\t")}
 	${DEFAULT_CONTAINER_SIZES.map(
-		([key]) => `--container-${key}: var(--size-${key});`,
+		([key, value]) => `--container-${key}: ${value};`,
 	).join("\n\t")}
 	${DEFAULT_CONTAINER_SIZES.map(
 		([key]) => `--width-${key}: var(--size-${key});`,
