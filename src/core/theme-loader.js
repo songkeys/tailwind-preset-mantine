@@ -58,6 +58,12 @@ function installThemeImportHooks() {
 		return;
 	}
 
+	if (typeof nodeModule.registerHooks !== "function") {
+		throw new Error(
+			"Build-time Mantine theme loading requires Node.js 22.15.0 or newer because it depends on node:module.registerHooks().",
+		);
+	}
+
 	themeImportHooksInstalled = true;
 
 	const require = nodeModule.createRequire(import.meta.url);
@@ -79,29 +85,27 @@ function installThemeImportHooks() {
 		}
 	}
 
-	if (typeof nodeModule.registerHooks === "function") {
-		nodeModule.registerHooks({
-			load(url, context, nextLoad) {
-				if (matchesExtension(url, STYLE_EXTENSIONS)) {
-					return {
-						format: "module",
-						shortCircuit: true,
-						source: "export default {};",
-					};
-				}
+	nodeModule.registerHooks({
+		load(url, context, nextLoad) {
+			if (matchesExtension(url, STYLE_EXTENSIONS)) {
+				return {
+					format: "module",
+					shortCircuit: true,
+					source: "export default {};",
+				};
+			}
 
-				if (matchesExtension(url, ASSET_EXTENSIONS)) {
-					return {
-						format: "module",
-						shortCircuit: true,
-						source: `export default ${JSON.stringify(ASSET_STUB)};`,
-					};
-				}
+			if (matchesExtension(url, ASSET_EXTENSIONS)) {
+				return {
+					format: "module",
+					shortCircuit: true,
+					source: `export default ${JSON.stringify(ASSET_STUB)};`,
+				};
+			}
 
-				return nextLoad(url, context);
-			},
-		});
-	}
+			return nextLoad(url, context);
+		},
+	});
 }
 
 /**

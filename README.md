@@ -71,6 +71,8 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), the recommended v4 setup is to keep the default preset import and point to your theme file directly from CSS using `@mantine-theme`.
 
+Build-time custom theme loading requires Node.js 22.15.0 or newer.
+
 1. Create a theme file (e.g., `mantine-theme.ts`):
 
 ```ts

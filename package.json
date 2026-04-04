@@ -31,6 +31,9 @@
 	"files": [
 		"src"
 	],
+	"engines": {
+		"node": ">=22.15.0"
+	},
 	"scripts": {
 		"generate": "node scripts/generate.js",
 		"lint": "biome check .",
