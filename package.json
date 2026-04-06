@@ -21,8 +21,14 @@
 	"exports": {
 		".": "./src/index.css",
 		"./theme.css": "./src/theme.css",
-		"./postcss": "./src/integrations/postcss.js",
-		"./vite": "./src/integrations/vite.js"
+		"./postcss": {
+			"types": "./src/integrations/postcss.d.ts",
+			"default": "./src/integrations/postcss.js"
+		},
+		"./vite": {
+			"types": "./src/integrations/vite.d.ts",
+			"default": "./src/integrations/vite.js"
+		}
 	},
 	"main": "src/index.css",
 	"bin": {
