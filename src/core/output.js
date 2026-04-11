@@ -1,35 +1,44 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { generateStandaloneTheme, generateTheme } from "./generate.js";
+import { generateManagedStylesheet } from "./generate.js";
 import { collectThemeDependencies } from "./theme-dependencies.js";
 import { loadThemeFromFile } from "./theme-loader.js";
 
-const OUTPUT_FORMAT_GENERATORS = {
-	theme: generateTheme,
-	standalone: generateStandaloneTheme,
-};
+const OUTPUT_FORMATS = ["theme", "standalone"];
 
 function validateOptions(options) {
 	if (!options?.input) {
 		throw new Error("Missing required `input` option.");
 	}
-
-	if (!options?.output) {
-		throw new Error("Missing required `output` option.");
-	}
 }
 
 export function validateOutputFormat(format = "theme") {
-	if (!(format in OUTPUT_FORMAT_GENERATORS)) {
+	if (!OUTPUT_FORMATS.includes(format)) {
 		throw new Error(
-			`Invalid output format: ${format}. Expected one of: ${Object.keys(OUTPUT_FORMAT_GENERATORS).join(", ")}`,
+			`Invalid output format: ${format}. Expected one of: ${OUTPUT_FORMATS.join(", ")}`,
 		);
 	}
 }
 
 /**
- * @param {{ input: string, output: string, format?: "theme" | "standalone" }} options
+ * @param {string} inputPath
+ * @param {string | undefined} output
+ * @param {string} baseDir
+ */
+function resolveOutputPath(inputPath, output, baseDir) {
+	if (output) {
+		return resolve(baseDir, output);
+	}
+
+	const inputDirectory = dirname(inputPath);
+	const inputFilename = basename(inputPath, extname(inputPath));
+
+	return join(inputDirectory, `${inputFilename}.css`);
+}
+
+/**
+ * @param {{ input: string, output?: string, format?: "theme" | "standalone" }} options
  * @param {string} [baseDir]
  */
 export function resolveThemeOutputOptions(options, baseDir = process.cwd()) {
@@ -37,10 +46,11 @@ export function resolveThemeOutputOptions(options, baseDir = process.cwd()) {
 
 	const format = options.format ?? "theme";
 	validateOutputFormat(format);
+	const inputPath = resolve(baseDir, options.input);
 
 	return {
-		inputPath: resolve(baseDir, options.input),
-		outputPath: resolve(baseDir, options.output),
+		inputPath,
+		outputPath: resolveOutputPath(inputPath, options.output, baseDir),
 		format,
 	};
 }
@@ -66,7 +76,7 @@ async function resolveThemeImport(specifier, importer) {
 }
 
 /**
- * @param {{ input: string, output: string, format?: "theme" | "standalone" }} options
+ * @param {{ input: string, output?: string, format?: "theme" | "standalone" }} options
  * @param {{ baseDir?: string, resolveImport?: (specifier: string, importer: string) => Promise<string | null> }} [runtimeOptions]
  */
 export async function buildThemeOutput(options, runtimeOptions = {}) {
@@ -77,7 +87,7 @@ export async function buildThemeOutput(options, runtimeOptions = {}) {
 		baseDir,
 	);
 	const { absolutePath, theme } = await loadThemeFromFile(inputPath);
-	const css = OUTPUT_FORMAT_GENERATORS[format](theme);
+	const css = generateManagedStylesheet(theme, format);
 	const dependencies = await collectThemeDependencies(
 		absolutePath,
 		resolveImport,
@@ -93,7 +103,7 @@ export async function buildThemeOutput(options, runtimeOptions = {}) {
 }
 
 /**
- * @param {{ input: string, output: string, format?: "theme" | "standalone" }} options
+ * @param {{ input: string, output?: string, format?: "theme" | "standalone" }} options
  * @param {{ baseDir?: string, resolveImport?: (specifier: string, importer: string) => Promise<string | null> }} [runtimeOptions]
  */
 export async function writeThemeOutput(options, runtimeOptions = {}) {

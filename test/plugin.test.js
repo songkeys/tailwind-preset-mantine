@@ -47,6 +47,7 @@ test("PostCSS plugin generates theme output and reports theme dependencies", asy
 		});
 
 		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
 		assert.match(css, /@theme inline {/);
 		assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
 		assert.match(
@@ -80,6 +81,7 @@ test("PostCSS plugin supports standalone output", async () => {
 		});
 
 		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
 		assert.match(css, /@layer mantine {/);
 		assert.match(css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
 		assert.match(css, /@theme inline {/);
@@ -103,6 +105,7 @@ test("PostCSS plugin generates output for themes that import stylesheets and ass
 		});
 
 		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
 		assert.match(css, /--color-forest-500: var\(--mantine-color-forest-5\);/);
 	});
 });
@@ -126,6 +129,7 @@ test("Vite plugin generates theme output and watches the theme graph", async () 
 		});
 
 		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
 		assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
 		assert.deepEqual(
 			watchFiles.sort(),
@@ -151,6 +155,7 @@ test("Vite plugin supports standalone output", async () => {
 		});
 
 		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
 		assert.match(css, /@layer mantine {/);
 		assert.match(css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
 		assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);

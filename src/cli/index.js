@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { relative } from "node:path";
 import { parseArgs } from "node:util";
 import { validateOutputFormat, writeThemeOutput } from "../core/output.js";
 
@@ -9,7 +10,6 @@ const options = {
 	output: {
 		type: "string",
 		short: "o",
-		default: "theme.css",
 		description: "Output file name",
 	},
 	format: {
@@ -41,7 +41,7 @@ try {
 }
 
 try {
-	await writeThemeOutput(
+	const { outputPath } = await writeThemeOutput(
 		{
 			input: inputFile,
 			output: outputFile,
@@ -50,7 +50,9 @@ try {
 		{ baseDir: pwd },
 	);
 
-	console.log(`Successfully generated ${outputFile}`);
+	console.log(
+		`Successfully generated ${relative(pwd, outputPath) || outputPath}`,
+	);
 } catch (error) {
 	console.error("Error generating theme:", error.message);
 	process.exit(1);

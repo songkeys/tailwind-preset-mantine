@@ -1,6 +1,6 @@
 export interface MantineThemePluginOptions {
 	input: string;
-	output: string;
+	output?: string;
 	format?: "theme" | "standalone";
 }
 

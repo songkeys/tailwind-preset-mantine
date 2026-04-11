@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { access, readFile, unlink } from "node:fs/promises";
+import { access, mkdtemp, readFile, unlink, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -52,15 +53,18 @@ async function cleanupFile(filepath) {
 
 // Helper function to run theme generation test
 async function testThemeGeneration(fixturePath, outputPath, options = {}) {
-	const { extraArgs = [], assertOutput } = options;
+	const { extraArgs = [], assertOutput, includeOutput = true } = options;
 
 	try {
-		const { code, stdout, stderr } = await runCLI([
-			fixturePath,
-			"-o",
-			outputPath,
-			...extraArgs,
-		]);
+		const args = [fixturePath];
+
+		if (includeOutput) {
+			args.push("-o", outputPath);
+		}
+
+		args.push(...extraArgs);
+
+		const { code, stdout, stderr } = await runCLI(args);
 		assert.equal(code, 0, `CLI failed with error: ${stderr}`);
 		assert.match(stdout, /Successfully generated/);
 
@@ -88,7 +92,12 @@ test("shows error when no input file is provided", async () => {
 // Test: CLI should process default theme
 test("processes default theme", async () => {
 	const inputPath = join(FIXTURES_DIR, "default-theme.js");
-	await testThemeGeneration(inputPath, "default-theme-output.css");
+	await testThemeGeneration(inputPath, "default-theme-output.css", {
+		assertOutput: async (css) => {
+			assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
+			assert.match(css, /@theme inline {/);
+		},
+	});
 });
 
 // Test: CLI should process custom JS theme
@@ -124,11 +133,38 @@ test("supports standalone output format", async () => {
 	await testThemeGeneration(inputPath, "standalone-theme-output.css", {
 		extraArgs: ["--format", "standalone"],
 		assertOutput: async (css) => {
+			assert.match(css, /@import "tailwindcss\/theme\.css" layer\(theme\);/);
 			assert.match(css, /@layer mantine {/);
 			assert.match(css, /--mantine-color-deep-red-0:|--mantine-spacing-xs:/);
 			assert.match(css, /--spacing-xs: var\(--mantine-spacing-xs\);/);
 		},
 	});
+});
+
+test("derives the default output path from the input file", async () => {
+	const directory = await mkdtemp(
+		join(tmpdir(), "tailwind-preset-mantine-cli-"),
+	);
+	const inputPath = join(directory, "theme.ts");
+	const outputPath = join(directory, "theme.css");
+
+	try {
+		await writeFile(
+			inputPath,
+			'export default { spacing: { xxs: "0.5rem" } };\n',
+		);
+
+		await testThemeGeneration(inputPath, outputPath, {
+			includeOutput: false,
+			assertOutput: async (css) => {
+				assert.match(css, /@import "@mantine\/core\/styles\.layer\.css";/);
+				assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
+			},
+		});
+	} finally {
+		await cleanupFile(inputPath);
+		await cleanupFile(outputPath);
+	}
 });
 
 // Test: CLI should handle custom output path

@@ -3,7 +3,7 @@ import { writeThemeOutput } from "../core/output.js";
 /**
  * @typedef {{
  * 	input: string;
- * 	output: string;
+ * 	output?: string;
  * 	format?: "theme" | "standalone";
  * }} MantineThemePluginOptions
  */
