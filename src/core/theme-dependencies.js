@@ -4,9 +4,11 @@ import { init, parse } from "es-module-lexer";
 
 const THEME_SOURCE_EXTENSIONS = new Set([
 	".js",
+	".jsx",
 	".mjs",
 	".cjs",
 	".ts",
+	".tsx",
 	".mts",
 	".cts",
 ]);

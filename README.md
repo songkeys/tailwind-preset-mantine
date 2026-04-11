@@ -8,7 +8,8 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 
 | Tailwind CSS Version | Mantine Version | Preset Version |
 |----------------------|-----------------|----------------|
-| v4                   | v7 or v8 or v9  | v3 (current)   |
+| v4                   | v7 or v8 or v9  | v4 (current)   |
+| v4                   | v7 or v8 or v9  | v3             |
 | v4                   | v7 or v8        | v2             |
 | v3                   | v7 or v8        | [v1]*          |
 
@@ -20,7 +21,7 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 npm install tailwind-preset-mantine
 ```
 
-Refer to [Tailwind Installation](https://tailwindcss.com/docs/installation/) for the rest of requirements to install tailwind depends on your project setup or framework.
+Refer to the [Tailwind installation guide](https://tailwindcss.com/docs/installation/) for the rest of the setup steps, since they depend on your framework or build tooling.
 
 ## Usage
 
@@ -69,9 +70,7 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 ### Custom mantine theme
 
-If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), the recommended v4 setup is to keep the default preset import and point to your theme file directly from CSS using `@mantine-theme`.
-
-Build-time custom theme loading requires Node.js 22.15.0 or newer.
+If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), the recommended setup is to generate a static stylesheet from your theme file and import that stylesheet after the preset.
 
 1. Create a theme file (e.g., `mantine-theme.ts`):
 
@@ -108,16 +107,21 @@ const theme = createTheme({
 export default theme;
 ```
 
-2. Expand the `@mantine-theme` directive during CSS compilation.
+2. Configure the integration to generate a stylesheet from your Mantine theme.
 
 PostCSS:
 
 ```js
 import mantineTheme from "tailwind-preset-mantine/postcss";
-import tailwindcss from "@tailwindcss/postcss";
 
 export default {
-  plugins: [mantineTheme(), tailwindcss()],
+  plugins: [
+    mantineTheme({
+      input: "./src/mantine-theme.ts",
+      output: "./src/mantine-theme.css",
+      format: "theme",
+    }),
+  ],
 };
 ```
 
@@ -126,46 +130,54 @@ Vite:
 ```ts
 import { defineConfig } from "vite";
 import mantineTheme from "tailwind-preset-mantine/vite";
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [mantineTheme(), tailwindcss()],
+  plugins: [
+    mantineTheme({
+      input: "./src/mantine-theme.ts",
+      output: "./src/mantine-theme.css",
+      format: "theme",
+    }),
+  ],
 });
 ```
 
-The Vite plugin also watches local modules imported by your Mantine theme file, so updates to split files like `theme/colors.ts` or `theme/spacing.ts` trigger CSS rebuilds automatically.
+The Vite integration also watches local modules imported by your Mantine theme file, so updates to split files like `theme/colors.ts` or `theme/spacing.ts` trigger the generated stylesheet to update automatically.
 
-3. Import the preset and point it at your Mantine theme file:
+3. Import the generated stylesheet after the preset.
 
 ```css
 @import "tailwind-preset-mantine";
-@mantine-theme "./mantine-theme.ts";
+@import "./mantine-theme.css";
 ```
 
-This keeps the default preset import path unchanged while still generating Tailwind theme variables from your merged Mantine theme during development and production builds.
-
-The theme loader ignores imported stylesheet and common asset files in the theme import graph, so `mantine-theme.ts` can safely import CSS modules, Sass files, images, fonts, or colocated `.tsx` helper modules that reference those files.
+This keeps the default preset import path unchanged while still generating Tailwind theme variables from your merged Mantine theme during development and production builds. Your app and editor tooling both read the generated stylesheet, so custom classes stay available in builds and IDE autocomplete.
 
 ### Standalone pages without MantineProvider
 
-If a page does not render `MantineProvider` but still needs your custom Mantine variables, use `@mantine-standalone` instead of `@mantine-theme`:
+If a page does not render `MantineProvider` but still needs your custom Mantine variables, generate the standalone variant instead:
 
-```css
-@import "tailwind-preset-mantine";
-@mantine-standalone "./mantine-theme.ts";
+PostCSS or Vite:
+
+```ts
+mantineTheme({
+  input: "./src/mantine-theme.ts",
+  output: "./src/mantine-theme.css",
+  format: "standalone",
+});
 ```
 
 This generates both:
 - Mantine CSS variables like `--mantine-color-*` and `--mantine-spacing-*`
 - Tailwind aliases like `--color-*` and `--spacing-*`
 
-`@mantine-standalone` defaults to the light color scheme. To use the dark scheme on a standalone page, set `data-mantine-color-scheme="dark"` on the document root or host element.
+`standalone` defaults to the light color scheme. To use the dark scheme on a standalone page, set `data-mantine-color-scheme="dark"` on the document root or host element.
 
-If you already render `MantineProvider` on the same page, prefer `@mantine-theme` instead. `@mantine-standalone` is meant for routes or templates that do not get Mantine runtime variable injection.
+If you already render `MantineProvider` on the same page, prefer the default `theme` format instead. `standalone` is meant for routes or templates that do not get Mantine runtime variable injection.
 
 ### CLI fallback
 
-If your setup does not use PostCSS or Vite, you can still pre-generate the theme CSS using the CLI:
+If your setup does not use PostCSS or Vite, you can still generate the theme CSS with the CLI:
 
 ```bash
 npx tailwind-preset-mantine mantine-theme.ts -o theme.css

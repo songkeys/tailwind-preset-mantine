@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readdir, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, unlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -17,12 +17,32 @@ const POSTCSS_ENTRY = fileURLToPath(
 const POSTCSS_STANDALONE_ENTRY = fileURLToPath(
 	new URL("../fixtures/e2e/postcss/standalone.css", import.meta.url),
 );
+const POSTCSS_THEME_SOURCE = fileURLToPath(
+	new URL("../fixtures/e2e/shared/plugin-theme.ts", import.meta.url),
+);
+const POSTCSS_OUTPUT = fileURLToPath(
+	new URL("../fixtures/e2e/postcss/mantine-theme.css", import.meta.url),
+);
 const VITE_ROOT = fileURLToPath(
 	new URL("../fixtures/e2e/vite/", import.meta.url),
+);
+const VITE_THEME_SOURCE = fileURLToPath(
+	new URL("../fixtures/e2e/shared/plugin-theme.ts", import.meta.url),
+);
+const VITE_OUTPUT = fileURLToPath(
+	new URL("../fixtures/e2e/vite/mantine-theme.css", import.meta.url),
 );
 const VITE_STANDALONE_HTML = fileURLToPath(
 	new URL("../fixtures/e2e/vite/index-standalone.html", import.meta.url),
 );
+
+async function cleanupFile(file) {
+	try {
+		await unlink(file);
+	} catch {
+		// Ignore missing files.
+	}
+}
 
 function assertGeneratedUtilities(css) {
 	assert.match(css, /\.p-xxs\s*\{\s*padding:\s*var\(--mantine-spacing-xxs\);/m);
@@ -67,7 +87,6 @@ async function findBuiltCssFiles(directory) {
 
 		if (entry.isDirectory()) {
 			cssFiles.push(...(await findBuiltCssFiles(entryPath)));
-
 			continue;
 		}
 
@@ -79,40 +98,66 @@ async function findBuiltCssFiles(directory) {
 	return cssFiles;
 }
 
-test("PostCSS e2e generates Tailwind utilities from @mantine-theme", async () => {
-	const input = await readFile(POSTCSS_ENTRY, "utf8");
-	const result = await postcss([
-		mantineThemePostCSS(),
-		tailwindPostCSS(),
-	]).process(input, {
-		from: POSTCSS_ENTRY,
-	});
+test("PostCSS e2e generates Tailwind utilities from managed theme output", async () => {
+	await cleanupFile(POSTCSS_OUTPUT);
 
-	assertGeneratedUtilities(result.css);
+	try {
+		const input = await readFile(POSTCSS_ENTRY, "utf8");
+		const result = await postcss([
+			mantineThemePostCSS({
+				input: POSTCSS_THEME_SOURCE,
+				output: POSTCSS_OUTPUT,
+			}),
+			tailwindPostCSS(),
+		]).process(input, {
+			from: POSTCSS_ENTRY,
+		});
+
+		assertGeneratedUtilities(result.css);
+	} finally {
+		await cleanupFile(POSTCSS_OUTPUT);
+	}
 });
 
 test("PostCSS e2e generates standalone Mantine variables and Tailwind utilities", async () => {
-	const input = await readFile(POSTCSS_STANDALONE_ENTRY, "utf8");
-	const result = await postcss([
-		mantineThemePostCSS(),
-		tailwindPostCSS(),
-	]).process(input, {
-		from: POSTCSS_STANDALONE_ENTRY,
-	});
+	await cleanupFile(POSTCSS_OUTPUT);
 
-	assertStandaloneMantineVariables(result.css);
-	assertGeneratedUtilities(result.css);
+	try {
+		const input = await readFile(POSTCSS_STANDALONE_ENTRY, "utf8");
+		const result = await postcss([
+			mantineThemePostCSS({
+				input: POSTCSS_THEME_SOURCE,
+				output: POSTCSS_OUTPUT,
+				format: "standalone",
+			}),
+			tailwindPostCSS(),
+		]).process(input, {
+			from: POSTCSS_STANDALONE_ENTRY,
+		});
+
+		assertStandaloneMantineVariables(result.css);
+		assertGeneratedUtilities(result.css);
+	} finally {
+		await cleanupFile(POSTCSS_OUTPUT);
+	}
 });
 
-test("Vite e2e generates Tailwind utilities from @mantine-theme", async () => {
+test("Vite e2e generates Tailwind utilities from managed theme output", async () => {
 	const outDir = await mkdtemp(join(tmpdir(), "tailwind-preset-mantine-vite-"));
+	await cleanupFile(VITE_OUTPUT);
 
 	try {
 		await build({
 			configFile: false,
 			logLevel: "silent",
 			root: VITE_ROOT,
-			plugins: [mantineThemeVite(), tailwindVite()],
+			plugins: [
+				mantineThemeVite({
+					input: VITE_THEME_SOURCE,
+					output: VITE_OUTPUT,
+				}),
+				tailwindVite(),
+			],
 			build: {
 				outDir,
 				emptyOutDir: true,
@@ -127,19 +172,28 @@ test("Vite e2e generates Tailwind utilities from @mantine-theme", async () => {
 		const css = await readFile(cssFile, "utf8");
 		assertGeneratedUtilities(css);
 	} finally {
+		await cleanupFile(VITE_OUTPUT);
 		await rm(outDir, { recursive: true, force: true });
 	}
 });
 
 test("Vite e2e generates standalone Mantine variables and Tailwind utilities", async () => {
 	const outDir = await mkdtemp(join(tmpdir(), "tailwind-preset-mantine-vite-"));
+	await cleanupFile(VITE_OUTPUT);
 
 	try {
 		await build({
 			configFile: false,
 			logLevel: "silent",
 			root: VITE_ROOT,
-			plugins: [mantineThemeVite(), tailwindVite()],
+			plugins: [
+				mantineThemeVite({
+					input: VITE_THEME_SOURCE,
+					output: VITE_OUTPUT,
+					format: "standalone",
+				}),
+				tailwindVite(),
+			],
 			build: {
 				outDir,
 				emptyOutDir: true,
@@ -173,6 +227,7 @@ test("Vite e2e generates standalone Mantine variables and Tailwind utilities", a
 		assertStandaloneMantineVariables(css);
 		assertGeneratedUtilities(css);
 	} finally {
+		await cleanupFile(VITE_OUTPUT);
 		await rm(outDir, { recursive: true, force: true });
 	}
 });

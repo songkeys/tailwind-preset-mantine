@@ -1,30 +1,30 @@
-import postcss from "postcss";
-import { expandMantineThemeDirectives } from "./transform-theme-directives.js";
+import { writeThemeOutput } from "../core/output.js";
 
-function mantineTheme() {
+/**
+ * @typedef {{
+ * 	input: string;
+ * 	output: string;
+ * 	format?: "theme" | "standalone";
+ * }} MantineThemePluginOptions
+ */
+
+/**
+ * @param {MantineThemePluginOptions} options
+ */
+function mantineTheme(options) {
 	return {
 		postcssPlugin: "tailwind-preset-mantine",
-		async Once(root, { result }) {
-			const from = root.source?.input.file ?? result.opts.from;
-			const dependencies = [];
-			const css = await expandMantineThemeDirectives(root.toString(), {
-				from,
-				onDependency: (file) => dependencies.push(file),
+		async Once(_, { result }) {
+			const { dependencies } = await writeThemeOutput(options, {
+				baseDir: process.cwd(),
 			});
-
-			if (dependencies.length === 0) {
-				return;
-			}
-
-			root.removeAll();
-			root.append(postcss.parse(css, { from }).nodes);
 
 			for (const file of dependencies) {
 				result.messages.push({
 					type: "dependency",
 					plugin: "tailwind-preset-mantine",
 					file,
-					parent: from,
+					parent: result.opts.from,
 				});
 			}
 		},

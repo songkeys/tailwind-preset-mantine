@@ -1,61 +1,68 @@
-import { collectThemeDependencies } from "../core/theme-dependencies.js";
-import { expandMantineThemeDirectives } from "./transform-theme-directives.js";
+import { writeThemeOutput } from "../core/output.js";
 
-export default function mantineTheme() {
+/**
+ * @typedef {{
+ * 	input: string;
+ * 	output: string;
+ * 	format?: "theme" | "standalone";
+ * }} MantineThemePluginOptions
+ */
+
+/**
+ * @param {MantineThemePluginOptions} options
+ */
+export default function mantineTheme(options) {
+	let root = process.cwd();
+	let outputPath = "";
+	let dependencyFiles = new Set();
+	let generatePromise = null;
+
+	async function generateThemeOutput() {
+		if (!generatePromise) {
+			generatePromise = writeThemeOutput(options, { baseDir: root }).finally(
+				() => {
+					generatePromise = null;
+				},
+			);
+		}
+
+		const result = await generatePromise;
+		outputPath = result.outputPath;
+		dependencyFiles = new Set(result.dependencies);
+		return result;
+	}
+
 	return {
 		name: "tailwind-preset-mantine",
-		enforce: "pre",
-		async transform(code, id) {
-			if (
-				!id.includes(".css") ||
-				(!code.includes("@mantine-theme") &&
-					!code.includes("@mantine-standalone"))
-			) {
-				return null;
-			}
+		async configResolved(config) {
+			root = config.root;
+		},
+		async buildStart() {
+			const result = await generateThemeOutput();
 
-			const from = id.split("?", 1)[0];
-			const dependencies = [];
-			const transformed = await expandMantineThemeDirectives(code, {
-				from,
-				onDependency: (file) => dependencies.push(file),
-			});
-
-			if (dependencies.length === 0) {
-				return null;
-			}
-
-			const watchedFiles = new Set();
-
-			for (const file of dependencies) {
-				const transitiveDependencies = await collectThemeDependencies(
-					file,
-					async (specifier, importer) => {
-						const resolved = await this.resolve(specifier, importer, {
-							skipSelf: true,
-						});
-
-						if (resolved?.external) {
-							return null;
-						}
-
-						return resolved?.id ?? null;
-					},
-				);
-
-				for (const dependency of transitiveDependencies) {
-					watchedFiles.add(dependency);
-				}
-			}
-
-			for (const file of watchedFiles) {
+			for (const file of result.dependencies) {
 				this.addWatchFile(file);
 			}
-
-			return {
-				code: transformed,
-				map: null,
+		},
+		configureServer(server) {
+			const refresh = async () => {
+				const result = await generateThemeOutput();
+				server.watcher.add([...result.dependencies]);
 			};
+
+			const handleFileChange = async (file) => {
+				if (file === outputPath || !dependencyFiles.has(file)) {
+					return;
+				}
+
+				await refresh();
+			};
+
+			server.watcher.on("change", handleFileChange);
+			server.watcher.on("add", handleFileChange);
+			server.watcher.on("unlink", handleFileChange);
+
+			void refresh();
 		},
 	};
 }

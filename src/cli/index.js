@@ -1,15 +1,8 @@
 #!/usr/bin/env node
-import { writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
 import { parseArgs } from "node:util";
-import { generateStandaloneTheme, generateTheme } from "../core/generate.js";
-import { loadThemeFromFile } from "../core/theme-loader.js";
+import { validateOutputFormat, writeThemeOutput } from "../core/output.js";
 
 const pwd = process.cwd();
-const OUTPUT_FORMATS = {
-	theme: generateTheme,
-	standalone: generateStandaloneTheme,
-};
 
 // Define CLI options
 const options = {
@@ -38,22 +31,24 @@ const inputFile = positionals[0];
 const outputFile = values.output;
 const outputFormat = values.format;
 
-if (!(outputFormat in OUTPUT_FORMATS)) {
+try {
+	validateOutputFormat(outputFormat);
+} catch (error) {
 	console.error(
-		`Invalid output format: ${outputFormat}. Expected one of: ${Object.keys(OUTPUT_FORMATS).join(", ")}`,
+		error instanceof Error ? error.message : "Invalid output format.",
 	);
 	process.exit(1);
 }
 
 try {
-	const { theme } = await loadThemeFromFile(inputFile, pwd);
-
-	// Generate CSS from theme object
-	const css = OUTPUT_FORMATS[outputFormat](theme);
-
-	// Write to output file
-	const outputPath = resolve(pwd, outputFile);
-	await writeFile(outputPath, css);
+	await writeThemeOutput(
+		{
+			input: inputFile,
+			output: outputFile,
+			format: outputFormat,
+		},
+		{ baseDir: pwd },
+	);
 
 	console.log(`Successfully generated ${outputFile}`);
 } catch (error) {

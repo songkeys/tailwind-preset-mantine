@@ -1,4 +1,3 @@
 @import "../../../src/index.css";
+@import "./mantine-theme.css";
 @source "./index.html";
-/* biome-ignore lint/suspicious/noUnknownAtRules: custom directive handled by the Tailwind preset plugin */
-@mantine-standalone "../shared/plugin-theme.ts";
