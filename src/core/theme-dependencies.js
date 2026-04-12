@@ -7,6 +7,7 @@ const THEME_SOURCE_EXTENSIONS = new Set([
 	".jsx",
 	".mjs",
 	".cjs",
+	".json",
 	".ts",
 	".tsx",
 	".mts",

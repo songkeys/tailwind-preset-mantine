@@ -145,7 +145,7 @@ test("PostCSS plugin resolves relative paths from a nested app root", async () =
 	});
 });
 
-test("buildThemeOutput loads themes that rely on tsconfig path aliases", async () => {
+test("buildThemeOutput tracks themes that rely on tsconfig path aliases", async () => {
 	await withTempDir(async (directory) => {
 		const themeDirectory = join(directory, "theme");
 		const themeFile = join(directory, "mantine-theme.ts");
@@ -182,6 +182,82 @@ test("buildThemeOutput loads themes that rely on tsconfig path aliases", async (
 
 		assert.equal(result.inputPath, themeFile);
 		assert.match(result.css, /--color-brand-500:/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[colorsFile, themeFile].sort(),
+		);
+	});
+});
+
+test("buildThemeOutput tracks themes that rely on package import aliases", async () => {
+	await withTempDir(async (directory) => {
+		const themeDirectory = join(directory, "theme");
+		const themeFile = join(directory, "mantine-theme.ts");
+		const colorsFile = join(themeDirectory, "colors.ts");
+
+		await mkdir(themeDirectory, { recursive: true });
+		await writeFile(
+			join(directory, "package.json"),
+			JSON.stringify({
+				type: "module",
+				imports: {
+					"#theme/*": "./theme/*",
+				},
+			}),
+		);
+		await writeFile(
+			colorsFile,
+			'export const colors = { brand: ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999"] };\n',
+		);
+		await writeFile(
+			themeFile,
+			'import { colors } from "#theme/colors";\nexport default { colors, primaryColor: "brand" };\n',
+		);
+
+		const result = await buildThemeOutput(
+			{
+				input: "./mantine-theme.ts",
+				output: "./mantine-theme.css",
+			},
+			{ baseDir: directory },
+		);
+
+		assert.equal(result.inputPath, themeFile);
+		assert.match(result.css, /--color-brand-500:/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[colorsFile, themeFile].sort(),
+		);
+	});
+});
+
+test("buildThemeOutput tracks JSON theme helpers", async () => {
+	await withTempDir(async (directory) => {
+		const themeFile = join(directory, "theme.ts");
+		const spacingFile = join(directory, "spacing.json");
+
+		await writeFile(
+			spacingFile,
+			JSON.stringify({
+				xxs: "0.5rem",
+			}),
+		);
+		await writeFile(
+			themeFile,
+			'import spacing from "./spacing.json" with { type: "json" };\nexport default { spacing };\n',
+		);
+
+		const result = await buildThemeOutput({
+			input: themeFile,
+			output: join(directory, "theme.css"),
+			format: "standalone",
+		});
+
+		assert.match(result.css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[spacingFile, themeFile].sort(),
+		);
 	});
 });
 
