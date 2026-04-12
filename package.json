@@ -23,6 +23,8 @@
 		"./theme.css": "./src/theme.css",
 		"./postcss": {
 			"types": "./src/integrations/postcss.d.ts",
+			"require": "./src/integrations/postcss.cjs",
+			"import": "./src/integrations/postcss.js",
 			"default": "./src/integrations/postcss.js"
 		},
 		"./vite": {

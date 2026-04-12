@@ -125,6 +125,20 @@ export default {
 };
 ```
 
+Next.js:
+
+```js
+// postcss.config.mjs
+export default {
+  plugins: {
+    "tailwind-preset-mantine/postcss": {
+      input: "./src/mantine-theme.ts",
+    },
+    "@tailwindcss/postcss": {},
+  },
+};
+```
+
 Vite:
 
 ```ts

@@ -13,6 +13,7 @@ import { join } from "node:path";
 import test from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import postcss from "postcss";
 import { buildThemeOutput } from "../src/core/output.js";
 import mantineThemePostCSS from "../src/integrations/postcss.js";
@@ -30,6 +31,7 @@ const THEME_SPACING_FILE = fileURLToPath(
 const LOADER_THEME_WITH_ASSETS_FILE = fileURLToPath(
 	new URL("../fixtures/loader/theme-with-assets-import.ts", import.meta.url),
 );
+const require = createRequire(import.meta.url);
 
 async function withTempDir(run) {
 	const directory = await mkdtemp(join(tmpdir(), "tailwind-preset-mantine-"));
@@ -40,6 +42,38 @@ async function withTempDir(run) {
 		await rm(directory, { recursive: true, force: true });
 	}
 }
+
+test("PostCSS plugin exposes a require-compatible entry", async () => {
+	const mantineThemePostCSSRequire = require("../src/integrations/postcss.cjs");
+
+	assert.equal(typeof mantineThemePostCSSRequire, "function");
+	assert.equal(mantineThemePostCSSRequire.postcss, true);
+
+	await withTempDir(async (directory) => {
+		const cssEntry = join(directory, "app.css");
+		const outputFile = join(directory, "mantine-theme.css");
+		await writeFile(cssEntry, '@import "./mantine-theme.css";\n');
+
+		const result = await postcss([
+			mantineThemePostCSSRequire({
+				input: THEME_FILE,
+				output: outputFile,
+			}),
+		]).process(await readFile(cssEntry, "utf8"), {
+			from: cssEntry,
+		});
+
+		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /@theme inline {/);
+		assert.deepEqual(
+			result.messages
+				.filter((message) => message.type === "dependency")
+				.map((message) => message.file)
+				.sort(),
+			[THEME_COLORS_FILE, THEME_FILE, THEME_SPACING_FILE].sort(),
+		);
+	});
+});
 
 test("PostCSS plugin generates theme output and reports theme dependencies", async () => {
 	await withTempDir(async (directory) => {
