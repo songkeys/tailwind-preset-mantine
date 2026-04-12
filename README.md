@@ -194,7 +194,7 @@ Options:
 Then import the generated file:
 
 ```css
-@import "./theme.css";
+@import "./mantine-theme.css";
 ```
 
 Use `--format standalone` when generating CSS for pages that do not render `MantineProvider`.
