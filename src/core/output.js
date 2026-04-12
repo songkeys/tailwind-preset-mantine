@@ -86,12 +86,9 @@ export async function buildThemeOutput(options, runtimeOptions = {}) {
 		options,
 		baseDir,
 	);
-	const { absolutePath, theme } = await loadThemeFromFile(inputPath);
+	const dependencies = await collectThemeDependencies(inputPath, resolveImport);
+	const { absolutePath, theme } = await loadThemeFromFile(inputPath, baseDir);
 	const css = generateManagedStylesheet(theme, format);
-	const dependencies = await collectThemeDependencies(
-		absolutePath,
-		resolveImport,
-	);
 
 	return {
 		css,

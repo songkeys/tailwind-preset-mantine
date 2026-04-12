@@ -18,8 +18,6 @@ function mantineTheme(options) {
 		const candidates = [];
 		const cwd = result.opts.cwd ?? process.cwd();
 
-		candidates.push(cwd);
-
 		if (result.opts.from) {
 			let current = resolve(cwd, result.opts.from);
 			current = dirname(current);
@@ -35,6 +33,8 @@ function mantineTheme(options) {
 				current = parent;
 			}
 		}
+
+		candidates.push(cwd);
 
 		const dedupedCandidates = [...new Set(candidates)];
 

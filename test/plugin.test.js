@@ -1,10 +1,20 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import {
+	access,
+	mkdir,
+	mkdtemp,
+	readFile,
+	rm,
+	utimes,
+	writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
+import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import postcss from "postcss";
+import { buildThemeOutput } from "../src/core/output.js";
 import mantineThemePostCSS from "../src/integrations/postcss.js";
 import mantineThemeVite from "../src/integrations/vite.js";
 
@@ -91,14 +101,22 @@ test("PostCSS plugin supports standalone output", async () => {
 
 test("PostCSS plugin resolves relative paths from a nested app root", async () => {
 	await withTempDir(async (directory) => {
+		const rootSourceDirectory = join(directory, "src");
+		const rootThemeFile = join(rootSourceDirectory, "theme.ts");
+		const rootOutputFile = join(directory, "mantine-theme.css");
 		const appDirectory = join(directory, "apps", "web");
 		const sourceDirectory = join(appDirectory, "src");
 		const cssEntry = join(appDirectory, "app.css");
 		const themeFile = join(sourceDirectory, "theme.ts");
 		const outputFile = join(appDirectory, "mantine-theme.css");
 
+		await mkdir(rootSourceDirectory, { recursive: true });
 		await mkdir(sourceDirectory, { recursive: true });
 		await writeFile(cssEntry, '@import "./mantine-theme.css";\n');
+		await writeFile(
+			rootThemeFile,
+			'export default { spacing: { xxs: "2rem" } };\n',
+		);
 		await writeFile(
 			themeFile,
 			'export default { spacing: { xxs: "0.5rem" } };\n',
@@ -116,11 +134,95 @@ test("PostCSS plugin resolves relative paths from a nested app root", async () =
 
 		const css = await readFile(outputFile, "utf8");
 		assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
+		assert.doesNotMatch(css, /--mantine-spacing-xxs:\s*2rem;/);
+		await assert.rejects(access(rootOutputFile));
 		assert.deepEqual(
 			result.messages
 				.filter((message) => message.type === "dependency")
 				.map((message) => message.file),
 			[themeFile],
+		);
+	});
+});
+
+test("buildThemeOutput invalidates the cached theme graph when a helper changes", async () => {
+	await withTempDir(async (directory) => {
+		const themeFile = join(directory, "theme.ts");
+		const spacingFile = join(directory, "spacing.ts");
+		const outputFile = join(directory, "theme.css");
+
+		await writeFile(spacingFile, 'export const spacing = { xxs: "0.5rem" };\n');
+		await writeFile(
+			themeFile,
+			'import { spacing } from "./spacing.ts";\nexport default { spacing };\n',
+		);
+
+		const initial = await buildThemeOutput({
+			input: themeFile,
+			output: outputFile,
+			format: "standalone",
+		});
+		assert.match(initial.css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
+
+		await writeFile(spacingFile, 'export const spacing = { xxs: "1rem" };\n');
+		const nextMtime = new Date(Date.now() + 1_000);
+		await utimes(spacingFile, nextMtime, nextMtime);
+		await delay(20);
+
+		const updated = await buildThemeOutput({
+			input: themeFile,
+			output: outputFile,
+			format: "standalone",
+		});
+		assert.match(updated.css, /--mantine-spacing-xxs:\s*1rem;/);
+	});
+});
+
+test("buildThemeOutput tracks extensionless theme imports", async () => {
+	await withTempDir(async (directory) => {
+		const themeFile = join(directory, "theme.ts");
+		const spacingFile = join(directory, "spacing.ts");
+
+		await writeFile(spacingFile, 'export const spacing = { xxs: "0.5rem" };\n');
+		await writeFile(
+			themeFile,
+			'import { spacing } from "./spacing";\nexport default { spacing };\n',
+		);
+
+		const result = await buildThemeOutput({
+			input: themeFile,
+			output: join(directory, "theme.css"),
+		});
+
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[spacingFile, themeFile].sort(),
+		);
+	});
+});
+
+test("buildThemeOutput tracks CommonJS theme helpers", async () => {
+	await withTempDir(async (directory) => {
+		const themeFile = join(directory, "theme.cjs");
+		const spacingFile = join(directory, "spacing.cjs");
+
+		await writeFile(
+			spacingFile,
+			'module.exports = { spacing: { xxs: "0.5rem" } };\n',
+		);
+		await writeFile(
+			themeFile,
+			'const { spacing } = require("./spacing.cjs");\nmodule.exports = { spacing };\n',
+		);
+
+		const result = await buildThemeOutput({
+			input: themeFile,
+			output: join(directory, "theme.css"),
+		});
+
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[spacingFile, themeFile].sort(),
 		);
 	});
 });

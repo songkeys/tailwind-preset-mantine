@@ -1,9 +1,13 @@
-import "tsx";
-import { stat } from "node:fs/promises";
+import { execFile as execFileCallback } from "node:child_process";
 import * as nodeModule from "node:module";
 import { resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { promisify } from "node:util";
 
+const execFile = promisify(execFileCallback);
+const PACKAGE_ROOT = fileURLToPath(new URL("../..", import.meta.url));
+const THIS_FILE = fileURLToPath(import.meta.url);
+const CHILD_RESULT_MARKER = "__TWPM_THEME_RESULT__";
 const STYLE_EXTENSIONS = [
 	".css",
 	".scss",
@@ -112,13 +116,11 @@ function installThemeImportHooks() {
  * @param {string} themePath
  * @param {string} baseDir
  */
-export async function loadThemeFromFile(themePath, baseDir = process.cwd()) {
+async function loadThemeFromFileInProcess(themePath, baseDir = process.cwd()) {
 	installThemeImportHooks();
 
 	const absolutePath = resolve(baseDir, themePath);
-	const themeURL = pathToFileURL(absolutePath);
-	const { mtimeMs } = await stat(absolutePath);
-	const themeModule = await import(`${themeURL.href}?t=${mtimeMs}`);
+	const themeModule = await import(pathToFileURL(absolutePath).href);
 	const theme = unwrapThemeExport(themeModule);
 
 	if (!theme) {
@@ -128,4 +130,39 @@ export async function loadThemeFromFile(themePath, baseDir = process.cwd()) {
 	}
 
 	return { absolutePath, theme };
+}
+
+/**
+ * @param {string} themePath
+ * @param {string} baseDir
+ */
+export async function loadThemeFromFile(themePath, baseDir = process.cwd()) {
+	const { stdout } = await execFile(
+		process.execPath,
+		["--import", "tsx", THIS_FILE, "--child", themePath, baseDir],
+		{
+			cwd: PACKAGE_ROOT,
+			maxBuffer: 5 * 1024 * 1024,
+		},
+	);
+	const markerIndex = stdout.lastIndexOf(CHILD_RESULT_MARKER);
+
+	if (markerIndex === -1) {
+		throw new Error("Theme loader child process did not return a result.");
+	}
+
+	return JSON.parse(stdout.slice(markerIndex + CHILD_RESULT_MARKER.length));
+}
+
+if (process.argv[1] === THIS_FILE && process.argv[2] === "--child") {
+	const themePath = process.argv[3];
+	const baseDir = process.argv[4] ?? process.cwd();
+
+	try {
+		const result = await loadThemeFromFileInProcess(themePath, baseDir);
+		process.stdout.write(`${CHILD_RESULT_MARKER}${JSON.stringify(result)}`);
+	} catch (error) {
+		console.error(error);
+		process.exitCode = 1;
+	}
 }
