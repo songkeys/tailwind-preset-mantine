@@ -1,13 +1,28 @@
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { createPathsMatcher, getTsconfig } from "get-tsconfig";
 import { generateManagedStylesheet } from "./generate.js";
 import { collectThemeDependencies } from "./theme-dependencies.js";
 import { loadThemeFromFile } from "./theme-loader.js";
 
 const OUTPUT_FORMATS = ["theme", "standalone"];
-const TSCONFIG_FILENAMES = ["tsconfig.json", "jsconfig.json"];
 const PACKAGE_JSON_FILENAMES = ["package.json"];
+const THEME_SOURCE_EXTENSIONS = [
+	".js",
+	".jsx",
+	".mjs",
+	".cjs",
+	".json",
+	".ts",
+	".tsx",
+	".mts",
+	".cts",
+];
+const JSON_FILE_CACHE = new Map();
+const TSCONFIG_DISCOVERY_CACHE = new Map();
+const TSCONFIG_FS_CACHE = new Map();
+const TSCONFIG_PATHS_MATCHER_CACHE = new Map();
 
 function validateOptions(options) {
 	if (!options?.input) {
@@ -93,11 +108,7 @@ async function resolveThemeImport(specifier, importer) {
 		}
 	}
 
-	const tsconfigPath = await findClosestConfig(
-		dirname(importer),
-		TSCONFIG_FILENAMES,
-	);
-	return resolveTsconfigImport(specifier, tsconfigPath);
+	return resolveTsconfigImport(specifier, dirname(importer));
 }
 
 function matchSpecifierPattern(specifier, pattern) {
@@ -148,9 +159,14 @@ function flattenImportTargets(target) {
 	return orderedTargets.flatMap((value) => flattenImportTargets(value));
 }
 
-function resolveMappedImport(specifier, mappings, baseDirectory, localOnly) {
+function getMappedImportCandidates(
+	specifier,
+	mappings,
+	baseDirectory,
+	localOnly,
+) {
 	if (!mappings || typeof mappings !== "object") {
-		return null;
+		return [];
 	}
 
 	for (const [pattern, target] of Object.entries(mappings)) {
@@ -159,6 +175,8 @@ function resolveMappedImport(specifier, mappings, baseDirectory, localOnly) {
 		if (match == null) {
 			continue;
 		}
+
+		const resolvedCandidates = [];
 
 		for (const candidate of flattenImportTargets(target)) {
 			if (typeof candidate !== "string") {
@@ -180,13 +198,17 @@ function resolveMappedImport(specifier, mappings, baseDirectory, localOnly) {
 				continue;
 			}
 
-			return resolvedTarget.startsWith("file:")
-				? fileURLToPath(resolvedTarget)
-				: resolve(baseDirectory, resolvedTarget);
+			resolvedCandidates.push(
+				resolvedTarget.startsWith("file:")
+					? fileURLToPath(resolvedTarget)
+					: resolve(baseDirectory, resolvedTarget),
+			);
 		}
+
+		return resolvedCandidates;
 	}
 
-	return null;
+	return [];
 }
 
 async function pathExists(path) {
@@ -202,9 +224,16 @@ async function pathExists(path) {
  * @param {string} path
  */
 async function readJsonFile(path) {
-	return readFile(path, "utf8")
+	if (JSON_FILE_CACHE.has(path)) {
+		return JSON_FILE_CACHE.get(path);
+	}
+
+	const json = await readFile(path, "utf8")
 		.then((source) => JSON.parse(source))
 		.catch(() => null);
+
+	JSON_FILE_CACHE.set(path, json);
+	return json;
 }
 
 /**
@@ -243,41 +272,135 @@ async function resolvePackageImport(specifier, packageJsonPath) {
 	}
 
 	const packageJson = await readJsonFile(packageJsonPath);
-	return resolveMappedImport(
-		specifier,
-		packageJson?.imports,
-		dirname(packageJsonPath),
-		true,
+	return resolveFirstExistingThemeSource(
+		getMappedImportCandidates(
+			specifier,
+			packageJson?.imports,
+			dirname(packageJsonPath),
+			true,
+		),
 	);
+}
+
+function getTsconfigPathsMatcher(tsconfigPath) {
+	if (TSCONFIG_PATHS_MATCHER_CACHE.has(tsconfigPath.path)) {
+		return TSCONFIG_PATHS_MATCHER_CACHE.get(tsconfigPath.path);
+	}
+
+	let matcher = null;
+
+	try {
+		matcher = createPathsMatcher(tsconfigPath);
+	} catch {
+		// Ignore unreadable or invalid configs and continue without alias support.
+	}
+
+	TSCONFIG_PATHS_MATCHER_CACHE.set(tsconfigPath.path, matcher);
+	return matcher;
+}
+
+function getConfigDistance(startDirectory, configPath) {
+	let currentDirectory = resolve(startDirectory);
+	const configDirectory = dirname(configPath);
+	let distance = 0;
+
+	while (true) {
+		if (currentDirectory === configDirectory) {
+			return distance;
+		}
+
+		const parentDirectory = dirname(currentDirectory);
+
+		if (parentDirectory === currentDirectory) {
+			return Number.POSITIVE_INFINITY;
+		}
+
+		currentDirectory = parentDirectory;
+		distance += 1;
+	}
+}
+
+function getClosestTsconfigResult(startDirectory) {
+	if (TSCONFIG_DISCOVERY_CACHE.has(startDirectory)) {
+		return TSCONFIG_DISCOVERY_CACHE.get(startDirectory);
+	}
+
+	const tsconfigResult = getTsconfig(
+		startDirectory,
+		"tsconfig.json",
+		TSCONFIG_FS_CACHE,
+	);
+	const jsconfigResult = getTsconfig(
+		startDirectory,
+		"jsconfig.json",
+		TSCONFIG_FS_CACHE,
+	);
+
+	let closestResult = tsconfigResult ?? jsconfigResult;
+
+	if (tsconfigResult && jsconfigResult) {
+		const tsconfigDistance = getConfigDistance(
+			startDirectory,
+			tsconfigResult.path,
+		);
+		const jsconfigDistance = getConfigDistance(
+			startDirectory,
+			jsconfigResult.path,
+		);
+
+		closestResult =
+			jsconfigDistance < tsconfigDistance ? jsconfigResult : tsconfigResult;
+	}
+
+	TSCONFIG_DISCOVERY_CACHE.set(startDirectory, closestResult);
+	return closestResult;
+}
+
+function getThemeSourceCandidates(path) {
+	const candidates = [path];
+
+	if (extname(path)) {
+		return candidates;
+	}
+
+	for (const extension of THEME_SOURCE_EXTENSIONS) {
+		candidates.push(`${path}${extension}`);
+	}
+
+	for (const extension of THEME_SOURCE_EXTENSIONS) {
+		candidates.push(join(path, `index${extension}`));
+	}
+
+	return candidates;
+}
+
+async function resolveFirstExistingThemeSource(candidatePaths) {
+	for (const candidatePath of candidatePaths) {
+		for (const candidate of getThemeSourceCandidates(candidatePath)) {
+			if (await pathExists(candidate)) {
+				return candidate;
+			}
+		}
+	}
+
+	return null;
 }
 
 /**
  * @param {string} specifier
- * @param {string | null} tsconfigPath
+ * @param {string} startDirectory
  */
-async function resolveTsconfigImport(specifier, tsconfigPath) {
-	if (!tsconfigPath) {
+async function resolveTsconfigImport(specifier, startDirectory) {
+	const tsconfigResult = getClosestTsconfigResult(startDirectory);
+
+	if (!tsconfigResult) {
 		return null;
 	}
 
-	const tsconfig = await readJsonFile(tsconfigPath);
-	const compilerOptions = tsconfig?.compilerOptions;
-
-	if (!compilerOptions?.paths) {
-		return null;
-	}
-
-	const baseDirectory = resolve(
-		dirname(tsconfigPath),
-		compilerOptions.baseUrl ?? ".",
-	);
-
-	return resolveMappedImport(
-		specifier,
-		compilerOptions.paths,
-		baseDirectory,
-		false,
-	);
+	const pathsMatcher = getTsconfigPathsMatcher(tsconfigResult);
+	return pathsMatcher
+		? resolveFirstExistingThemeSource(pathsMatcher(specifier))
+		: null;
 }
 
 /**

@@ -189,6 +189,194 @@ test("buildThemeOutput tracks themes that rely on tsconfig path aliases", async 
 	});
 });
 
+test("buildThemeOutput tracks themes that rely on JSONC tsconfig path aliases", async () => {
+	await withTempDir(async (directory) => {
+		const themeDirectory = join(directory, "theme");
+		const themeFile = join(directory, "mantine-theme.ts");
+		const colorsFile = join(themeDirectory, "colors.ts");
+
+		await mkdir(themeDirectory, { recursive: true });
+		await writeFile(
+			join(directory, "tsconfig.json"),
+			`{
+				// Comments and trailing commas are valid JSONC.
+				"compilerOptions": {
+					"baseUrl": ".",
+					"paths": {
+						"@theme/*": ["./theme/*"],
+					},
+				},
+			}
+`,
+		);
+		await writeFile(
+			colorsFile,
+			'export const colors = { brand: ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999"] };\n',
+		);
+		await writeFile(
+			themeFile,
+			'import { colors } from "@theme/colors";\nexport default { colors, primaryColor: "brand" };\n',
+		);
+
+		const result = await buildThemeOutput(
+			{
+				input: "./mantine-theme.ts",
+				output: "./mantine-theme.css",
+			},
+			{ baseDir: directory },
+		);
+
+		assert.equal(result.inputPath, themeFile);
+		assert.match(result.css, /--color-brand-500:/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[colorsFile, themeFile].sort(),
+		);
+	});
+});
+
+test("buildThemeOutput prefers tsconfig aliases over jsconfig aliases in the same directory", async () => {
+	await withTempDir(async (directory) => {
+		const themeDirectory = join(directory, "theme");
+		const themeFile = join(directory, "mantine-theme.ts");
+		const colorsFile = join(themeDirectory, "colors.ts");
+		const ignoredDirectory = join(directory, "ignored");
+
+		await mkdir(themeDirectory, { recursive: true });
+		await mkdir(ignoredDirectory, { recursive: true });
+		await writeFile(
+			join(directory, "tsconfig.json"),
+			JSON.stringify({
+				compilerOptions: {
+					baseUrl: ".",
+					paths: {
+						"@theme/*": ["./theme/*"],
+					},
+				},
+			}),
+		);
+		await writeFile(
+			join(directory, "jsconfig.json"),
+			JSON.stringify({
+				compilerOptions: {
+					baseUrl: ".",
+					paths: {
+						"@theme/*": ["./ignored/*"],
+					},
+				},
+			}),
+		);
+		await writeFile(
+			colorsFile,
+			'export const colors = { brand: ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999"] };\n',
+		);
+		await writeFile(
+			themeFile,
+			'import { colors } from "@theme/colors";\nexport default { colors, primaryColor: "brand" };\n',
+		);
+
+		const result = await buildThemeOutput(
+			{
+				input: "./mantine-theme.ts",
+				output: "./mantine-theme.css",
+			},
+			{ baseDir: directory },
+		);
+
+		assert.equal(result.inputPath, themeFile);
+		assert.match(result.css, /--color-brand-500:/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[colorsFile, themeFile].sort(),
+		);
+	});
+});
+
+test("buildThemeOutput tracks themes that rely on tsconfig baseUrl imports", async () => {
+	await withTempDir(async (directory) => {
+		const themeDirectory = join(directory, "theme");
+		const themeFile = join(directory, "mantine-theme.ts");
+		const colorsFile = join(themeDirectory, "colors.ts");
+
+		await mkdir(themeDirectory, { recursive: true });
+		await writeFile(
+			join(directory, "tsconfig.json"),
+			JSON.stringify({
+				compilerOptions: {
+					baseUrl: ".",
+				},
+			}),
+		);
+		await writeFile(
+			colorsFile,
+			'export const colors = { brand: ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999"] };\n',
+		);
+		await writeFile(
+			themeFile,
+			'import { colors } from "theme/colors";\nexport default { colors, primaryColor: "brand" };\n',
+		);
+
+		const result = await buildThemeOutput(
+			{
+				input: "./mantine-theme.ts",
+				output: "./mantine-theme.css",
+			},
+			{ baseDir: directory },
+		);
+
+		assert.equal(result.inputPath, themeFile);
+		assert.match(result.css, /--color-brand-500:/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[colorsFile, themeFile].sort(),
+		);
+	});
+});
+
+test("buildThemeOutput tracks themes that rely on tsconfig path alias fallbacks", async () => {
+	await withTempDir(async (directory) => {
+		const themeDirectory = join(directory, "theme");
+		const themeFile = join(directory, "mantine-theme.ts");
+		const colorsFile = join(themeDirectory, "colors.ts");
+
+		await mkdir(themeDirectory, { recursive: true });
+		await writeFile(
+			join(directory, "tsconfig.json"),
+			JSON.stringify({
+				compilerOptions: {
+					baseUrl: ".",
+					paths: {
+						"@theme/*": ["./generated/*", "./theme/*"],
+					},
+				},
+			}),
+		);
+		await writeFile(
+			colorsFile,
+			'export const colors = { brand: ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999"] };\n',
+		);
+		await writeFile(
+			themeFile,
+			'import { colors } from "@theme/colors";\nexport default { colors, primaryColor: "brand" };\n',
+		);
+
+		const result = await buildThemeOutput(
+			{
+				input: "./mantine-theme.ts",
+				output: "./mantine-theme.css",
+			},
+			{ baseDir: directory },
+		);
+
+		assert.equal(result.inputPath, themeFile);
+		assert.match(result.css, /--color-brand-500:/);
+		assert.deepEqual(
+			result.dependencies.sort(),
+			[colorsFile, themeFile].sort(),
+		);
+	});
+});
+
 test("buildThemeOutput tracks themes that rely on package import aliases", async () => {
 	await withTempDir(async (directory) => {
 		const themeDirectory = join(directory, "theme");
