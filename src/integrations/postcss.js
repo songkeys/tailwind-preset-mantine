@@ -1,3 +1,5 @@
+import { access } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
 import { writeThemeOutput } from "../core/output.js";
 
 /**
@@ -12,11 +14,48 @@ import { writeThemeOutput } from "../core/output.js";
  * @param {MantineThemePluginOptions} options
  */
 function mantineTheme(options) {
+	async function resolveBaseDir(result) {
+		const candidates = [];
+		const cwd = result.opts.cwd ?? process.cwd();
+
+		candidates.push(cwd);
+
+		if (result.opts.from) {
+			let current = resolve(cwd, result.opts.from);
+			current = dirname(current);
+
+			while (true) {
+				candidates.push(current);
+				const parent = dirname(current);
+
+				if (parent === current) {
+					break;
+				}
+
+				current = parent;
+			}
+		}
+
+		const dedupedCandidates = [...new Set(candidates)];
+
+		for (const baseDir of dedupedCandidates) {
+			try {
+				await access(resolve(baseDir, options.input));
+				return baseDir;
+			} catch {
+				// Try the next candidate directory.
+			}
+		}
+
+		return cwd;
+	}
+
 	return {
 		postcssPlugin: "tailwind-preset-mantine",
 		async Once(_, { result }) {
+			const baseDir = await resolveBaseDir(result);
 			const { dependencies } = await writeThemeOutput(options, {
-				baseDir: process.cwd(),
+				baseDir,
 			});
 
 			for (const file of dependencies) {

@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { createTheme } from "@mantine/core";
 import {
+	generateManagedStylesheet,
 	generateStandaloneTheme,
 	generateTheme,
 } from "../src/core/generate.js";
@@ -92,6 +93,17 @@ test("generateTheme keeps breakpoint reset needed by Tailwind responsive utiliti
 	assert.match(css, /--breakpoint-\*: initial;/);
 	assert.match(css, /--breakpoint-xs: 36em;/);
 	assert.doesNotMatch(css, /--breakpoint-xs: var\(--mantine-breakpoint-xs\);/);
+});
+
+test("generateManagedStylesheet keeps the Mantine dark variant for custom themes", () => {
+	const css = generateManagedStylesheet(
+		createTheme({
+			spacing: { xxs: "0.5rem" },
+		}),
+	);
+
+	assert.match(css, /@custom-variant dark \(&:where\(/);
+	assert.match(css, /\[data-mantine-color-scheme="dark"\]/);
 });
 
 test("generateStandaloneTheme emits Mantine variables and Tailwind aliases", () => {

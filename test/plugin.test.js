@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -86,6 +86,42 @@ test("PostCSS plugin supports standalone output", async () => {
 		assert.match(css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
 		assert.match(css, /@theme inline {/);
 		assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
+	});
+});
+
+test("PostCSS plugin resolves relative paths from a nested app root", async () => {
+	await withTempDir(async (directory) => {
+		const appDirectory = join(directory, "apps", "web");
+		const sourceDirectory = join(appDirectory, "src");
+		const cssEntry = join(appDirectory, "app.css");
+		const themeFile = join(sourceDirectory, "theme.ts");
+		const outputFile = join(appDirectory, "mantine-theme.css");
+
+		await mkdir(sourceDirectory, { recursive: true });
+		await writeFile(cssEntry, '@import "./mantine-theme.css";\n');
+		await writeFile(
+			themeFile,
+			'export default { spacing: { xxs: "0.5rem" } };\n',
+		);
+
+		const result = await postcss([
+			mantineThemePostCSS({
+				input: "./src/theme.ts",
+				output: "./mantine-theme.css",
+			}),
+		]).process(await readFile(cssEntry, "utf8"), {
+			cwd: directory,
+			from: cssEntry,
+		});
+
+		const css = await readFile(outputFile, "utf8");
+		assert.match(css, /--spacing-xxs: var\(--mantine-spacing-xxs\);/);
+		assert.deepEqual(
+			result.messages
+				.filter((message) => message.type === "dependency")
+				.map((message) => message.file),
+			[themeFile],
+		);
 	});
 });
 

@@ -66,6 +66,11 @@ function assertGeneratedUtilities(css) {
 	);
 }
 
+function assertDarkGeneratedUtility(css) {
+	assert.match(css, /\.dark\\:bg-primary-outline/);
+	assert.match(css, /\[data-mantine-color-scheme="dark"\]/);
+}
+
 function assertStandaloneMantineVariables(css) {
 	assert.match(css, /--mantine-spacing-xxs:\s*(?:0?\.5rem);/);
 	assert.match(
@@ -114,6 +119,7 @@ test("PostCSS e2e generates Tailwind utilities from managed theme output", async
 		});
 
 		assertGeneratedUtilities(result.css);
+		assertDarkGeneratedUtility(result.css);
 	} finally {
 		await cleanupFile(POSTCSS_OUTPUT);
 	}
@@ -171,6 +177,7 @@ test("Vite e2e generates Tailwind utilities from managed theme output", async ()
 
 		const css = await readFile(cssFile, "utf8");
 		assertGeneratedUtilities(css);
+		assertDarkGeneratedUtility(css);
 	} finally {
 		await cleanupFile(VITE_OUTPUT);
 		await rm(outDir, { recursive: true, force: true });
