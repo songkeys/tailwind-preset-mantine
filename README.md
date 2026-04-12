@@ -8,7 +8,8 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 
 | Tailwind CSS Version | Mantine Version | Preset Version |
 |----------------------|-----------------|----------------|
-| v4                   | v7 or v8 or v9  | v3 (current)   |
+| v4                   | v7 or v8 or v9  | v4 (current)   |
+| v4                   | v7 or v8 or v9  | v3             |
 | v4                   | v7 or v8        | v2             |
 | v3                   | v7 or v8        | [v1]*          |
 
@@ -20,7 +21,7 @@ A [Tailwind CSS (v4)](https://tailwindcss.com/) preset for seamless integration 
 npm install tailwind-preset-mantine
 ```
 
-Refer to [Tailwind Installation](https://tailwindcss.com/docs/installation/) for the rest of requirements to install tailwind depends on your project setup or framework.
+Refer to the [Tailwind installation guide](https://tailwindcss.com/docs/installation/) for the rest of the setup steps, since they depend on your framework or build tooling.
 
 ## Usage
 
@@ -69,11 +70,11 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 ### Custom mantine theme
 
-If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), you can create a theme file using `@mantine/core`'s `createTheme` function and generate the CSS using our CLI:
+If you have a custom mantine theme (<https://mantine.dev/theming/theme-object/>), the recommended setup is to generate a complete stylesheet from your theme file and import that stylesheet directly.
 
-1. Create a theme file (e.g., `theme.js`):
+1. Create a theme file (e.g., `mantine-theme.ts`):
 
-```js
+```ts
 import { createTheme } from "@mantine/core";
 
 const theme = createTheme({
@@ -106,21 +107,97 @@ const theme = createTheme({
 export default theme;
 ```
 
-2. Generate the CSS using our CLI:
+2. Configure the integration to generate a stylesheet from your Mantine theme.
+
+By default, the generated file is written next to the theme file with the same basename and a `.css` extension. For example, `./src/mantine-theme.ts` generates `./src/mantine-theme.css`.
+
+PostCSS:
+
+```js
+import mantineTheme from "tailwind-preset-mantine/postcss";
+
+export default {
+  plugins: [
+    mantineTheme({
+      input: "./src/mantine-theme.ts",
+    }),
+  ],
+};
+```
+
+Vite:
+
+```ts
+import { defineConfig } from "vite";
+import mantineTheme from "tailwind-preset-mantine/vite";
+
+export default defineConfig({
+  plugins: [
+    mantineTheme({
+      input: "./src/mantine-theme.ts",
+    }),
+  ],
+});
+```
+
+The Vite integration also watches local modules imported by your Mantine theme file, so updates to split files like `theme/colors.ts` or `theme/spacing.ts` trigger the generated stylesheet to update automatically.
+
+3. Import the generated stylesheet.
+
+```css
+@import "./mantine-theme.css";
+```
+
+The generated stylesheet includes the default imports and your merged Mantine theme.
+
+#### Integration options
+
+| Option | Required | Default | Description |
+|--------|----------|---------|-------------|
+| `input` | Yes | – | Path to the Mantine theme source file |
+| `output` | No | `input` basename with `.css` extension | Path to the generated stylesheet |
+| `format` | No | `theme` | `theme` generates Tailwind aliases only; `standalone` generates Mantine variables plus Tailwind aliases |
+
+### Standalone pages without MantineProvider
+
+If a page does not render `MantineProvider` but still needs your custom Mantine variables, generate the standalone variant instead:
+
+PostCSS or Vite:
+
+```ts
+mantineTheme({
+  input: "./src/mantine-theme.ts",
+  format: "standalone",
+});
+```
+
+This generates both:
+- Mantine CSS variables like `--mantine-color-*` and `--mantine-spacing-*`
+- Tailwind aliases like `--color-*` and `--spacing-*`
+
+`standalone` defaults to the light color scheme. To use the dark scheme on a standalone page, set `data-mantine-color-scheme="dark"` on the document root or host element.
+
+If you already render `MantineProvider` on the same page, prefer the default `theme` format instead. `standalone` is meant for routes or templates that do not get Mantine runtime variable injection.
+
+### CLI fallback
+
+If your setup does not use PostCSS or Vite, you can still generate the theme CSS with the CLI:
 
 ```bash
-npx tailwind-preset-mantine theme.js -o theme.css
+npx tailwind-preset-mantine mantine-theme.ts
 ```
 
 Options:
-- `-o, --output`: Output file name/location (default: "theme.css")
+- `-o, --output`: Output file name/location (defaults to the input filename with a `.css` extension)
+- `--format theme|standalone`: Output either Tailwind aliases only (`theme`, default) or Mantine variables plus Tailwind aliases (`standalone`)
 
-3. Import the generated CSS file in your application:
+Then import the generated file:
 
 ```css
-@import "tailwind-preset-mantine";
-@import "./theme.css"; /* <-- add the generated theme */
+@import "./mantine-theme.css";
 ```
+
+Use `--format standalone` when generating CSS for pages that do not render `MantineProvider`.
 
 ## Minimal template
 

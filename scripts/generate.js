@@ -2,15 +2,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { generateDefaultImports, generateTheme } from "../src/generate.js";
+import { generateDefaultImports, generateTheme } from "../src/core/generate.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const defaultImports = generateDefaultImports();
 const theme = generateTheme();
+const index = `${defaultImports}@import "./theme.css";
+`;
 
 fs.writeFileSync(path.join(__dirname, "../src/theme.css"), theme);
-fs.writeFileSync(
-	path.join(__dirname, "../src/index.css"),
-	defaultImports + theme,
-);
+fs.writeFileSync(path.join(__dirname, "../src/index.css"), index);
