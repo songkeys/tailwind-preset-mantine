@@ -145,6 +145,46 @@ test("PostCSS plugin resolves relative paths from a nested app root", async () =
 	});
 });
 
+test("buildThemeOutput loads themes that rely on tsconfig path aliases", async () => {
+	await withTempDir(async (directory) => {
+		const themeDirectory = join(directory, "theme");
+		const themeFile = join(directory, "mantine-theme.ts");
+		const colorsFile = join(themeDirectory, "colors.ts");
+
+		await mkdir(themeDirectory, { recursive: true });
+		await writeFile(
+			join(directory, "tsconfig.json"),
+			JSON.stringify({
+				compilerOptions: {
+					baseUrl: ".",
+					paths: {
+						"@theme/*": ["./theme/*"],
+					},
+				},
+			}),
+		);
+		await writeFile(
+			colorsFile,
+			'export const colors = { brand: ["#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999"] };\n',
+		);
+		await writeFile(
+			themeFile,
+			'import { colors } from "@theme/colors";\nexport default { colors, primaryColor: "brand" };\n',
+		);
+
+		const result = await buildThemeOutput(
+			{
+				input: "./mantine-theme.ts",
+				output: "./mantine-theme.css",
+			},
+			{ baseDir: directory },
+		);
+
+		assert.equal(result.inputPath, themeFile);
+		assert.match(result.css, /--color-brand-500:/);
+	});
+});
+
 test("buildThemeOutput invalidates the cached theme graph when a helper changes", async () => {
 	await withTempDir(async (directory) => {
 		const themeFile = join(directory, "theme.ts");
@@ -272,6 +312,59 @@ test("Vite plugin generates theme output and watches the theme graph", async () 
 		assert.deepEqual(
 			watchFiles.sort(),
 			[THEME_COLORS_FILE, THEME_FILE, THEME_SPACING_FILE].sort(),
+		);
+	});
+});
+
+test("Vite plugin reruns generation when a dependency changes mid-refresh", async () => {
+	await withTempDir(async (directory) => {
+		const themeFile = join(directory, "theme.ts");
+		const spacingFile = join(directory, "spacing.ts");
+		const outputFile = join(directory, "mantine-theme.css");
+		const watcherHandlers = new Map();
+		const plugin = mantineThemeVite({
+			input: "./theme.ts",
+			output: "./mantine-theme.css",
+			format: "standalone",
+		});
+
+		await writeFile(spacingFile, 'export const spacing = { xxs: "0.5rem" };\n');
+		await writeFile(
+			themeFile,
+			'import { spacing } from "./spacing.ts";\nAtomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100);\nexport default { spacing };\n',
+		);
+
+		await plugin.configResolved?.({
+			root: directory,
+		});
+		await plugin.buildStart?.call({
+			addWatchFile() {},
+		});
+
+		assert.match(
+			await readFile(outputFile, "utf8"),
+			/--mantine-spacing-xxs:\s*(?:0?\.5rem);/,
+		);
+
+		plugin.configureServer?.({
+			watcher: {
+				add() {},
+				on(event, handler) {
+					watcherHandlers.set(event, handler);
+				},
+			},
+		});
+
+		const handleFileChange = watcherHandlers.get("change");
+		assert.equal(typeof handleFileChange, "function");
+
+		await delay(20);
+		await writeFile(spacingFile, 'export const spacing = { xxs: "1rem" };\n');
+		await handleFileChange(spacingFile);
+
+		assert.match(
+			await readFile(outputFile, "utf8"),
+			/--mantine-spacing-xxs:\s*1rem;/,
 		);
 	});
 });

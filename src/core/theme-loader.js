@@ -5,9 +5,10 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 
 const execFile = promisify(execFileCallback);
-const PACKAGE_ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const THIS_FILE = fileURLToPath(import.meta.url);
 const CHILD_RESULT_MARKER = "__TWPM_THEME_RESULT__";
+const require = nodeModule.createRequire(import.meta.url);
+const TSX_LOADER_PATH = require.resolve("tsx");
 const STYLE_EXTENSIONS = [
 	".css",
 	".scss",
@@ -70,7 +71,6 @@ function installThemeImportHooks() {
 
 	themeImportHooksInstalled = true;
 
-	const require = nodeModule.createRequire(import.meta.url);
 	const extensions = require.extensions;
 
 	for (const extension of STYLE_EXTENSIONS) {
@@ -139,9 +139,9 @@ async function loadThemeFromFileInProcess(themePath, baseDir = process.cwd()) {
 export async function loadThemeFromFile(themePath, baseDir = process.cwd()) {
 	const { stdout } = await execFile(
 		process.execPath,
-		["--import", "tsx", THIS_FILE, "--child", themePath, baseDir],
+		["--import", TSX_LOADER_PATH, THIS_FILE, "--child", themePath, baseDir],
 		{
-			cwd: PACKAGE_ROOT,
+			cwd: resolve(baseDir),
 			maxBuffer: 5 * 1024 * 1024,
 		},
 	);
