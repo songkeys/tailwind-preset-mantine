@@ -35,6 +35,8 @@ When importing the styles, instead of importing the tailwind css file, importing
 @import "tailwind-preset-mantine";
 ```
 
+(No extra tailwind / mantine styles imported mantually.)
+
 That's it!
 
 Now you can use tailwind with mantine's style applied:
@@ -49,9 +51,25 @@ export default function Page() {
 }
 ```
 
-2. Manual import (advanced)
+2. More styles from other mantine libraries
 
-Note that you don't have to import tailwind or mantine styles, this preset will handle that for you. If you want to import it yourself, you can use the `./theme.css` file:
+If you use additional Mantine packages with their own styles, import them after the preset:
+
+```css
+@import "tailwind-preset-mantine";
+
+@import "@mantine/dates/styles.layer.css";
+@import "@mantine/dropzone/styles.layer.css";
+@import "@mantine/carousel/styles.layer.css";
+@import "@mantine/notifications/styles.layer.css";
+@import "mantine-react-table/styles.css";
+```
+
+`@mantine/core/styles.layer.css` is already included by `tailwind-preset-mantine`, so you do not need to import it again in the all-in-one setup.
+
+3. Manual import (advanced)
+
+If you want to take more control on the import, you can expand and use the `./theme.css` file:
 
 ```css
 @layer theme, base, mantine, components, utilities;
@@ -63,6 +81,26 @@ Note that you don't have to import tailwind or mantine styles, this preset will 
 
 @import "tailwind-preset-mantine/theme.css"; /* <-- import the preset */
 ```
+
+With more styles you have:
+
+```css
+@layer theme, base, mantine, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "@mantine/core/styles.layer.css";
+@import "@mantine/dates/styles.layer.css";
+@import "@mantine/dropzone/styles.layer.css";
+@import "@mantine/carousel/styles.layer.css";
+@import "@mantine/notifications/styles.layer.css";
+
+@import "tailwind-preset-mantine/theme.css"; /* <-- import the preset */
+@import "mantine-react-table/styles.css"; /* regular CSS, placement relative to theme.css is flexible */
+```
+
+Additional Mantine package `styles.layer.css` imports can be placed either before or after `tailwind-preset-mantine/theme.css`. The important part is that they are imported after the `@layer theme, base, mantine, components, utilities;` declaration so they participate in the `mantine` layer correctly. The example above keeps them grouped with other Mantine imports for readability.
 
 > What's `@layer`?
 >
