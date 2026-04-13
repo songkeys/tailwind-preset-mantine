@@ -141,7 +141,14 @@ export function getThemeLoaderChildArgs(
 	themePath,
 	baseDir = process.cwd(),
 ) {
-	return ["--import", TSX_LOADER_URL, THIS_FILE, "--child", themePath, baseDir];
+	return [
+		"--import",
+		TSX_LOADER_URL,
+		THIS_FILE,
+		"--child",
+		themePath,
+		resolve(baseDir),
+	];
 }
 
 /**
