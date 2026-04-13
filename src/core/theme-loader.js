@@ -9,6 +9,7 @@ const THIS_FILE = fileURLToPath(import.meta.url);
 const CHILD_RESULT_MARKER = "__TWPM_THEME_RESULT__";
 const require = nodeModule.createRequire(import.meta.url);
 const TSX_LOADER_PATH = require.resolve("tsx");
+const TSX_LOADER_URL = pathToFileURL(TSX_LOADER_PATH).href;
 const STYLE_EXTENSIONS = [
 	".css",
 	".scss",
@@ -139,7 +140,7 @@ async function loadThemeFromFileInProcess(themePath, baseDir = process.cwd()) {
 export async function loadThemeFromFile(themePath, baseDir = process.cwd()) {
 	const { stdout } = await execFile(
 		process.execPath,
-		["--import", TSX_LOADER_PATH, THIS_FILE, "--child", themePath, baseDir],
+		["--import", TSX_LOADER_URL, THIS_FILE, "--child", themePath, baseDir],
 		{
 			cwd: resolve(baseDir),
 			maxBuffer: 5 * 1024 * 1024,
