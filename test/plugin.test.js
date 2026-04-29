@@ -8,12 +8,12 @@ import {
 	utimes,
 	writeFile,
 } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
 import postcss from "postcss";
 import { buildThemeOutput } from "../src/core/output.js";
 import mantineThemePostCSS from "../src/integrations/postcss.js";

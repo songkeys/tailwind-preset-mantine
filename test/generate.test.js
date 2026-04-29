@@ -54,7 +54,7 @@ test("generateTheme emits merged Mantine namespaces for custom theme keys", () =
 	);
 	assert.match(
 		css,
-		/--font-weight-blacker: var\(--mantine-font-weight-blacker\);/,
+		/--font-weight-blacker: var\(--mantine-font-weight-blacker, 950\);/,
 	);
 	assert.match(css, /--shadow-xxs: var\(--mantine-shadow-xxs\);/);
 	assert.match(css, /--text-hero: var\(--mantine-hero-font-size\);/);
@@ -71,6 +71,23 @@ test("generateTheme emits merged Mantine namespaces for custom theme keys", () =
 	assert.match(
 		css,
 		/--color-primary-contrast: var\(--mantine-primary-color-contrast\);/,
+	);
+});
+
+test("generateTheme falls back to concrete values for Mantine font weights", () => {
+	const css = generateTheme();
+
+	assert.match(
+		css,
+		/--font-weight-regular: var\(--mantine-font-weight-regular, 400\);/,
+	);
+	assert.match(
+		css,
+		/--font-weight-medium: var\(--mantine-font-weight-medium, 600\);/,
+	);
+	assert.match(
+		css,
+		/--font-weight-bold: var\(--mantine-font-weight-bold, 700\);/,
 	);
 });
 

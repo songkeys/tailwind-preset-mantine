@@ -137,10 +137,7 @@ async function loadThemeFromFileInProcess(themePath, baseDir = process.cwd()) {
  * @param {string} themePath
  * @param {string} baseDir
  */
-export function getThemeLoaderChildArgs(
-	themePath,
-	baseDir = process.cwd(),
-) {
+export function getThemeLoaderChildArgs(themePath, baseDir = process.cwd()) {
 	return [
 		"--import",
 		TSX_LOADER_URL,

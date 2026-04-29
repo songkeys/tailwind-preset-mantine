@@ -50,6 +50,12 @@ function indentCSS(css) {
 		.join("\n");
 }
 
+function cssVar(name, fallback) {
+	return fallback == null || fallback === ""
+		? `var(${name})`
+		: `var(${name}, ${fallback})`;
+}
+
 /**
  * @param {import("@mantine/core").MantineTheme} theme
  */
@@ -195,7 +201,10 @@ export function generateTheme(theme = DEFAULT_THEME) {
 
 	/* font weight */
 	${fontWeightKeys
-		.map((key) => `--font-weight-${key}: var(--mantine-font-weight-${key});`)
+		.map(
+			(key) =>
+				`--font-weight-${key}: ${cssVar(`--mantine-font-weight-${key}`, mergedTheme.fontWeights?.[key])};`,
+		)
 		.join("\n\t")}
 	${headingKeys
 		.map((key) => `--font-weight-${key}: var(--mantine-${key}-font-weight);`)

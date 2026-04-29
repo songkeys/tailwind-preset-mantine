@@ -34,7 +34,12 @@ test("Node rejects raw Windows paths for --import but accepts file URLs", async 
 	);
 
 	await assert.rejects(
-		execFile(process.execPath, ["--import", "file:///C:/fake/loader.mjs", "-e", ""]),
+		execFile(process.execPath, [
+			"--import",
+			"file:///C:/fake/loader.mjs",
+			"-e",
+			"",
+		]),
 		(error) => {
 			assert.doesNotMatch(error.stderr, /ERR_UNSUPPORTED_ESM_URL_SCHEME/);
 			assert.match(error.stderr, /ERR_MODULE_NOT_FOUND/);

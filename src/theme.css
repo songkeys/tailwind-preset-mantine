@@ -358,9 +358,9 @@
 	--text-base--line-height: var(--mantine-line-height);
 
 	/* font weight */
-	--font-weight-regular: var(--mantine-font-weight-regular);
-	--font-weight-medium: var(--mantine-font-weight-medium);
-	--font-weight-bold: var(--mantine-font-weight-bold);
+	--font-weight-regular: var(--mantine-font-weight-regular, 400);
+	--font-weight-medium: var(--mantine-font-weight-medium, 600);
+	--font-weight-bold: var(--mantine-font-weight-bold, 700);
 	--font-weight-h1: var(--mantine-h1-font-weight);
 	--font-weight-h2: var(--mantine-h2-font-weight);
 	--font-weight-h3: var(--mantine-h3-font-weight);

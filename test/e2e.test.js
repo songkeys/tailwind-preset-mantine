@@ -54,6 +54,10 @@ function assertGeneratedUtilities(css) {
 		css,
 		/\.text-primary-text\s*\{\s*color:\s*var\(--mantine-color-deep-red-text\);/m,
 	);
+	assert.match(
+		css,
+		/\.font-bold\s*\{[^}]*font-weight:\s*var\(--mantine-font-weight-bold,\s*700\);/m,
+	);
 	assert.match(css, /\.basis-md\s*\{\s*flex-basis:\s*var\(--size-md\);/m);
 	assert.ok(
 		/\.\\@xs\\\/navbar\\:block\s*\{\s*@container navbar \(width >= 20rem\)\s*\{\s*display:\s*block;/m.test(
