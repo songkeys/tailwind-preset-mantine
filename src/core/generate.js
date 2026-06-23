@@ -134,6 +134,7 @@ export function generateTheme(theme = DEFAULT_THEME) {
 	--color-body: var(--mantine-color-body);
 	--color-text: var(--mantine-color-text);
 	--color-error: var(--mantine-color-error);
+	--color-success: var(--mantine-color-success);
 	--color-placeholder: var(--mantine-color-placeholder);
 	--color-anchor: var(--mantine-color-anchor);
 	--color-default: var(--mantine-color-default);
