@@ -50,23 +50,23 @@
 		"test": "node --test"
 	},
 	"dependencies": {
-		"es-module-lexer": "^2.0.0",
-		"get-tsconfig": "^4.13.7",
-		"postcss": "^8.5.9",
-		"tsx": "^4.21.0"
+		"es-module-lexer": "^2.1.0",
+		"get-tsconfig": "^4.14.0",
+		"postcss": "^8.5.15",
+		"tsx": "^4.22.4"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.11",
-		"@mantine/core": "^9.0.1",
-		"@tailwindcss/postcss": "^4.2.2",
-		"@tailwindcss/vite": "^4.2.2",
-		"bumpp": "^11.0.1",
-		"tailwindcss": "^4.2.2",
-		"vite": "^8.0.8"
+		"@biomejs/biome": "^2.5.0",
+		"@mantine/core": "^9.4.0",
+		"@tailwindcss/postcss": "^4.3.1",
+		"@tailwindcss/vite": "^4.3.1",
+		"bumpp": "^11.1.0",
+		"tailwindcss": "^4.3.1",
+		"vite": "^8.0.16"
 	},
 	"peerDependencies": {
 		"@mantine/core": "^7 || ^8 || ^9",
 		"tailwindcss": "^4"
 	},
-	"packageManager": "pnpm@10.33.0"
+	"packageManager": "pnpm@10.34.3"
 }
